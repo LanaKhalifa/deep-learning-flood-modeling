@@ -6,6 +6,8 @@ Deep learning framework for flood modeling using HEC-RAS simulations: from HDF p
 The folder `HECRAS_Simulations_Results/` contains raw terrain and simulation files generated using HEC-RAS. Due to GitHub file size limitations, these files are **not included** in this repository. You can download the full dataset from the following OneDrive link: [Download Simulations Results](https://onedrive.live.com/your_shared_link_here)
 
 After downloading, please place the folder in the root of the cloned repository like so:
+<pre><code> ``` deep-learning-for-flood-modeling/ ├── HECRAS_Simulations_Results/ │ ├── prj_03/ │ ├── prj_04/ │ ├── ... ├── Architectures/ ├── train.py ├── main.py ├── README.md ``` </code></pre>
+
 
 deep-learning-for-flood-modeling/
 ├── HECRAS_Simulations_Results/
