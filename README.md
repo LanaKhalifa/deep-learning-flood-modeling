@@ -8,8 +8,11 @@ The folder `HECRAS_Simulations_Results/` contains raw terrain and simulation fil
 After downloading, please place the folder in the **root** directory of the cloned repository with the following structure:
 
 deep-learning-for-flood-modeling/
+
 ├── HECRAS_Simulations_Results/
+
 │ ├── prj_03/
+
 │ ├── prj_04/
 │ ├── prj_05/
 │ ├── prj_06/
