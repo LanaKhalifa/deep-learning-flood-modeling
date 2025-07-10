@@ -90,7 +90,7 @@ def concatenate_all_test_chunks(prj_sublists):
 
     logging.info("Final big_test files saved across all projects.")
 
-def concatenate_prj03_split():
+def concatenate_prj03_train_val_test_chunks():
     prj_num = '03'
     save_dir = os.path.join(DATA_ROOT, f'saved_in_chunks/{prj_num}/')
     sublists = prj_sublists[prj_num][1]
