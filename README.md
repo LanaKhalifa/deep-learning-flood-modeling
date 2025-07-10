@@ -1,3 +1,13 @@
+## Database directory: 
+Use a more specific directory like:
+
+./Database/chunks/{prj_num}/
+This makes it clear that:
+
+These are partial datasets
+Belong to a specific project
+Were saved per sublist chunk for memory efficiency
+
 ## The project is composed of 3 parts: 
 1. preprocessing: Convert raw HEC-RAS simulation results (in HDF5 and terrain files) into training-ready datasets
 2. training DL models
