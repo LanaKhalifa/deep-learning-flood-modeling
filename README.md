@@ -1,41 +1,68 @@
+Overview of the Databases
 
-## we have 3 databases: 
-big_train_val and big_test which were created from all simulations. big_test patches come from simulaions that were not used in train_val
-prj_03_train_val and prj_03_test:since prj_03 is hand curated we wanted to see performance on this dataset separately 
-small_train_val for parameter tuning only so as not to atke a long time in each trainig. 
+We have three main datasets used throughout this project:
 
+big_train_val and big_test:
+Created from all simulations.
+big_test contains patches from simulations that were not used during training/validation.
+prj_03_train_val and prj_03_test:
+Specific to Project 03, which was manually curated. These datasets help evaluate performance on a consistent and clean dataset.
+small_train_val:
+A compact version of the dataset used for quick parameter tuning, to speed up experimentation.
+Project Numbers
 
+Whenever you see identifiers like 03, 04, 05, or 06, they refer to the four HEC-RAS projects used in this study.
+Each project includes:
 
-whenever you see: 03, 04, 05, 06 we are speaking about the 4 projects used for this work. each project contains multiple simulations (named in HECRAS as plans). and they have terrrains in the proximity. 
+Multiple simulations (referred to in HEC-RAS as plans).
+Terrain files located nearby in the folder structure.
+Database Directory Structure
 
-## Database directory: 
-Use a more specific directory like:
+Preprocessed chunks of data are saved under:
 
 ./Database/chunks/{prj_num}/
-This makes it clear that:
+This structure ensures:
 
-These are partial datasets
-Belong to a specific project
-Were saved per sublist chunk for memory efficiency
+Modularity per project.
+Efficient storage of sublist-based data chunks, due to memory constraints during processing.
+Project Structure
 
-## The project is composed of 3 parts: 
-1. preprocessing: Convert raw HEC-RAS simulation results (in HDF5 and terrain files) into training-ready datasets
-2. training DL models
-3. closure part
+The repository is organized into three main components:
 
+Preprocessing
+Converts raw HEC-RAS simulation results (HDF5 and terrain TIFFs) into patches ready for training.
+Training
+Deep learning models are trained to emulate hydrodynamic simulation results.
+Closure
+Final step in the pipeline, which uses the trained models to predict forward in time across a full domain.
+Entry Script: from_HDF.py
 
-from_HDF script since it's the first step in your preprocessing pipeline
+The from_HDF script is the starting point of the preprocessing pipeline.
+It:
 
-## Data Availability
-The folder `HECRAS_Simulations_Results/` contains raw terrain and simulation files generated using HEC-RAS. Due to GitHub file size limitations, these files are **not included** in this repository. You can download the full dataset from the following OneDrive link:  
-[Download Simulations Results](https://onedrive.live.com/your_shared_link_here)
+Loads raw simulation outputs and terrain files.
+Extracts relevant data patches from simulations.
+Applies filtering and augmentation.
+Saves the resulting data into project-specific subdirectories.
+Data Availability
 
-This dataset is the **starting point of the project**. All subsequent steps in the pipeline depend on these simulations. The project begins by processing these HEC-RAS simulation results and preprocessing them for use in Deep Learning tasks, and finally in the closure model. 
+The folder HECRAS_Simulations_Results/ contains the raw HEC-RAS simulation outputs and terrain files.
+Due to GitHub’s file size limitations, these files are not included in this repository.
 
-After downloading, place the folder named `HECRAS_Simulations_Results` in the **main directory** of the cloned repository — that is, in the same location as `train.py`, `main.py`, and the `Architectures/` folder. The structure must be preserved as-is to ensure compatibility with the provided data loaders and training scripts.
+You can download them from the following OneDrive link:
+📥 Download Simulation Results
 
-The folder should contain four subfolders: `prj_03`, `prj_04`, `prj_05`, and `prj_06`.  
-Each of these subfolders includes:
-- Approximately 90 simulation output files in HDF5 format, each representing a different flood event occuring on a different terran
-- A `Terrains/` folder containing the terrain files used in the simulations
+Important:
+Once downloaded, place the folder HECRAS_Simulations_Results/ at the root of the cloned repository. This ensures compatibility with all scripts. The directory should sit alongside train.py, main.py, and the Architectures/ folder.
 
+Directory Structure:
+HECRAS_Simulations_Results/
+│
+├── prj_03/
+│   ├── *.hdf     # ~90 simulation results
+│   └── Terrains/
+│       └── *.tif
+├── prj_04/
+├── prj_05/
+└── prj_06/
+Each *.hdf file corresponds to a flood simulation under different terrain and conditions. Each Terrains/ folder contains the associated elevation map used in the corresponding simulations.
