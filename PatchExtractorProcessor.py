@@ -447,10 +447,29 @@ class PatchExtractorProcessor:
 
         # Filter all keys in database using surviving indices
         for key in self.database:
-            self.database[key] = [
-                sample for i, sample in enumerate(self.database[key]) if i not in indices_to_remove]
+            self.database[key] = [sample for i, sample in enumerate(self.database[key]) if i not in indices_to_remove]
 
-    def generate_training_data(self):
+    def postprocess_patches(self):
+        """
+        Postprocesses patches by:
+        - Removing samples where depth_next - depth contains large values (>|10| m)
+        - Shifting each terrain patch so its minimum value is zero
+        """
+        keep_indices = []
+    
+        for i in range(len(self.database['depth'])):
+            diff = self.database['depth_next'][i] - self.database['depth'][i]
+            if np.max(np.abs(diff)) <= 10:
+                keep_indices.append(i)
+    
+        # Apply filtering
+        for key in self.database:
+            self.database[key] = [self.database[key][i] for i in keep_indices]
+    
+        # Shift terrain patches
+        self.database['terrain'] = [terrain - np.min(terrain) for terrain in self.database['terrain']]
+
+    def generate_patches(self):
         """
         Runs the full preprocessing pipeline:
         - Loads HDF and TIFF data
@@ -467,3 +486,4 @@ class PatchExtractorProcessor:
         self.tiff_patches()
         self.populate_from_all_k_indices()
         self.delete_dry_patches()
+        self.postprocess_patches()
