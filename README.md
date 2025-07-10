@@ -1,3 +1,88 @@
+🌊 Deep Learning Flood Modeling
+
+This repository contains a complete pipeline for converting HEC-RAS flood simulation outputs into patch-based datasets suitable for deep learning training.
+
+📁 Project Structure
+
+├── main.py                       # Entry point: runs full pipeline
+├── config.py                     # All project config and sublists
+├── database_generator.py         # Preprocessing logic
+├── PatchExtractorProcessor.py   # Core class: extract and process patches
+├── generate_dataloaders.py      # (Optional) for training input loading
+├── HECRAS_Simulations_Results/  # Raw input files (HDFs, TIFFs)
+├── Databases/                   # Output patches (.pkl)
+└── README.md
+
+🚀 How to Run
+
+Install dependencies
+
+pip install -r requirements.txt  # ← or add your own dependencies
+
+Run full preprocessing pipeline
+
+python main.py
+
+This will:
+
+Process all simulation plans
+
+Extract and augment patches
+
+Save per-group chunks
+
+Concatenate all training/validation/test splits
+
+📦 Output Files
+
+Saved under ./Database/:
+
+saved_in_chunks/{project_id}/ → raw patches per sublist
+
+big_train_val_depths.pkl, etc. → unified datasets
+
+prj_03_train_val_depths.pkl → separate prj_03 split
+
+small_train_val_depths.pkl → dev/debug subset
+
+📐 Patch Format
+
+Each training sample is a dict:
+
+{
+  'terrain': np.ndarray (321x321),
+  'depth': np.ndarray (32x32),
+  'depth_next': np.ndarray (32x32)
+}
+
+Augmentations include flipping + rotation.
+
+🧠 Tips
+
+Edit config.py to add/remove plans or change paths.
+
+Intermediate HDFs and TIFFs go in HECRAS_Simulations_Results/
+
+All constants (patch size, grid spacing, etc.) are configurable.
+
+🧼 Cleanup
+
+To remove macOS metadata files:
+
+find . -name '__MACOSX' -or -name '.DS_Store' | xargs rm -rf
+
+🧪 Coming Next
+
+Training script
+
+Dataloader module
+
+Model evaluation code
+
+📄 License
+
+MIT License — free to use with attribution.
+
 Databases
 
 We have 3 main databases:
