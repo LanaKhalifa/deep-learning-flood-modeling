@@ -1,14 +1,16 @@
-# This script processes HEC-RAS simulation outputs into training data for deep learning.
+# This script processes HEC-RAS simulation outputs into patch data for deep learning.
 # Each number in the sublists corresponds to a plan ID (plan_num) — a simulation run in HEC-RAS.
-# For memory limitation, we process 7 simulations (plan_nums) at a time using the PatchExtractorProcessor.
-# The resulting patches from all 7 simulations are concatenated and saved together as a chunk here: ./Database/saved_in_chunks/{prj_num}/.
-# Then chunks are loaded and concatenated
+# For memory efficiency, we process simulations in groups (sublists) using PatchExtractorProcessor.
+# Output patches are saved per group under ./Database/saved_in_chunks/{prj_num}/.
+# Then all training/validation chunks are concatenated across all projects (excluding test groups).
 
 import os
 import pickle
 import numpy as np
+import logging
 from PatchExtractorProcessor import PatchExtractorProcessor  # Update with actual class name if different
 
+logging.basicConfig(level=logging.INFO)
 
 prj_03_sublists = [
     ['04', '05', '06', '07', '08', '09', '10'],
@@ -50,57 +52,180 @@ prj_06_sublists = [
     ['41', '42', '43'],
     ['44', '45', '46', '47', '48', '49', '50']]
 
+prj_sublists = {
+    '03': ('hecras_on_03', prj_03_sublists),
+    '04': ('HECRAS', prj_04_sublists),
+    '05': ('HECRAS', prj_05_sublists),
+    '06': ('HECRAS', prj_06_sublists),}
+
 def process_project(prj_num, prj_name, sublists):
     for idx, plan_nums in enumerate(sublists):
-        print(f"Processing sublist {idx} of project {prj_num}")
+        logging.info(f"Processing sublist {idx} of project {prj_num}")
 
-        instances = []
-        for plan_num in plan_nums:
-            print('plan_num:', plan_num)
-            instance = PatchExtractorProcessor(prj_num, prj_name, plan_num)
-            instance.generate_training_data()
-            instances.append(instance)
-
-        terrains_list = []
-        depths_list = []
-        depths_next_list = []
-
+        instances = [PatchExtractorProcessor(prj_num, prj_name, plan_num) for plan_num in plan_nums]
         for instance in instances:
-            db = instance.database
-            terrains_list.append(db['terrain'])
-            depths_list.append(db['depth'])
-            depths_next_list.append(db['depth_next'])
+            instance.generate_patches()
 
-        cleaned_terrains_list = []
-        cleaned_depths_list = []
-        cleaned_depths_next_list = []
-
-        for t, d, dn in zip(terrains_list, depths_list, depths_next_list):
-            if len(d) > 0 and len(dn) > 0:
-                cleaned_terrains_list.append(t)
-                cleaned_depths_list.append(d)
-                cleaned_depths_next_list.append(dn)
-
-        terrains = np.concatenate(cleaned_terrains_list, axis=0)
-        depths = np.concatenate(cleaned_depths_list, axis=0)
-        depths_next = np.concatenate(cleaned_depths_next_list, axis=0)
+        terrains = np.concatenate([inst.database['terrain'] for inst in instances if len(inst.database['depth']) > 0], axis=0)
+        depths = np.concatenate([inst.database['depth'] for inst in instances if len(inst.database['depth']) > 0], axis=0)
+        depths_next = np.concatenate([inst.database['depth_next'] for inst in instances if len(inst.database['depth_next']) > 0], axis=0)
 
         save_dir = f'./Database/saved_in_chunks/{prj_num}/'
         os.makedirs(save_dir, exist_ok=True)
 
-        with open(os.path.join(save_dir, f'terrains_{idx}.pkl'), 'wb') as f:
+        with open(os.path.join(save_dir, f'terrains_sublist_{idx}.pkl'), 'wb') as f:
             pickle.dump(terrains, f)
-
-        with open(os.path.join(save_dir, f'depths_{idx}.pkl'), 'wb') as f:
+        with open(os.path.join(save_dir, f'depths_sublist_{idx}.pkl'), 'wb') as f:
             pickle.dump(depths, f)
-
-        with open(os.path.join(save_dir, f'depths_next_{idx}.pkl'), 'wb') as f:
+        with open(os.path.join(save_dir, f'depths_next_sublist_{idx}.pkl'), 'wb') as f:
             pickle.dump(depths_next, f)
 
-        print("Sublist", idx, "saved successfully.")
+        logging.info(f"Sublist {idx} saved successfully.")
 
-# Run processing for all four projects
-process_project('03', 'hecras_on_03', prj_03_sublists)
-process_project('04', 'HECRAS', prj_04_sublists)
-process_project('05', 'HECRAS', prj_05_sublists)
-process_project('06', 'HECRAS', prj_06_sublists)
+def concatenate_all_train_val_chunks(prj_sublists):
+    all_depths, all_depths_next, all_terrains = [], [], []
+
+    for prj_num, (_, sublists) in prj_sublists.items():
+        save_dir = f'./Database/saved_in_chunks/{prj_num}/'
+        last_index = len(sublists) - 1
+
+        for idx in range(last_index):  # exclude test set
+            with open(os.path.join(save_dir, f'depths_sublist_{idx}.pkl'), 'rb') as f:
+                all_depths.extend(pickle.load(f))
+            with open(os.path.join(save_dir, f'depths_next_sublist_{idx}.pkl'), 'rb') as f:
+                all_depths_next.extend(pickle.load(f))
+            with open(os.path.join(save_dir, f'terrains_sublist_{idx}.pkl'), 'rb') as f:
+                all_terrains.extend(pickle.load(f))
+
+    output_dir = './Database/'
+    with open(os.path.join(output_dir, 'big_train_val_depths.pkl'), 'wb') as f:
+        pickle.dump(all_depths, f)
+    with open(os.path.join(output_dir, 'big_train_val_depths_next.pkl'), 'wb') as f:
+        pickle.dump(all_depths_next, f)
+    with open(os.path.join(output_dir, 'big_train_val_terrains.pkl'), 'wb') as f:
+        pickle.dump(all_terrains, f)
+
+    logging.info("Final big_train_val files saved across all projects.")
+
+    # Verification
+    assert len(all_depths) == len(all_depths_next) == len(all_terrains), "Mismatch in number of samples across lists."
+    assert all(isinstance(item, np.ndarray) and item.shape == (32, 32) for item in all_depths), "Invalid shape in depths."
+    assert all(isinstance(item, np.ndarray) and item.shape == (32, 32) for item in all_depths_next), "Invalid shape in depths_next."
+    assert all(isinstance(item, np.ndarray) and item.shape == (321, 321) for item in all_terrains), "Invalid shape in terrains."
+    logging.info("All checks passed successfully for final combined lists.")
+
+def concatenate_all_test_chunks(prj_sublists):
+    all_depths, all_depths_next, all_terrains = [], [], []
+
+    for prj_num, (_, sublists) in prj_sublists.items():
+        save_dir = f'./Database/saved_in_chunks/{prj_num}/'
+        last_index = len(sublists) - 1  # only use last index for test set
+
+        with open(os.path.join(save_dir, f'depths_sublist_{last_index}.pkl'), 'rb') as f:
+            all_depths.extend(pickle.load(f))
+        with open(os.path.join(save_dir, f'depths_next_sublist_{last_index}.pkl'), 'rb') as f:
+            all_depths_next.extend(pickle.load(f))
+        with open(os.path.join(save_dir, f'terrains_sublist_{last_index}.pkl'), 'rb') as f:
+            all_terrains.extend(pickle.load(f))
+
+    output_dir = './Database/'
+    with open(os.path.join(output_dir, 'big_test_depths.pkl'), 'wb') as f:
+        pickle.dump(all_depths, f)
+    with open(os.path.join(output_dir, 'big_test_depths_next.pkl'), 'wb') as f:
+        pickle.dump(all_depths_next, f)
+    with open(os.path.join(output_dir, 'big_test_terrains.pkl'), 'wb') as f:
+        pickle.dump(all_terrains, f)
+
+    logging.info("Final big_test files saved across all projects.")
+
+    # (Add assertions or inspection code if needed)
+
+def concatenate_prj03_split():
+    prj_num = '03'
+    save_dir = f'./Database/saved_in_chunks/{prj_num}/'
+    sublists = prj_sublists[prj_num][1]
+
+    train_val_depths, train_val_depths_next, train_val_terrains = [], [], []
+    test_depths, test_depths_next, test_terrains = [], [], []
+
+    for idx in range(len(sublists)):
+        with open(os.path.join(save_dir, f'depths_sublist_{idx}.pkl'), 'rb') as f:
+            depths = pickle.load(f)
+        with open(os.path.join(save_dir, f'depths_next_sublist_{idx}.pkl'), 'rb') as f:
+            depths_next = pickle.load(f)
+        with open(os.path.join(save_dir, f'terrains_sublist_{idx}.pkl'), 'rb') as f:
+            terrains = pickle.load(f)
+
+        if idx == len(sublists) - 1:
+            test_depths.extend(depths)
+            test_depths_next.extend(depths_next)
+            test_terrains.extend(terrains)
+        else:
+            train_val_depths.extend(depths)
+            train_val_depths_next.extend(depths_next)
+            train_val_terrains.extend(terrains)
+
+    output_dir = './Database/'
+    with open(os.path.join(output_dir, 'prj_03_train_val_depths.pkl'), 'wb') as f:
+        pickle.dump(train_val_depths, f)
+    with open(os.path.join(output_dir, 'prj_03_train_val_depths_next.pkl'), 'wb') as f:
+        pickle.dump(train_val_depths_next, f)
+    with open(os.path.join(output_dir, 'prj_03_train_val_terrains.pkl'), 'wb') as f:
+        pickle.dump(train_val_terrains, f)
+
+    with open(os.path.join(output_dir, 'prj_03_test_depths.pkl'), 'wb') as f:
+        pickle.dump(test_depths, f)
+    with open(os.path.join(output_dir, 'prj_03_test_depths_next.pkl'), 'wb') as f:
+        pickle.dump(test_depths_next, f)
+    with open(os.path.join(output_dir, 'prj_03_test_terrains.pkl'), 'wb') as f:
+        pickle.dump(test_terrains, f)
+
+    logging.info("prj_03 train/val and test files saved.")
+
+def generate_small_train_val_subset():
+    prj_num = '03'
+    sublists = prj_sublists[prj_num][1]
+    save_dir = f'./Database/saved_in_chunks/{prj_num}/'
+    output_dir = './Database/'
+
+    all_depths, all_depths_next, all_terrains = [], [], []
+
+    for idx in range(3):  # only first 3 sublists (21 simulations)
+        with open(os.path.join(save_dir, f'depths_sublist_{idx}.pkl'), 'rb') as f:
+            all_depths.extend(pickle.load(f))
+        with open(os.path.join(save_dir, f'depths_next_sublist_{idx}.pkl'), 'rb') as f:
+            all_depths_next.extend(pickle.load(f))
+        with open(os.path.join(save_dir, f'terrains_sublist_{idx}.pkl'), 'rb') as f:
+            all_terrains.extend(pickle.load(f))
+
+    with open(os.path.join(output_dir, 'small_train_val_depths.pkl'), 'wb') as f:
+        pickle.dump(all_depths, f)
+    with open(os.path.join(output_dir, 'small_train_val_depths_next.pkl'), 'wb') as f:
+        pickle.dump(all_depths_next, f)
+    with open(os.path.join(output_dir, 'small_train_val_terrains.pkl'), 'wb') as f:
+        pickle.dump(all_terrains, f)
+
+    # Assertions
+    assert len(all_depths) == len(all_depths_next) == len(all_terrains), "Mismatch in number of samples."
+    assert all(isinstance(item, np.ndarray) and item.shape == (32, 32) for item in all_depths), "Invalid shape in depths."
+    assert all(isinstance(item, np.ndarray) and item.shape == (32, 32) for item in all_depths_next), "Invalid shape in depths_next."
+    assert all(isinstance(item, np.ndarray) and item.shape == (321, 321) for item in all_terrains), "Invalid shape in terrains."
+
+    logging.info("Small train/val subset saved and verified.")
+
+# Run preprocessing for all projects
+for prj_num, (prj_name, sublists) in prj_sublists.items():
+    process_project(prj_num, prj_name, sublists)
+
+# Concatenate train/val patches from all projects into unified lists
+concatenate_all_train_val_chunks(prj_sublists)
+
+# Concatenate test patches from all projects into unified lists
+concatenate_all_test_chunks(prj_sublists)
+
+# Concatenate prj_03 split separately
+concatenate_prj03_split()
+
+# Generate small_train_val set from prj_03
+generate_small_train_val_subset()
+
