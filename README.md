@@ -1,3 +1,13 @@
+
+## we have 3 databases: 
+big_train_val and big_test which were created from all simulations. big_test patches come from simulaions that were not used in train_val
+prj_03_train_val and prj_03_test:since prj_03 is hand curated we wanted to see performance on this dataset separately 
+small_train_val for parameter tuning only so as not to atke a long time in each trainig. 
+
+
+
+whenever you see: 03, 04, 05, 06 we are speaking about the 4 projects used for this work. each project contains multiple simulations (named in HECRAS as plans). and they have terrrains in the proximity. 
+
 ## Database directory: 
 Use a more specific directory like:
 
