@@ -1,9 +1,9 @@
 from config import prj_sublists
-from database_generator import (process_project,
-                                concatenate_all_train_val_chunks,
-                                concatenate_all_test_chunks,
-                                concatenate_prj03_train_val_test_chunks,
-                                generate_small_train_val_subset)
+from generate_database import (process_project,
+                              concatenate_all_train_val_chunks,
+                              concatenate_all_test_chunks,
+                              concatenate_prj03_train_val_test_chunks,
+                              generate_small_train_val_subset)
 
 print("Starting full flood patch generation pipeline...")
 
