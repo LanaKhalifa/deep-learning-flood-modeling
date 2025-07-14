@@ -9,12 +9,11 @@ print("=" * 60)
 print("🔷 Starting Full Flood Patch Generation Pipeline... 🔷")
 print("=" * 60)
 
-
-"""
 # Step 1: Process each project and save patches in chunks of data due to memory limitation 
 for prj_num, (prj_name, sublists) in prj_sublists.items():
     process_project(prj_num, prj_name, sublists)
 
+"""
 # Step 2: Concatenate train+val sets across all projects
 concatenate_all_train_val_chunks(prj_sublists)
 
