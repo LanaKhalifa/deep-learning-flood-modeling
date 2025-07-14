@@ -9,7 +9,8 @@ import os
 import pickle
 import numpy as np
 import logging
-from patch_extractor_processor import PatchExtractorProcessor
+from simulations_to_samples.scripts.patch_extractor_processor import PatchExtractorProcessor
+
 from config import prj_sublists, DATA_ROOT
 
 logging.basicConfig(level=logging.INFO)
