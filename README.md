@@ -1,3 +1,13 @@
+## 📦 How to Run
+
+Clone the repository and create the environment:
+
+```bash
+git clone https://github.com/yourusername/deep-learning-flood-modeling.git
+cd deep-learning-flood-modeling
+conda env create -f environment.yml
+conda activate HDF_env
+
 🌊 Deep Learning Flood Modeling
 
 This repository contains a complete pipeline for converting HEC-RAS flood simulation outputs into patch-based datasets suitable for deep learning training.
