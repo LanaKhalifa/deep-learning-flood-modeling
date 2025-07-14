@@ -7,6 +7,8 @@ from generate_database import (process_project,
 
 print("Starting full flood patch generation pipeline...")
 
+
+"""
 # Step 1: Process each project and save patches in chunks of data due to memory limitation 
 for prj_num, (prj_name, sublists) in prj_sublists.items():
     process_project(prj_num, prj_name, sublists)
@@ -24,3 +26,4 @@ concatenate_prj03_train_val_test_chunks()
 generate_small_train_val_subset()
 
 print("All patch datasets have been generated and saved.")
+"""
