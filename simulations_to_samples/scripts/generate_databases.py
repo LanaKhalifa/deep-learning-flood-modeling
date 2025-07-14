@@ -10,41 +10,11 @@ import pickle
 import numpy as np
 import logging
 from simulations_to_samples.scripts.patch_extractor_processor import PatchExtractorProcessor
-
-from config import prj_sublists, DATA_ROOT
+from config import prj_sublists, PATCHES_ROOT, DATABASES_ROOT, DATALOADERS_ROOT
 
 logging.basicConfig(level=logging.INFO)
 
-def load_pickle(path):
-    with open(path, 'rb') as f:
-        return pickle.load(f)
-
-def process_project(prj_num, prj_name, sublists):
-    for idx, plan_nums in enumerate(sublists):
-        logging.info(f"Processing sublist {idx} of project {prj_num}")
-
-        instances = [PatchExtractorProcessor(prj_num, prj_name, plan_num) for plan_num in plan_nums]
-        for instance in instances:
-            instance.generate_patches()
-
-        terrains = np.concatenate([inst.database['terrain'] for inst in instances if len(inst.database['depth']) > 0], axis=0)
-        depths = np.concatenate([inst.database['depth'] for inst in instances if len(inst.database['depth']) > 0], axis=0)
-        depths_next = np.concatenate([inst.database['depth_next'] for inst in instances if len(inst.database['depth_next']) > 0], axis=0)
-
-        logging.info(f"Sublist {idx}: {len(depths)} samples ready. Depth min/max: {depths.min():.2f}/{depths.max():.2f}")
-
-        save_dir = os.path.join(DATA_ROOT, f'saved_in_chunks/{prj_num}/')
-        os.makedirs(save_dir, exist_ok=True)
-
-        with open(os.path.join(save_dir, f'terrains_sublist_{idx}.pkl'), 'wb') as f:
-            pickle.dump(terrains, f)
-        with open(os.path.join(save_dir, f'depths_sublist_{idx}.pkl'), 'wb') as f:
-            pickle.dump(depths, f)
-        with open(os.path.join(save_dir, f'depths_next_sublist_{idx}.pkl'), 'wb') as f:
-            pickle.dump(depths_next, f)
-
-        logging.info(f"Sublist {idx} saved successfully.")
-
+        
 def concatenate_all_train_val_chunks(prj_sublists):
     all_depths, all_depths_next, all_terrains = [], [], []
 
