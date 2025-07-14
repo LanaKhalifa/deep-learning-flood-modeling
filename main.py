@@ -1,4 +1,4 @@
-from config import prj_sublists
+from config import prjs_metadata
 
 from simulations_to_samples.scripts.generate_databases import (process_project,
                                                              concatenate_all_train_val_chunks,
@@ -9,9 +9,9 @@ print("=" * 60)
 print("🔷 Starting Full Flood Patch Generation Pipeline... 🔷")
 print("=" * 60)
 
-# Step 1: Process each project and save patches in chunks of data due to memory limitation 
-for prj_num, (prj_name, sublists) in prj_sublists.items():
-    process_project(prj_num, prj_name, sublists)
+# Step 1: Process each project
+for prj_num, (prj_name, plans) in prjs_metadata.items():
+    process_project(prj_num, prj_name, plans)
 
 """
 # Step 2: Concatenate train+val sets across all projects
