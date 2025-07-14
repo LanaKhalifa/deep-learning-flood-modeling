@@ -3,7 +3,9 @@
 # General constants
 PATCH_SIZE = 32
 TERRAIN_PATCH_SIZE = 321
-DATA_ROOT = './Database/'
+PATCHES_ROOT = './simulations_to_samples/processed_data/patches_per_simulation/'
+DATABASES_ROOT - './simulations_to_samples/processed_data/databases/'
+DATALOADERS_ROOT - './simulations_to_samples/processed_data/dataloaders/'
 
 # Project simulation sublists
 prj_03_sublists = [
