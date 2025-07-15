@@ -15,8 +15,15 @@ for prj_num, (prj_name, plans) in prjs_metadata.items():
 print("=" * 60)
 print("🔷 Starting Datasets Generation... 🔷")
 print("=" * 60)
-
+"""
 # Step 2: Create and save datasets
 create_and_save_datasets()
+"""
+print("=" * 60)
+print("🔷 Starting Dataloaders Generation... 🔷")
+print("=" * 60)
+# Step 3: Create and save datasets
+create_and_save_dataloaders()
+
 
 
