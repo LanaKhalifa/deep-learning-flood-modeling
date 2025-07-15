@@ -24,7 +24,7 @@ class PatchExtractorProcessor:
     PatchExtractorProcessor
 
     Processes raw flood simulation outputs (HDF and TIFF files) into structured
-    training data for deep learning.
+    patches suitable as deep learning samples. 
 
     Responsibilities:
     - Load water depth and terrain data from HDF and TIFF
@@ -44,8 +44,8 @@ class PatchExtractorProcessor:
 
         Args:
             prj_num (str): Custom project number (e.g., "03", "04", etc.)
-            prj_name (str): Project name as used in HECRAS.
-            plan_num (str): Plan number for the simulation.
+            prj_name (str): Project name as used in HECRAS (i set it when setting up the simulations)
+            plan_num (str): Plan number for the simulation (HECRAS calls each simulation a plan)
         """
         # Project identifiers
         self.prj_num = prj_num
@@ -53,17 +53,17 @@ class PatchExtractorProcessor:
         self.plan_num = plan_num
 
         # File paths (relative to GitHub root)
-        self.prj_path = os.path.join('HECRAS_Simulations_Results', f'prj_{prj_num}')
-        self.terrain_path = os.path.join(self.prj_path, 'Terrains')
-        self.plan_file_name = f'{prj_name}.p{plan_num}.hdf'
+        self.prj_path = os.path.join('simulations_to_samples', 'raw_data', 'hecras_simulations_results', f'prj_{prj_num}') # location of simulations results in github repo
+        self.terrain_path = os.path.join(self.prj_path, 'Terrains') # terrain are saved in simulations results directory
+        self.plan_file_name = f'{prj_name}.p{plan_num}.hdf' # HECRAS saves simulations results with these names
         self.tiff_name = f'terrain_{plan_num}.tif'
 
         # Simulation settings
         self.k = 4  # Number of snapshots taken from each simulation
-        self.delta_t = 60  # Time step between input and output in minutes
+        self.delta_t = 60  # Time step between input and output in minutes. was set after to trial and error. 
         self.closest_indices = [0, 70, 140, 210]  # Time points used
         self.meters_in_cell = 10  # Cell resolution set in HECRAS
-        self.cells_in_patch = 32  # Each sample is a 32x32 patch
+        self.cells_in_patch = 32  # Each sample is a 32x32 patch. was set after trial and error. 
 
         # Placeholders for internal data
         self.depth_vectors = None
@@ -94,7 +94,7 @@ class PatchExtractorProcessor:
         # Miscellaneous
         self.cluster_counter = 0
         self.trimmed_1km_inwards = False
-        self.database = {'terrain': [], 'depth': [], 'depth_next': []}
+        self.database = {'terrain': [], 'depth': [], 'depth_next': []} # end goal of using this class is to populate this dictionary.
 
         #plotting
         self.plot = plot  # Enable plotting manually if needed
@@ -108,6 +108,8 @@ class PatchExtractorProcessor:
                   - 'Invert_Depth': ndarray of invert depth values
         """
         hdf_path = os.path.join(self.prj_path, self.plan_file_name)
+        if not os.path.exists(hdf_path):
+            raise FileNotFoundError(f'HDF file not found: {hdf_path}')
 
         with h5py.File(hdf_path, 'r') as f:
             data = {}
@@ -207,6 +209,9 @@ class PatchExtractorProcessor:
 
         """
         tiff_path = os.path.join(self.terrain_path, self.tiff_name)
+        if not os.path.exists(tiff_path):
+            raise FileNotFoundError(f'TIFF file not found: {tiff_path}')
+
         self.tiff_data = tifffile.imread(tiff_path)
 
         # Trim 1 km (1000 TIFF pixels) from edges if required
@@ -407,7 +412,7 @@ class PatchExtractorProcessor:
         print(f'Now in prj_{self.prj_num} plan_{self.plan_num}')
 
         for k_index in [0, 1, 2, 3]:
-            self.depth_patches(k_index=k_index)
+            self.depth_patches(k_index=k_index) #It extracts a fresh set of patches (depth, depth_next, and optionally dual versions) for the specific k_index.
 
             if k_index == 0:
                 self.add_samples(self.patches_depth, self.patches_depth_next, self.patches_tiff, dual=False)
@@ -426,8 +431,6 @@ class PatchExtractorProcessor:
                 patches_flipped = self.flip(dual=True, side='vertical')
                 patches_rotated = self.rotate(patches_flipped, dual=True, angle=270)
                 self.add_samples(self.patches_depth_dual, self.patches_depth_next_dual, patches_rotated, dual=True)
-
-            print(f'k index {k_index} is done')
 
     def delete_dry_patches(self):
         """
@@ -470,6 +473,54 @@ class PatchExtractorProcessor:
         # Shift terrain patches
         self.database['terrain'] = [terrain - np.min(terrain) for terrain in self.database['terrain']]
 
+    def plot_final_patches(self):
+        # Unpack the data
+        depths = self.database['depth']
+        depths_next = self.database['depth_next']
+        terrains = self.database['terrain']
+    
+        n_total = len(depths)
+        n_samples = min(30, n_total)  # don't exceed available samples
+        idxs = random.sample(range(n_total), n_samples)
+    
+        # Create output directory
+        output_dir = os.path.join(
+            'simulations_to_samples',
+            'processed_data',
+            'patches_per_simulation',
+            'images',
+            f'prj_{self.prj_num}',
+            f'plan_{self.plan_num}'
+        )
+        os.makedirs(output_dir, exist_ok=True)
+    
+        # Create figure: 10 rows x 3 columns
+        fig, axs = plt.subplots(nrows=10, ncols=3, figsize=(12, 30))
+        for i, idx in enumerate(idxs):
+            row = i // 3
+            col = i % 3
+            ax = axs[row, col]
+    
+            if col == 0:
+                ax.imshow(depths[idx], cmap='viridis')
+                ax.set_title(f'Depth [{idx}]')
+            elif col == 1:
+                ax.imshow(depths_next[idx], cmap='viridis')
+                ax.set_title(f'Depth Next [{idx}]')
+            else:
+                ax.imshow(terrains[idx], cmap='terrain')
+                ax.set_title(f'Terrain [{idx}]')
+    
+            ax.axis('off')
+    
+        plt.tight_layout()
+    
+        # Save single image for this simulation (plan)
+        save_path = os.path.join(output_dir, 'patches_summary.png')
+        plt.savefig(save_path, dpi=200)
+        plt.close(fig)
+
+           
     def generate_patches(self):
         """
         Runs the full preprocessing pipeline:
@@ -477,7 +528,7 @@ class PatchExtractorProcessor:
         - Computes grid size and trims water depth matrices
         - Extracts standard and dual terrain/depth patches
         - Applies flipping and rotation augmentations
-        - Filters out dry (irrelevant) patches
+        - Filters out dry (irrelevant) and unstable patches, postprocesses terrain
         """
         self.populate_from_HDF()
         self.find_num_rows_cols_in_HECRAS()
@@ -488,3 +539,4 @@ class PatchExtractorProcessor:
         self.populate_from_all_k_indices()
         self.delete_dry_patches()
         self.postprocess_patches()
+        self.plot_final_patches()
