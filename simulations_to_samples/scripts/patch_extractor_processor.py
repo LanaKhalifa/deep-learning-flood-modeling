@@ -499,7 +499,7 @@ class PatchExtractorProcessor:
         and their differences for the current plan, then saves the figure in the raw_data/images/ directory.
         """
         # Prepare the figure: 4 rows, 3 columns (for terrain, depth, depth_next, and difference maps)
-        fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(20, 40))
+        fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(40, 20))
         # Plot Terrain (first row, first column)
         axs[0, 0].imshow(self.tiff_data, cmap='terrain')
         axs[0, 0].set_title('Original Terrain')
