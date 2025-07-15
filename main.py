@@ -3,6 +3,8 @@ from simulations_to_samples.scripts.generate_patches import process_project
 from simulations_to_samples.scripts.generate_datasets import create_and_save_datasets
 from simulations_to_samples.scripts.generate_dataloaders import create_and_save_dataloaders
 
+print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 1: FROM SIMULATIONS TO SAMPLES 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
+
 print("=" * 60)
 print("🔷 Starting Flood Patch Generation... 🔷")
 print("=" * 60)
@@ -16,15 +18,23 @@ for prj_num, (prj_name, plans) in prjs_metadata.items():
 print("=" * 60)
 print("🔷 Starting Datasets Generation... 🔷")
 print("=" * 60)
+
 """
 # Step 2: Create and save datasets
 create_and_save_datasets()
 """
+
 print("=" * 60)
 print("🔷 Starting Dataloaders Generation... 🔷")
 print("=" * 60)
+
+"""
 # Step 3: Create and save datasets
 create_and_save_dataloaders()
+"""
+
+print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 2: TRAIN DEEP LEARNING MODELS 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
+
 
 
 
