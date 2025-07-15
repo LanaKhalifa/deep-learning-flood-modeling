@@ -19,8 +19,18 @@ def zero_internal(matrix):
 
 
 def create_loader(prefix, shuffle=True, split_train_val=False):
-    # Load full dataset dictionary
-    with open(os.path.join(DATASETS_ROOT, f'{prefix}.pkl'), 'rb') as f:
+    # Determine subdirectory based on prefix
+    if prefix.startswith('big_'):
+        subdir = 'big_dataset'
+    elif prefix.startswith('small_'):
+        subdir = 'small_dataset'
+    elif prefix.startswith('prj_03'):
+        subdir = 'prj_03_dataset'
+    else:
+        raise ValueError(f"Unknown dataset prefix: {prefix}")
+    
+    # Load dataset
+    with open(os.path.join(DATASETS_ROOT, subdir, f'{prefix}.pkl'), 'rb') as f:
         dataset_dict = pickle.load(f)
 
     depths_numpy = np.array(dataset_dict['depth'])
