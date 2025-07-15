@@ -502,7 +502,7 @@ class PatchExtractorProcessor:
         fig, axs = plt.subplots(nrows=4, ncols=3, figsize=(15, 20))
         print('here 1')
         # Plot Terrain (first row, first column)
-        axs[0, 0].imshow(self.tiff_data, cmap='terrain', vmin=vmin, vmax=vmax)
+        axs[0, 0].imshow(self.tiff_data, cmap='terrain')
         axs[0, 0].set_title('Original Terrain')
         axs[0, 0].axis('off')
         cbar = plt.colorbar(axs[0, 0].imshow(self.tiff_data, cmap='terrain'), ax=axs[0, 0])
