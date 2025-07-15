@@ -1,18 +1,18 @@
 # 🌊 Deep Learning Flood Modeling
 
-This repository contains a complete pipeline to emulate the output of hydrodynamic flood simulations using deep learning. The pipeline consists of three main parts:
+This repository presents a complete and modular pipeline for emulating hydrodynamic flood simulations using deep learning. It transforms traditional HEC-RAS model outputs into a format suitable for modern deep learning workflows, enabling rapid and scalable flood prediction.
 
-1. **From Simulations to Data**: Extracting structured patch datasets from HEC-RAS outputs.
-2. **Training and Validation**: Training deep learning models to predict flood behavior over patches.
-3. **Closure Model Application**: Pick a trained models to simulate flood prediction over full domains.
+The pipeline consists of three stages:
+
+1. **From Simulations to Data** – Convert HEC-RAS outputs into structured, augmented patch datasets.
+2. **Training and Validation** – Train deep learning models to learn flood dynamics at the patch level.
+3. **Closure Model Application** – Build a closure model that translates patch-level predictions into full-domain flood simulations.
 
 ---
-
 #### Terminology
 
 - **Simulation** = a **HEC-RAS plan**. These terms are used interchangeably. "Simulation" is more intuitive; "plan" is the term used in HEC-RAS.
 - Each **project** (prj_03, prj_04, etc.) contains dozens of simulations, each associated with one terrain.
-
 ---
 
 
