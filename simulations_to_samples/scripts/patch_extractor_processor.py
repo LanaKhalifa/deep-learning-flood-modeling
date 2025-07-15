@@ -510,7 +510,7 @@ class PatchExtractorProcessor:
         print('here 2')
         # Plot Depth (Depth 0–3 in columns 1–4, row 2)
         for i in range(4):
-            print(self.k_depth_matrices.size())
+            print(self.k_depth_matrices.shape)
             axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues')
             axs[1, i].set_title(f'Depth {i}')
             axs[1, i].axis('off')
