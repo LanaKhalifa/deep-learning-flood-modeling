@@ -1,3 +1,63 @@
+# 🌊 Deep Learning Flood Modeling
+
+This repository contains a complete pipeline to emulate the output of hydrodynamic flood simulations using deep learning. The pipeline consists of three main parts:
+
+1. **From Simulations to Data**: Extracting structured patch datasets from HEC-RAS outputs.
+2. **Training and Validation**: Training deep learning models to predict flood behavior over patches.
+3. **Closure Model Application**: Pick a trained models to simulate flood prediction over full domains.
+
+---
+
+
+
+---
+
+## 🧭 Terminology
+
+- **Simulation** = a **HEC-RAS plan**. These terms are used interchangeably. "Simulation" is more intuitive; "plan" is the term used in HEC-RAS.
+- Each **project** (prj_03, prj_04, etc.) contains dozens of simulations, each associated with one terrain.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+📊 Project Workflow Overview
+From Simulations to Data
+Extract terrain, depth, and future depth patches from HEC-RAS simulations and generate structured datasets and dataloaders.
+Training and Validation
+Train various deep learning architectures to predict water depth evolution using the generated patch datasets.
+
+📘 README Structure
+
+🌊 1. From Simulations to Data
+What is a "plan" vs. a simulation
+Extracting patches with PatchExtractorProcessor
+Dataset design: big_, small_, prj_03_
+Creating PyTorch DataLoaders
+Directories and file formats
+🧠 2. Training and Validation
+Supported architectures: UNet, ResNet, Attention, GAN, etc.
+Input/Output formulation: BC + depth → Δdepth
+Loss functions used (e.g., L1, smooth L1)
+Training pipeline overview (early stopping, LR scheduling)
+Validation strategy and monitoring
+Tips for architecture debugging
+
+
+
+
+
+
 ## 📦 How to Run
 
 Clone the repository and create the environment:
@@ -120,7 +180,6 @@ The project is composed of 3 main parts:
 
 Preprocessing: Convert raw HEC-RAS simulation results (HDF5 and terrain files) into datasets of patches.
 Training: Train deep learning models on the generated patches.
-Closure: Use the trained models to simulate flood progression over full domains.
 The from_HDF script is the first step in the preprocessing pipeline.
 
 Data Availability
