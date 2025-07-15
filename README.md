@@ -1,14 +1,30 @@
 # 🌊 Deep Learning Flood Modeling
 
-This repository presents a complete and modular pipeline for emulating hydrodynamic flood simulations using deep learning. It transforms traditional HEC-RAS model outputs into a format suitable for modern deep learning workflows, enabling rapid and scalable flood prediction.
+This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning. It transforms HEC-RAS (hydrodynamic simulation software) outputs into patch-based datasets, trains models to learn flood dynamics, and builds a closure model to scale patch predictions to full-domain simulations.
 
-The pipeline consists of three stages:
+The pipeline is organized into three stages:
 
-1. **From Simulations to Data** – Convert HEC-RAS outputs into structured, augmented patch datasets.
-2. **Training and Validation** – Train deep learning models to learn flood dynamics at the patch level.
-3. **Closure Model Application** – Build a closure model that translates patch-level predictions into full-domain flood simulations.
+1. **From Simulations to Data**  
+   Converts HEC-RAS simulation outputs into structured and augmented datasets of terrain and water patches.
+   - **Directory**: `simulations_to_samples/`  
+     Includes patch extraction, dataset creation, and dataloader generation scripts.
 
----
+2. **Training and Validation**  
+   Trains deep learning models to predict water depth evolution on 2D spatial patches.
+   - **Directory**: `multi_architecture_training/`  
+     Contains model architectures, training scripts, and evaluation logic.
+
+3. **Closure Model**  
+   Builds a closure model that assembles patch-level predictions into coherent full-domain flood forecasts.
+   - **Directory**: `full_domain_closure_best_model/`  
+     Includes utilities to map patch predictions back to the simulation domain grid.
+
+Additional key files:
+- `main.py` – Runs the full preprocessing pipeline.
+- `config.py` – Central configuration for paths, patch size, and simulation metadata.
+- `environment.yml` – Conda environment setup.
+- `utils/` – Shared utility functions.
+
 #### Terminology
 
 - **Simulation** = a **HEC-RAS plan**. These terms are used interchangeably. "Simulation" is more intuitive; "plan" is the term used in HEC-RAS.
