@@ -452,7 +452,7 @@ class PatchExtractorProcessor:
         terrains = self.database['terrain']
     
         n_total = len(depths)
-        n_samples = 10  # don't exceed available samples
+        n_samples = min(len(depths),10)  # don't exceed available samples
         idxs = random.sample(range(n_total), n_samples)
     
         # Create output directory
