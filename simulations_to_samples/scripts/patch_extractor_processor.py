@@ -453,7 +453,7 @@ class PatchExtractorProcessor:
         terrains = self.database['terrain']
     
         n_total = len(depths)
-        n_samples = min(30, n_total)  # don't exceed available samples
+        n_samples = 10  # don't exceed available samples
         idxs = random.sample(range(n_total), n_samples)
     
         # Create output directory
@@ -466,21 +466,19 @@ class PatchExtractorProcessor:
     
         # Create figure: 10 rows x 3 columns
         fig, axs = plt.subplots(nrows=10, ncols=3, figsize=(12, 30))
-        for i, idx in enumerate(idxs):
-            row = i // 3
-            col = i % 3
-            ax = axs[row, col]
-    
-            if col == 0:
-                ax.imshow(depths[idx], cmap='viridis')
-                ax.set_title(f'Depth [{idx}]')
-            elif col == 1:
-                ax.imshow(depths_next[idx], cmap='viridis')
-                ax.set_title(f'Depth Next [{idx}]')
-            else:
-                ax.imshow(terrains[idx], cmap='terrain')
-                ax.set_title(f'Terrain [{idx}]')
-    
+        for i, idx in enumerate(idxs): 
+            ax = axs[i, 0]
+            ax.imshow(depths[idx], cmap='viridis')
+            ax.set_title(f'Depth [{idx}]')
+            
+            ax = axs[i, 1]
+            ax.imshow(depths_next[idx], cmap='viridis')
+            ax.set_title(f'Depth Next [{idx}]')
+
+            ax = axs[i, 2]
+            ax.imshow(terrains[idx], cmap='terrain')
+            ax.set_title(f'Terrain [{idx}]')
+
             ax.axis('off')
     
         plt.tight_layout()
