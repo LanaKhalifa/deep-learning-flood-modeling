@@ -1,4 +1,6 @@
-<img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/002b08f7-d514-47bc-b90a-05ad6d6ea83b" /># 🌊 Deep Learning Flood Modeling
+<img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/dfdbd8d9-d1d6-49cd-b1e6-683e19b28708" />
+
+# 🌊 Deep Learning Flood Modeling
 
 This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning.
 The pipeline is organized into three stages:
