@@ -461,10 +461,7 @@ class PatchExtractorProcessor:
             'simulations_to_samples',
             'processed_data',
             'patches_per_simulation',
-            'images',
-            f'prj_{self.prj_num}',
-            f'plan_{self.plan_num}'
-        )
+            'images')
         os.makedirs(output_dir, exist_ok=True)
     
         # Create figure: 10 rows x 3 columns
@@ -489,7 +486,7 @@ class PatchExtractorProcessor:
         plt.tight_layout()
     
         # Save single image for this simulation (plan)
-        save_path = os.path.join(output_dir, 'patches_summary.png')
+        save_path = os.path.join(output_dir, f'prj_{self.prj_num}_plan_{self.plan_num}_random_patches.png')
         plt.savefig(save_path, dpi=200)
         plt.close(fig)
         
