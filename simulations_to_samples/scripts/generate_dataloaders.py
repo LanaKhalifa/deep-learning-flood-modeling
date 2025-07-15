@@ -1,3 +1,5 @@
+# simulations_to_samples/scripts/generate_dataloaders.py
+
 import os
 import pickle
 import torch
@@ -72,23 +74,23 @@ def create_loader(prefix, shuffle=True, split_train_val=False):
         return len(full_loader), None
 
 
-# List of datasets to process
-loader_configs = [
-    ('big_train_val', True),
-    ('big_test', False),
-    ('small_train_val', True),
-    ('prj_03_train_val', False),
-    ('prj_03_test', False)
-]
+def create_and_save_dataloaders():
+    """Run full DataLoader generation pipeline."""
+    loader_configs = [
+        ('big_train_val', True),
+        ('big_test', False),
+        ('small_train_val', True),
+        ('prj_03_train_val', False),
+        ('prj_03_test', False)
+    ]
 
-# Run loader creation
-results = {}
-for prefix, split in loader_configs:
-    results[prefix] = create_loader(prefix, split_train_val=split)
+    results = {}
+    for prefix, split in loader_configs:
+        results[prefix] = create_loader(prefix, split_train_val=split)
 
-print("✅ Done. DataLoader sizes:")
-for name, (train_size, val_size) in results.items():
-    if val_size is not None:
-        print(f"{name}: train={train_size}, val={val_size}")
-    else:
-        print(f"{name}: total={train_size}")
+    print("✅ Done. DataLoader sizes:")
+    for name, (train_size, val_size) in results.items():
+        if val_size is not None:
+            print(f"{name}: train={train_size}, val={val_size}")
+        else:
+            print(f"{name}: total={train_size}")
