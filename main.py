@@ -1,6 +1,7 @@
 from config import prjs_metadata
 from simulations_to_samples.scripts.generate_patches import process_project
 from simulations_to_samples.scripts.generate_datasets import create_and_save_datasets
+from simulations_to_samples.scripts.generate_dataloader import create_and_save_dataloaders
 
 print("=" * 60)
 print("🔷 Starting Flood Patch Generation... 🔷")
