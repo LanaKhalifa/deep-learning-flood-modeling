@@ -12,7 +12,7 @@ This repository contains a complete pipeline to emulate the output of hydrodynam
 
 ---
 
-## 🧭 Terminology
+### Terminology
 
 - **Simulation** = a **HEC-RAS plan**. These terms are used interchangeably. "Simulation" is more intuitive; "plan" is the term used in HEC-RAS.
 - Each **project** (prj_03, prj_04, etc.) contains dozens of simulations, each associated with one terrain.
