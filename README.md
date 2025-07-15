@@ -1,11 +1,10 @@
-# 🌊 Deep Learning Flood Modeling
+<img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/002b08f7-d514-47bc-b90a-05ad6d6ea83b" /># 🌊 Deep Learning Flood Modeling
 
-This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning. It transforms HEC-RAS (hydrodynamic simulation software) outputs into patch-based datasets, trains models to learn flood dynamics, and builds a closure model to scale patch predictions to full-domain simulations.
-
+This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning.
 The pipeline is organized into three stages:
 
 1. **From Simulations to Data**  
-   Converts HEC-RAS simulation outputs into structured and augmented datasets of terrain and water patches.
+   Transforms HEC-RAS (hydrodynamic simulation software) outputs into patch-based datasets of augmented terrain and water depth patches.
    - **Directory**: `simulations_to_samples/`  
      Includes patch extraction, dataset creation, and dataloader generation scripts.
    - **Before running**:  
@@ -14,14 +13,76 @@ The pipeline is organized into three stages:
      This is necessary due to GitHub's file size limitations. With this structure in place, you can run the full pipeline using `main.py`.
 
 2. **Training and Validation**  
-   Trains deep learning models to predict water depth evolution on 2D spatial patches.
+   Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
    - **Directory**: `multi_architecture_training/`  
      Contains model architectures, training scripts, and evaluation logic.
 
 3. **Closure Model**  
-   Builds a closure model that assembles patch-level predictions into coherent full-domain flood forecasts.
+   scale patch predictions to coherent full-domain predictions. 
    - **Directory**: `full_domain_closure_best_model/`  
      Includes utilities to map patch predictions back to the simulation domain grid.
+
+
+## From Simulations to Data
+ℹNote: “Plan” and “Simulation” are used interchangeably throughout this repository.
+
+This stage prepares deep learning-ready datasets from HEC-RAS simulation outputs (.hdf and terrain .tif files). The process includes:
+
+1. Extracting Patches
+Each HEC-RAS simulation (referred to as a plan in HEC-RAS terminology) is spatially split into multiple smaller patches:
+
+Terrain patch: 321×321
+Water depth patch at time t: 32×32
+Water depth patch at time t+Δt: 32×32 
+
+Here is an example for splitting 
+
+<img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/644d3fd9-7f8f-4668-8025-1e1843113b07" />
+
+2. Creating Datasets
+Patches are grouped into larger datasets for training and testing. We define three types of datasets:
+
+📦 big_* datasets
+
+Combine patches from all projects (03, 04, 05, 06)
+Exclude the last 7 simulations (plans) from each project, which are reserved for testing
+Used to maximize training diversity
+📦 prj_03_* datasets
+
+Include only patches from Project 03 (hand-curated simulations)
+Used to test model generalization on high-quality, minimally automated data
+📦 small_* dataset
+
+Contains only the first two simulations of each project
+Designed for debugging, parameter tuning, and quick iteration
+All datasets are stored as .pkl files under:
+
+simulations_to_samples/processed_data/datasets/
+3. Generating Dataloaders
+Each dataset is transformed into a PyTorch DataLoader, providing inputs and labels formatted for model training:
+
+Input (2 channels):
+Channel 1: water depth at t+Δt with zeroed interior and preserved boundary
+Channel 2: water depth at t
+Auxiliary input: terrain patch
+Label: water depth difference → depth_next - depth
+The dataloaders are optionally split into training and validation and stored under:
+
+simulations_to_samples/processed_data/dataloaders/
+▶️ Run Full Pipeline
+To generate all patches, datasets, and dataloaders:
+
+python main.py
+This will:
+
+Extract patches from all simulations
+Create dataset groupings
+Build and save dataloaders
+✅ Make sure to place your raw data folder hecras_simulations_results/ inside:
+simulations_to_samples/raw_data/hecras_simulations_results/
+(This is required due to GitHub’s file size limitations.)
+Let me know when you're ready to proceed to the Training and Validation section.
+
 
 Additional key files:
 - `main.py` – Runs the full preprocessing pipeline.
