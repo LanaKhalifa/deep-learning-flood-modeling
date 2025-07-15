@@ -499,7 +499,7 @@ class PatchExtractorProcessor:
         and their differences for the current plan, then saves the figure in the raw_data/images/ directory.
         """
         # Prepare the figure: 4 rows, 3 columns (for terrain, depth, depth_next, and difference maps)
-        fig, axs = plt.subplots(nrows=4, ncols=3, figsize=(15, 20))
+        fig, axs = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
         print('here 1')
         # Plot Terrain (first row, first column)
         axs[0, 0].imshow(self.tiff_data, cmap='terrain')
@@ -510,6 +510,7 @@ class PatchExtractorProcessor:
         print('here 2')
         # Plot Depth (Depth 0–3 in columns 1–4, row 2)
         for i in range(4):
+            print(self.k_depth_matrices.shape())
             axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues')
             axs[1, i].set_title(f'Depth {i}')
             axs[1, i].axis('off')
