@@ -1,12 +1,8 @@
 from config import prjs_metadata
+from simulations_to_samples.scripts.generate_patches import process_project
 
-from simulations_to_samples.scripts.generate_databases import (process_project,
-                                                             concatenate_all_train_val_chunks,
-                                                             concatenate_all_test_chunks,
-                                                             concatenate_prj03_train_val_test_chunks,
-                                                            generate_small_train_val_subset)
 print("=" * 60)
-print("🔷 Starting Full Flood Patch Generation Pipeline... 🔷")
+print("🔷 Starting Flood Patch Generation Pipeline... 🔷")
 print("=" * 60)
 
 # Step 1: Process each project
