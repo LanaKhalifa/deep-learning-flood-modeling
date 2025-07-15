@@ -550,7 +550,6 @@ class PatchExtractorProcessor:
         """
         self.populate_from_HDF()
         self.find_num_rows_cols_in_HECRAS()
-        self.plot_depth_maps()
         self.load_tiff_data()
         self.calculate_num_patches()
         self.tiff_patches()
