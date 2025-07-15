@@ -141,17 +141,18 @@ def create_and_save_dataloaders():
     # Run loader creation and plot
     results = {}
     for prefix, split in loader_configs:
+        print(f"Now Building {prefix}...")
         results[prefix] = create_loader(prefix, split_train_val=split)
     
         # Optional: visualize and save 10 samples
         try:
             if split:
                 train_loader = torch.load(os.path.join(DATALOADERS_ROOT, f'{prefix}_train_loader.pt'))
-                print(f"🔍 Visualizing samples from {prefix}_train_loader...")
+                print(f"Visualizing samples from {prefix}_train_loader...")
                 plot_samples(train_loader, prefix=prefix)
             else:
                 loader = torch.load(os.path.join(DATALOADERS_ROOT, f'{prefix}_loader.pt'))
-                print(f"🔍 Visualizing samples from {prefix}_loader...")
+                print(f"Visualizing samples from {prefix}_loader...")
                 plot_samples(loader, prefix=prefix)
         except Exception as e:
             print(f"⚠️ Could not visualize samples for {prefix}: {e}")
