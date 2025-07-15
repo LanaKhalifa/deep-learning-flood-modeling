@@ -512,17 +512,23 @@ class PatchExtractorProcessor:
             axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues')
             axs[1, i].set_title(f'Depth {i}')
             axs[1, i].axis('off')
+            cbar = plt.colorbar(axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues'), ax=axs[1, i])
+            cbar.set_label('Meters')
         # Plot Depth Next (Depth Next 0–3 in columns 1–4, row 3)
         for i in range(4):
             axs[2, i].imshow(self.k_depth_matrices_next[i], cmap='Blues')
             axs[2, i].set_title(f'Depth Next {i}')
             axs[2, i].axis('off')
+            cbar = plt.colorbar(axs[2, i].imshow(self.k_depth_matrices_next[i], cmap='Blues'), ax=axs[2, i])
+            cbar.set_label('Meters')
         # Plot Difference (Depth Next - Depth) in row 4
         for i in range(4):
             diff = self.k_depth_matrices_next[i] - self.k_depth_matrices[i]
             axs[3, i].imshow(diff, cmap='coolwarm')
             axs[3, i].set_title(f'Diff {i}')
             axs[3, i].axis('off')
+            cbar = plt.colorbar(axs[3, i].imshow(diff, cmap='coolwarm'), ax=axs[3, i])
+            cbar.set_label('Meters')
         # Remove unnecessary axis for row 4 (empty column 0)
         axs[0, 1].axis('off')
         axs[0, 2].axis('off')
