@@ -31,7 +31,7 @@ def build_dataset(prj_plan_list):
     dataset = {'terrain': [], 'depth': [], 'depth_next': []}
     
     for prj_num, plan_num in prj_plan_list:
-        terrain, depth, depth_next = load_plan_patches(prj_num, plan_num, PATCHES_ROOT)
+        terrain, depth, depth_next = load_plan_patches(prj_num, plan_num)
         dataset['terrain'].extend(terrain)
         dataset['depth'].extend(depth)
         dataset['depth_next'].extend(depth_next)
