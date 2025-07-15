@@ -8,6 +8,10 @@ The pipeline is organized into three stages:
    Converts HEC-RAS simulation outputs into structured and augmented datasets of terrain and water patches.
    - **Directory**: `simulations_to_samples/`  
      Includes patch extraction, dataset creation, and dataloader generation scripts.
+   - **Before running**:  
+     Move the large folder `hecras_simulations_results/` (shared via OneDrive) into:  
+     `simulations_to_samples/raw_data/hecras_simulations_results/`  
+     This is necessary due to GitHub's file size limitations. With this structure in place, you can run the full pipeline using `main.py`.
 
 2. **Training and Validation**  
    Trains deep learning models to predict water depth evolution on 2D spatial patches.
@@ -24,16 +28,6 @@ Additional key files:
 - `config.py` – Central configuration for paths, patch size, and simulation metadata.
 - `environment.yml` – Conda environment setup.
 - `utils/` – Shared utility functions.
-
-#### Terminology
-
-- **Simulation** = a **HEC-RAS plan**. These terms are used interchangeably. "Simulation" is more intuitive; "plan" is the term used in HEC-RAS.
-- Each **project** (prj_03, prj_04, etc.) contains dozens of simulations, each associated with one terrain.
----
-
-
-
-
 
 
 
