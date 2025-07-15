@@ -1,0 +1,70 @@
+import os
+import pickle
+from config import prjs_metadata, PATCHES_ROOT, DATASETS_ROOT
+
+# Output dataset directories
+SMALL_DIR = os.path.join(DATASETS_ROOT, 'small_dataset')
+BIG_DIR = os.path.join(DATASETS_ROOT, 'big_dataset')
+PRJ_03_DIR = os.path.join(DATASETS_ROOT, 'prj_03_dataset')
+
+# Ensure output directories exist
+for path in [SMALL_DIR, BIG_DIR, PRJ_03_DIR]:
+    os.makedirs(path, exist_ok=True)
+
+
+def load_plan_patches(prj_num, plan_num):
+    terrain_path = os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_terrain_patches.pkl')
+    depth_path = os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_depth_patches.pkl')
+    depth_next_path = os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_depth_next_patches.pkl')
+
+    with open(terrain_path, 'rb') as f:
+        terrain = pickle.load(f)
+    with open(depth_path, 'rb') as f:
+        depth = pickle.load(f)
+    with open(depth_next_path, 'rb') as f:
+        depth_next = pickle.load(f)
+
+    return terrain, depth, depth_next
+
+
+def build_dataset(prj_plan_list):
+    dataset = {'terrain': [], 'depth': [], 'depth_next': []}
+    
+    for prj_num, plan_num in prj_plan_list:
+        terrain, depth, depth_next = load_plan_patches(prj_num, plan_num, PATCHES_ROOT)
+        dataset['terrain'].extend(terrain)
+        dataset['depth'].extend(depth)
+        dataset['depth_next'].extend(depth_next)
+    
+    return dataset
+
+
+def save_dataset(dataset, directory, name):
+    path = os.path.join(directory, f'{name}.pkl')
+    with open(path, 'wb') as f:
+        pickle.dump(dataset, f)
+    print(f"✅ Saved: {path}")
+
+
+def create_and_save_datasets():
+    # Prepare dataset lists
+    big_train_val_list = []
+    big_test_list = []
+    small_train_val_list = []
+
+    for prj_num, (_, plan_list) in prjs_metadata.items():
+        big_train_val_list += [(prj_num, p) for p in plan_list[:-7]]
+        big_test_list += [(prj_num, p) for p in plan_list[-7:]]
+        small_train_val_list += [(prj_num, p) for p in plan_list[:2]]
+
+    # --- BIG DATASET ---
+    save_dataset(build_dataset(big_train_val_list, PATCHES_ROOT), BIG_DIR, 'big_train_val')
+    save_dataset(build_dataset(big_test_list, PATCHES_ROOT), BIG_DIR, 'big_test')
+
+    # --- PRJ_03 ONLY ---
+    prj_03_plans = prjs_metadata['03'][1]
+    save_dataset(build_dataset([('03', p) for p in prj_03_plans[:-7]], PATCHES_ROOT), PRJ_03_DIR, 'prj_03_train_val')
+    save_dataset(build_dataset([('03', p) for p in prj_03_plans[-7:]], PATCHES_ROOT), PRJ_03_DIR, 'prj_03_test')
+
+    # --- SMALL DATASET ---
+    save_dataset(build_dataset(small_train_val_list, PATCHES_ROOT), SMALL_DIR, 'small_train_val')
