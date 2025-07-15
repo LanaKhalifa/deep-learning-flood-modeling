@@ -3,32 +3,34 @@ import pickle
 import torch
 import numpy as np
 from torch.utils.data import TensorDataset, DataLoader
-import copy
+from config import DATASETS_ROOT, DATALOADERS_ROOT, PATCH_SIZE, BOUNDARY_THICKNESS, BATCH_SIZE
 
-def zero_internal(matrix, boundary_thickness):
+
+def zero_internal(matrix):
     """Zero out the internal region of a 2D matrix, keeping a boundary."""
     result = np.zeros_like(matrix)
-    result[:boundary_thickness, :] = matrix[:boundary_thickness, :]
-    result[-boundary_thickness:, :] = matrix[-boundary_thickness:, :]
-    result[:, :boundary_thickness] = matrix[:, :boundary_thickness]
-    result[:, -boundary_thickness:] = matrix[:, -boundary_thickness:]
+    result[:BOUNDARY_THICKNESS, :] = matrix[:BOUNDARY_THICKNESS, :]
+    result[-BOUNDARY_THICKNESS:, :] = matrix[-BOUNDARY_THICKNESS:, :]
+    result[:, :BOUNDARY_THICKNESS] = matrix[:, :BOUNDARY_THICKNESS]
+    result[:, -BOUNDARY_THICKNESS:] = matrix[:, -BOUNDARY_THICKNESS:]
     return result
 
-def create_loader(prefix, base_dir, save_dir, boundary_thickness=2, batch_size=300, num_cells_in_patch=32, shuffle=True, split_train_val=False):
-    # Load the data
-    with open(os.path.join(base_dir, f'{prefix}_depths.pkl'), 'rb') as f:
-        depths_numpy = np.array(pickle.load(f))
-    with open(os.path.join(base_dir, f'{prefix}_depths_next.pkl'), 'rb') as f:
-        depths_next_numpy = np.array(pickle.load(f))
-    with open(os.path.join(base_dir, f'{prefix}_terrains.pkl'), 'rb') as f:
-        terrains_numpy = np.array(pickle.load(f))
 
-    # Prepare tensors
+def create_loader(prefix, shuffle=True, split_train_val=False):
+    # Load full dataset dictionary
+    with open(os.path.join(DATASETS_ROOT, f'{prefix}.pkl'), 'rb') as f:
+        dataset_dict = pickle.load(f)
+
+    depths_numpy = np.array(dataset_dict['depth'])
+    depths_next_numpy = np.array(dataset_dict['depth_next'])
+    terrains_numpy = np.array(dataset_dict['terrain'])
+
     N = terrains_numpy.shape[0]
     terrains_tensor = torch.tensor(np.expand_dims(terrains_numpy, axis=1)).float()
-    dataset_numpy = np.zeros((N, 2, num_cells_in_patch, num_cells_in_patch), dtype=np.float32)
+    dataset_numpy = np.zeros((N, 2, PATCH_SIZE, PATCH_SIZE), dtype=np.float32)
 
-    depths_BC_numpy = np.stack([zero_internal(matrix, boundary_thickness) for matrix in depths_next_numpy], axis=0)
+    # Zero out internal region of depth_next for BCs
+    depths_BC_numpy = np.stack([zero_internal(matrix) for matrix in depths_next_numpy], axis=0)
     for i in range(N):
         dataset_numpy[i] = np.stack((depths_BC_numpy[i], depths_numpy[i]))
 
@@ -42,32 +44,33 @@ def create_loader(prefix, base_dir, save_dir, boundary_thickness=2, batch_size=3
     labels_tensor = labels_tensor[indices]
     terrains_tensor = terrains_tensor[indices]
 
-    # Split or full loader
+    # Ensure output dir exists
+    os.makedirs(DATALOADERS_ROOT, exist_ok=True)
+
+    # Split or return full loader
     if split_train_val:
         train_size = int(N * 0.7)
-        train_dataset = TensorDataset(terrains_tensor[:train_size], dataset_tensor[:train_size], labels_tensor[:train_size])
-        val_dataset = TensorDataset(terrains_tensor[train_size:], dataset_tensor[train_size:], labels_tensor[train_size:])
+        train_dataset = TensorDataset(terrains_tensor[:train_size],
+                                      dataset_tensor[:train_size],
+                                      labels_tensor[:train_size])
+        val_dataset = TensorDataset(terrains_tensor[train_size:],
+                                    dataset_tensor[train_size:],
+                                    labels_tensor[train_size:])
 
-        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=shuffle)
-        val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+        train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
+        val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
-        torch.save(train_loader, os.path.join(save_dir, f'{prefix}_train_loader.pt'))
-        torch.save(val_loader, os.path.join(save_dir, f'{prefix}_val_loader.pt'))
+        torch.save(train_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_train_loader.pt'))
+        torch.save(val_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_val_loader.pt'))
 
         return len(train_loader), len(val_loader)
     else:
         full_dataset = TensorDataset(terrains_tensor, dataset_tensor, labels_tensor)
-        full_loader = DataLoader(full_dataset, batch_size=batch_size, shuffle=False)
+        full_loader = DataLoader(full_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
 
-        torch.save(full_loader, os.path.join(save_dir, f'{prefix}_loader.pt'))
+        torch.save(full_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_loader.pt'))
         return len(full_loader), None
 
-# Paths (relative to project root)
-base_dir = './Database/'
-save_dir = './Dataloaders/'
-
-# Create save directory if it doesn't exist
-os.makedirs(save_dir, exist_ok=True)
 
 # List of datasets to process
 loader_configs = [
@@ -81,6 +84,11 @@ loader_configs = [
 # Run loader creation
 results = {}
 for prefix, split in loader_configs:
-    results[prefix] = create_loader(prefix, base_dir, save_dir, split_train_val=split)
+    results[prefix] = create_loader(prefix, split_train_val=split)
 
-print("Done. DataLoader sizes:", results)
+print("✅ Done. DataLoader sizes:")
+for name, (train_size, val_size) in results.items():
+    if val_size is not None:
+        print(f"{name}: train={train_size}, val={val_size}")
+    else:
+        print(f"{name}: total={train_size}")
