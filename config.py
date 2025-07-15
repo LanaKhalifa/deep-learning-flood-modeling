@@ -4,8 +4,8 @@
 PATCH_SIZE = 32
 TERRAIN_PATCH_SIZE = 321
 PATCHES_ROOT = './simulations_to_samples/processed_data/patches_per_simulation/'
-DATABASES_ROOT - './simulations_to_samples/processed_data/databases/'
-DATALOADERS_ROOT - './simulations_to_samples/processed_data/dataloaders/'
+DATABASES_ROOT = './simulations_to_samples/processed_data/databases/'
+DATALOADERS_ROOT = './simulations_to_samples/processed_data/dataloaders/'
 
 # Project simulation sublists
 prj_03_plans = ['04', '05', '06', '07', '08', '09']# '10','13', '14', '15', '16', '17', '18', '19','20', '21', '22', '23', '24', '25', '26',
@@ -26,7 +26,7 @@ prj_06_plans = ['01', '02', '03', '04', '05', '06']#, '07', '08', '09', '10', '1
                 #'48', '49', '50']
 
 # Unified dictionary of project metadata
-prjs_metadata = {'03': ('hecras_on_03', prj_03_sublists),
-                 '04': ('HECRAS', prj_04_sublists),
-                 '05': ('HECRAS', prj_05_sublists),
-                 '06': ('HECRAS', prj_06_sublists)}
+prjs_metadata = {'03': ('hecras_on_03', prj_03_plans),
+                 '04': ('HECRAS', prj_04_plans),
+                 '05': ('HECRAS', prj_05_plans),
+                 '06': ('HECRAS', prj_06_plans)}
