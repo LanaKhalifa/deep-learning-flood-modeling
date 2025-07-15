@@ -182,25 +182,6 @@ class PatchExtractorProcessor:
             self.num_cols -= 200
             self.num_cells = self.num_rows * self.num_cols
 
-    def plot_depth_maps(self):
-        """
-        Plots the water depth maps for each time snapshot in self.k_depth_matrices.
-        Only runs if self.plot is True.
-        """
-        if not self.plot:
-            return  # Skip plotting unless explicitly enabled
-
-        plt.figure(figsize=(6, 6))
-
-        for i in range(self.k):
-            plt.clf()
-            plt.imshow(self.k_depth_matrices[i], cmap='Blues', vmin=0, vmax=3)
-            plt.colorbar(label='Water Depth [m]')
-            plt.title(f'Project {self.prj_num} | Plan {self.plan_num} | Snapshot {i}')
-            plt.pause(1)
-
-        plt.show()
-
     def load_tiff_data(self):
         """
         Loads the terrain TIFF file into self.tiff_data.
@@ -220,13 +201,6 @@ class PatchExtractorProcessor:
             # This ensures alignment with the trimmed water depth grid, as terrain patches
             # will later be extracted according to the water depth cells.
             self.tiff_data = self.tiff_data[1000:, 1000:]
-
-        # Optional plot
-        if self.plot:
-            plt.imshow(self.tiff_data, cmap='terrain')
-            plt.colorbar()
-            plt.title(f'Terrain of prj_{self.prj_num} - plan_{self.plan_num}')
-            plt.show()
             
     def calculate_num_patches(self):
         """
@@ -247,7 +221,7 @@ class PatchExtractorProcessor:
         self.num_patches_row_dual = (self.num_rows - offset - 1) // self.cells_in_patch
         self.num_patches_col_dual = (self.num_cols - offset - 1) // self.cells_in_patch
         self.num_patches_dual = self.num_patches_row_dual * self.num_patches_col_dual
-
+    
     def tiff_patches(self):
         """
         Extracts terrain patches (standard and dual) from the TIFF terrain data.
@@ -519,6 +493,50 @@ class PatchExtractorProcessor:
         save_path = os.path.join(output_dir, 'patches_summary.png')
         plt.savefig(save_path, dpi=200)
         plt.close(fig)
+        
+    def plot_and_save_maps(self):
+        """
+        Plots the original terrain TIFF and the 4 depth and 4 depth_next maps for the current plan,
+        then saves the figure in the raw_data directory.
+        """
+        # Prepare the figure: 3 rows, 5 columns (for terrain, depth, and depth_next maps)
+        fig, axs = plt.subplots(nrows=3, ncols=5, figsize=(15, 10))
+    
+        # Plot Terrain (first column)
+        axs[0, 0].imshow(self.tiff_data, cmap='terrain')
+        axs[0, 0].set_title('Original Terrain')
+        axs[0, 0].axis('off')
+    
+        # Plot Depth (Depth 0–3 in columns 1–4)
+        for i in range(4):
+            axs[0, i+1].imshow(self.k_depth_matrices[i], cmap='Blues', vmin=0, vmax=3)
+            axs[0, i+1].set_title(f'Depth {i}')
+            axs[0, i+1].axis('off')
+    
+        # Plot Depth Next (Depth Next 0–3 in columns 1–4, row 2)
+        for i in range(4):
+            axs[1, i+1].imshow(self.k_depth_matrices_next[i], cmap='Blues', vmin=0, vmax=3)
+            axs[1, i+1].set_title(f'Depth Next {i}')
+            axs[1, i+1].axis('off')
+    
+        # Blank row for spacing (row 3)
+        for i in range(5):
+            axs[2, i].axis('off')
+    
+        # Directory for saving the figure
+        output_dir = os.path.join(
+            'simulations_to_samples',
+            'raw_data',
+            f'prj_{self.prj_num}',
+            f'plan_{self.plan_num}'
+        )
+        os.makedirs(output_dir, exist_ok=True)
+    
+        # Save the figure
+        save_path = os.path.join(output_dir, f'plan_{self.plan_num}_maps.png')
+        plt.tight_layout()
+        plt.savefig(save_path, dpi=200)
+        plt.close(fig)
 
            
     def generate_patches(self):
@@ -539,4 +557,5 @@ class PatchExtractorProcessor:
         self.populate_from_all_k_indices()
         self.delete_dry_patches()
         self.postprocess_patches()
+        self.plot_and_save_maps()
         self.plot_final_patches()
