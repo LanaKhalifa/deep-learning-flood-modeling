@@ -94,7 +94,7 @@ def plot_samples(loader, prefix, samples_to_plot=10):
     - prefix: Identifier for the loader (e.g. 'big_train_val')
     - samples_to_plot: Number of samples to plot/save
     """
-    save_dir = os.path.join(DATALOADERS_ROOT, 'figures')
+    save_dir = os.path.join(DATALOADERS_ROOT, 'figures', f'{prefix}')
     os.makedirs(save_dir, exist_ok=True)
 
     for idx, (terrain, data, label) in enumerate(loader):
@@ -123,7 +123,7 @@ def plot_samples(loader, prefix, samples_to_plot=10):
             fig.colorbar(im4, ax=axs[3], fraction=0.046, pad=0.04).ax.tick_params(labelsize=20)
 
             plt.tight_layout()
-            filepath = os.path.join(save_dir, f'{prefix}', f'{prefix}_{i}.png')
+            filepath = os.path.join(save_dir, f'{prefix}_{i}.png')
             plt.savefig(filepath)
             plt.close()
 
