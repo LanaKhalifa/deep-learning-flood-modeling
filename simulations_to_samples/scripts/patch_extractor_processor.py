@@ -498,10 +498,6 @@ class PatchExtractorProcessor:
         Plots the original terrain TIFF, 4 depth maps, 4 depth_next maps,
         and their differences for the current plan, then saves the figure in the raw_data/images/ directory.
         """
-        # Get the number of available depth maps (up to 4)
-        num_depth_maps = min(4, len(self.k_depth_matrices))  # Ensure we don't exceed available depth maps
-        num_depth_next_maps = min(4, len(self.k_depth_matrices_next))  # Ensure we don't exceed available depth_next maps
-    
         # Prepare the figure: 4 rows, 3 columns (for terrain, depth, depth_next, and difference maps)
         fig, axs = plt.subplots(nrows=4, ncols=3, figsize=(15, 20))
     
@@ -517,19 +513,19 @@ class PatchExtractorProcessor:
         cbar.set_label('Meters')
     
         # Plot Depth (Depth 0–3 in columns 1–4, row 2)
-        for i in range(num_depth_maps):
+        for i in range(4):
             axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues', vmin=vmin, vmax=vmax)
             axs[1, i].set_title(f'Depth {i}')
             axs[1, i].axis('off')
     
         # Plot Depth Next (Depth Next 0–3 in columns 1–4, row 3)
-        for i in range(num_depth_next_maps):
+        for i in range(4):
             axs[2, i].imshow(self.k_depth_matrices_next[i], cmap='Blues', vmin=vmin, vmax=vmax)
             axs[2, i].set_title(f'Depth Next {i}')
             axs[2, i].axis('off')
     
         # Plot Difference (Depth Next - Depth) in row 4
-        for i in range(min(num_depth_maps, num_depth_next_maps)):
+        for i in range(4):
             diff = self.k_depth_matrices_next[i] - self.k_depth_matrices[i]
             axs[3, i].imshow(diff, cmap='coolwarm', vmin=vmin, vmax=vmax)
             axs[3, i].set_title(f'Diff {i}')
@@ -547,6 +543,7 @@ class PatchExtractorProcessor:
         plt.tight_layout()
         plt.savefig(save_path, dpi=200)
         plt.close(fig)
+
 
     def generate_patches(self):
         """
