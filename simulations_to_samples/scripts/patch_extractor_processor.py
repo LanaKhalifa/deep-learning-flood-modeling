@@ -565,5 +565,5 @@ class PatchExtractorProcessor:
         self.populate_from_all_k_indices()
         self.delete_dry_patches()
         self.postprocess_patches()
-        self.plot_and_save_maps()
+        #self.plot_and_save_maps()
         self.plot_final_patches()
