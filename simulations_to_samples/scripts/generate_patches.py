@@ -16,7 +16,6 @@ logging.basicConfig(level=logging.INFO)
 
 def process_project(prj_num, prj_name, plans):
     for plan_num in plans:
-        logging.info(f"Processing project {prj_num}")
         try: 
             instance = PatchExtractorProcessor(prj_num, prj_name, plan_num)
             instance.generate_patches()  
