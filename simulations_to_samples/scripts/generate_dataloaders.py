@@ -123,7 +123,7 @@ def plot_samples(loader, prefix, samples_to_plot=10):
             fig.colorbar(im4, ax=axs[3], fraction=0.046, pad=0.04).ax.tick_params(labelsize=20)
 
             plt.tight_layout()
-            filepath = os.path.join(save_dir, f'{prefix}_{i}.png')
+            filepath = os.path.join(save_dir, f'{prefix}', f'{prefix}_{i}.png')
             plt.savefig(filepath)
             plt.close()
 
