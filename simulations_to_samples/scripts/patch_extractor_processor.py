@@ -500,40 +500,36 @@ class PatchExtractorProcessor:
         """
         # Prepare the figure: 4 rows, 3 columns (for terrain, depth, depth_next, and difference maps)
         fig, axs = plt.subplots(nrows=4, ncols=3, figsize=(15, 20))
-    
-        # Colorbar normalization for meters (same scale for all plots)
-        vmin = 0  # Minimum value for the color scale
-        vmax = 3  # Maximum value for the color scale (you can adjust this as needed)
-    
+        print('here 1')
         # Plot Terrain (first row, first column)
         axs[0, 0].imshow(self.tiff_data, cmap='terrain', vmin=vmin, vmax=vmax)
         axs[0, 0].set_title('Original Terrain')
         axs[0, 0].axis('off')
-        cbar = plt.colorbar(axs[0, 0].imshow(self.tiff_data, cmap='terrain', vmin=vmin, vmax=vmax), ax=axs[0, 0])
+        cbar = plt.colorbar(axs[0, 0].imshow(self.tiff_data, cmap='terrain'), ax=axs[0, 0])
         cbar.set_label('Meters')
-    
+        print('here 2')
         # Plot Depth (Depth 0–3 in columns 1–4, row 2)
         for i in range(4):
-            axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues', vmin=vmin, vmax=vmax)
+            axs[1, i].imshow(self.k_depth_matrices[i], cmap='Blues')
             axs[1, i].set_title(f'Depth {i}')
             axs[1, i].axis('off')
-    
+        print('here 3')
         # Plot Depth Next (Depth Next 0–3 in columns 1–4, row 3)
         for i in range(4):
-            axs[2, i].imshow(self.k_depth_matrices_next[i], cmap='Blues', vmin=vmin, vmax=vmax)
+            axs[2, i].imshow(self.k_depth_matrices_next[i], cmap='Blues')
             axs[2, i].set_title(f'Depth Next {i}')
             axs[2, i].axis('off')
-    
+        print('here 4')
         # Plot Difference (Depth Next - Depth) in row 4
         for i in range(4):
             diff = self.k_depth_matrices_next[i] - self.k_depth_matrices[i]
-            axs[3, i].imshow(diff, cmap='coolwarm', vmin=vmin, vmax=vmax)
+            axs[3, i].imshow(diff, cmap='coolwarm')
             axs[3, i].set_title(f'Diff {i}')
             axs[3, i].axis('off')
-    
+        print('here 5')
         # Remove unnecessary axis for row 4 (empty column 0)
         axs[3, 0].axis('off')
-    
+        print('here 6')
         # Save the figure in the raw_data/images/ directory
         output_dir = './raw_data/images/'
         os.makedirs(output_dir, exist_ok=True)
