@@ -1,4 +1,3 @@
-
 """
 This script extracts and processes flood simulation data from HDF files and TIFF terrain files
 for further use in deep learning models.
@@ -538,7 +537,6 @@ class PatchExtractorProcessor:
         plt.tight_layout()
         plt.savefig(save_path, dpi=200)
         plt.close(fig)
-
 
     def generate_patches(self):
         """
