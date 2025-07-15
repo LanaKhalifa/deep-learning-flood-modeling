@@ -11,7 +11,10 @@ import logging
 from simulations_to_samples.scripts.patch_extractor_processor import PatchExtractorProcessor
 from config import PATCHES_ROOT
 
-os.makedirs(PATCHES_ROOT, exist_ok=True)
+# Create the root directory and 'pkls' subdirectory
+PKLS_DIR = os.path.join(PATCHES_ROOT, 'patches_per_simulation_pkls')
+os.makedirs(PKLS_DIR, exist_ok=True)
+
 logging.basicConfig(level=logging.INFO)
 
 def process_project(prj_num, prj_name, plans):
@@ -19,12 +22,15 @@ def process_project(prj_num, prj_name, plans):
         try: 
             instance = PatchExtractorProcessor(prj_num, prj_name, plan_num)
             instance.generate_patches()  
-            with open(os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_terrain_patches.pkl'), 'wb') as f:
+
+            # Save patch data inside the 'pkls' directory
+            with open(os.path.join(PKLS_DIR, f'prj_{prj_num}_plan_{plan_num}_terrain_patches.pkl'), 'wb') as f:
                 pickle.dump(instance.database['terrain'], f)
-            with open(os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_depth_patches.pkl'), 'wb') as f:
+            with open(os.path.join(PKLS_DIR, f'prj_{prj_num}_plan_{plan_num}_depth_patches.pkl'), 'wb') as f:
                 pickle.dump(instance.database['depth'], f)
-            with open(os.path.join(PATCHES_ROOT, f'prj_{prj_num}_plan_{plan_num}_depth_next_patches.pkl'), 'wb') as f:
+            with open(os.path.join(PKLS_DIR, f'prj_{prj_num}_plan_{plan_num}_depth_next_patches.pkl'), 'wb') as f:
                 pickle.dump(instance.database['depth_next'], f)
                 
         except Exception as e:
             logging.error(f"Failed to process prj_{prj_num}, plan_{plan_num}: {e}")
+
