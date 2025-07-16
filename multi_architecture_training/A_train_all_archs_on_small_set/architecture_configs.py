@@ -21,7 +21,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -36,7 +35,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -55,7 +53,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -72,7 +69,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -89,7 +85,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -106,7 +101,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
@@ -123,7 +117,6 @@ architectures = {
         "downsampler_params": {
             "c_start": 10,
             "c_end": 1,
-            "norm": False,
             "act": "leakyrelu"
         },
         "epochs": 150,
