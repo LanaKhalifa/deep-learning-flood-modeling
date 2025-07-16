@@ -1,9 +1,9 @@
 # training_utils/train_model.py
+
 import torch
 import os
+import pickle
 
-from training_utils.early_stopping import EarlyStopping  # Optional if you use it
-from training_utils.plot_loss_curves import plot_loss_curves  # Optional if you use it
 
 def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_name, device):
     criterion = torch.nn.L1Loss()
@@ -41,9 +41,15 @@ def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_na
 
         print(f"Epoch [{epoch+1}/{num_epochs}] | Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f}")
 
-    # Save the trained model
+    # Create directory for saving
     save_dir = os.path.join("trained_models", arch_name)
     os.makedirs(save_dir, exist_ok=True)
+
+    # Save model
     torch.save(model.state_dict(), os.path.join(save_dir, "model.pth"))
+
+    # Save loss curves
+    with open(os.path.join(save_dir, "train_val_losses.pkl"), "wb") as f:
+        pickle.dump({"train": train_losses, "val": val_losses}, f)
 
     return train_losses, val_losses
