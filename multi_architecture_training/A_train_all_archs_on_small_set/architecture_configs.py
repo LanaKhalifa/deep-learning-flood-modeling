@@ -10,7 +10,7 @@ from multi_architecture_training.models.encoder_decoder_large_convolutions impor
 architectures = {
     "Arch_02": {
         "model_class": NonDownsamplingConvolutions,
-        "downsampler_class": DownsamplerK11S10,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "input_channels": 3,
             "num_layers": 5,
@@ -30,7 +30,7 @@ architectures = {
     },
     "Arch_03": {
         "model_class": SimplifiedUNet,
-        "downsampler_class": DownsamplerK11S10,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "num_c_encoder": [3, 32, 64, 128, 256, 256, 256, 128, 64, 32, 1]
         },
@@ -45,8 +45,8 @@ architectures = {
         "lr": 0.0001
     },
     "Arch_04": {
-        "model_class": NonDownsamplingConvolutionsAttention,
-        "downsampler_class": DownsamplerK11S10,
+        "model_class": NonDownsamplingConvolutionsWithAttention,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "input_channels": 3,
             "num_layers": 5,
@@ -66,7 +66,7 @@ architectures = {
     },
     "Arch_05": {
         "model_class": ClassicUNet,
-        "downsampler_class": DownsamplerK11S10,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "in_channels": 3,
             "out_channels": 1,
@@ -84,7 +84,7 @@ architectures = {
     },
     "Arch_07": {
         "model_class": EncoderDecoderWithAttention,
-        "downsampler_class": DownsamplerK11S10,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "input_channels": 3,
             "inner_channels": 32,
@@ -102,7 +102,7 @@ architectures = {
     },
     "Arch_08": {
         "model_class": UNetResNetModified,
-        "downsampler_class": DownsamplerK11S10,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "input_channels": 3,
             "base_channels": 32,
@@ -119,8 +119,8 @@ architectures = {
         "lr": 0.0001
     },
     "Arch_09": {
-        "model_class": EncoderDecoderLargeConv,
-        "downsampler_class": DownsamplerK11S10,
+        "model_class": EncoderDecoderWithLargeConvolutions,
+        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "input_channels": 3,
             "inner_channels": 32,
