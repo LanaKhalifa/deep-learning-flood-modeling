@@ -28,10 +28,10 @@ create_and_save_datasets()
 print("=" * 60)
 print("🔷 Starting Dataloaders Generation... 🔷")
 print("=" * 60)
-
+"""
 # Step 3: Create and save dataloaders
 create_and_save_dataloaders()
-
+"""
 print("************************************************* STAGE 2: TRAIN DEEP LEARNING MODELS *************************************************")
 
 # ============================================
