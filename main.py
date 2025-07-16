@@ -4,8 +4,6 @@ from simulations_to_samples.scripts.generate_datasets import create_and_save_dat
 from simulations_to_samples.scripts.generate_dataloaders import create_and_save_dataloaders
 from multi_architecture_training.A_train_all_archs_on_small_set.train import run_train_all_on_small
 
-train_all_architectures_on_small_set()
-
 print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 1: FROM SIMULATIONS TO SAMPLES 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
 
 print("=" * 60)
