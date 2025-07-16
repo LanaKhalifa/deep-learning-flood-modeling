@@ -11,7 +11,7 @@ from multi_architecture_training.models.encoder_decoder_large_convolutions impor
 default_downsampler = {
     "downsampler_class": TerrainDownsampleK11S10,
     "downsampler_params": {
-        "c_start": 10,
+        "c_start": 1,
         "c1": 16,
         "c2": 8,
         "c_end": 1,
