@@ -35,6 +35,8 @@ def plot_loss_curves(losses_dir, archs, output_path):
     print(f"[✓] Saved plot to {output_path}")
 
 
-# === ENTRY POINT ===
-if __name__ == "__main__":
+
+def plot_all_arch_losses():
     plot_loss_curves(LOSSES_DIR, ARCHS, OUTPUT_PATH)
+
+
