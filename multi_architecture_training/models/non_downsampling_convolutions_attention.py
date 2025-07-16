@@ -31,7 +31,8 @@ class NonDownsamplingConvolutionsWithAttention(nn.Module):
 
         # Insert attention layer(s)
         for _ in range(arch_num_attentions):
-            layers.append(ConvSelfAttention(arch_num_c))
+            layers.append(ConvSelfAttention(arch_num_c, arch_num_c))
+
 
         # Remaining conv layers
         for _ in range(arch_num_layers // 2, arch_num_layers - 1):
