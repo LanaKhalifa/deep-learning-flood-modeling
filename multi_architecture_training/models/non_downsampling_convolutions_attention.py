@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from models.attention import ConvSelfAttention 
+from multi_architecture_training.models.attention import ConvSelfAttention 
 
 
 class NonDownsamplingConvolutionsWithAttention(nn.Module):
