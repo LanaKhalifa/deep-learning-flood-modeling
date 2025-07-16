@@ -2,6 +2,9 @@ from config import prjs_metadata
 from simulations_to_samples.scripts.generate_patches import process_project
 from simulations_to_samples.scripts.generate_datasets import create_and_save_datasets
 from simulations_to_samples.scripts.generate_dataloaders import create_and_save_dataloaders
+from A_train_all_archs_on_small_set.train import run_train_all_on_small
+
+train_all_architectures_on_small_set()
 
 print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 1: FROM SIMULATIONS TO SAMPLES 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
 
@@ -28,13 +31,18 @@ print("=" * 60)
 print("🔷 Starting Dataloaders Generation... 🔷")
 print("=" * 60)
 
-
-# Step 3: Create and save datasets
+"""
+# Step 3: Create and save dataloaders
 create_and_save_dataloaders()
-
+"""
 
 print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 2: TRAIN DEEP LEARNING MODELS 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
 
+# =============================
+# STEP 1: Train All Architectures on Small Set
+# =============================
+print("=" * 60)
+print("🔷 Training All Architectures on Small Set... 🔷")
+print("=" * 60)
 
-
-
+run_train_all_on_small()
