@@ -5,7 +5,7 @@ import os
 import pickle
 
 
-def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_name, device):
+def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_name, device, save_root_dir):
     criterion = torch.nn.L1Loss()
     
     train_losses = []
@@ -41,15 +41,14 @@ def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_na
 
         print(f"Epoch [{epoch+1}/{num_epochs}] | Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f}")
 
-    # Create directory for saving
-    save_dir = os.path.join("trained_models", arch_name)
-    os.makedirs(save_dir, exist_ok=True)
-
-    # Save model
-    torch.save(model.state_dict(), os.path.join(save_dir, "model.pth"))
+    # Save trained model
+    model_dir = os.path.join(save_root_dir, "saved_trained_models", arch_name)
+    os.makedirs(model_dir, exist_ok=True)
+    torch.save(model.state_dict(), os.path.join(model_dir, "model.pth"))
 
     # Save loss curves
-    with open(os.path.join(save_dir, "train_val_losses.pkl"), "wb") as f:
-        pickle.dump({"train": train_losses, "val": val_losses}, f)
+    loss_dir = os.path.join(save_root_dir, "saved_losses", arch_name)
+    os.makedirs(loss_dir, exist_ok=True)
+    torch.save({'train_losses': train_losses, 'val_losses': val_losses}, os.path.join(loss_dir, "losses.pt"))
 
     return train_losses, val_losses
