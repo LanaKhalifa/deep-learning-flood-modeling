@@ -9,6 +9,9 @@ from config import DATALOADERS_ROOT
 from training_utils.weights_init import weights_init
 from training_utils.train_model import train_model
 from A_train_all_archs_on_small_set.architecture_configs import architectures
+from pathlib import Path
+CURRENT_DIR = Path(__file__).parent
+
 
 def run_train_all_on_small():
     """
@@ -43,5 +46,6 @@ def run_train_all_on_small():
             test_loader=test_loader,
             num_epochs=config["epochs"],
             arch_name=arch_name,
-            device=device
+            device=device,
+            save_root_dir=CURRENT_DIR
         )
