@@ -19,8 +19,8 @@ def zero_internal(matrix):
     return result
 
 
-def create_loader(prefix, shuffle=True, split_train_val=False):
-    # Determine subdirectory based on prefix
+def create_loader(prefix, shuffle=True, split_train_val=False, save_test_loader=False):
+    # Determine subdirectory
     if prefix.startswith('big_'):
         subdir = 'big_dataset'
     elif prefix.startswith('small_'):
@@ -42,7 +42,6 @@ def create_loader(prefix, shuffle=True, split_train_val=False):
     terrains_tensor = torch.tensor(np.expand_dims(terrains_numpy, axis=1)).float()
     dataset_numpy = np.zeros((N, 2, PATCH_SIZE, PATCH_SIZE), dtype=np.float32)
 
-    # Zero out internal region of depth_next for BCs
     depths_BC_numpy = np.stack([zero_internal(matrix) for matrix in depths_next_numpy], axis=0)
     for i in range(N):
         dataset_numpy[i] = np.stack((depths_BC_numpy[i], depths_numpy[i]))
@@ -57,10 +56,9 @@ def create_loader(prefix, shuffle=True, split_train_val=False):
     labels_tensor = labels_tensor[indices]
     terrains_tensor = terrains_tensor[indices]
 
-    # Ensure output dir exists
     os.makedirs(DATALOADERS_ROOT, exist_ok=True)
 
-    # Split or return full loader
+    # Split into train/val
     if split_train_val:
         train_size = int(N * 0.7)
         train_dataset = TensorDataset(terrains_tensor[:train_size],
@@ -69,20 +67,26 @@ def create_loader(prefix, shuffle=True, split_train_val=False):
         val_dataset = TensorDataset(terrains_tensor[train_size:],
                                     dataset_tensor[train_size:],
                                     labels_tensor[train_size:])
-
+        
         train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
         val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
-        torch.save(train_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_train_loader.pt'))
-        torch.save(val_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_val_loader.pt'))
+        torch.save(train_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}train_loader.pt'))
+        torch.save(val_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}val_loader.pt'))
 
         return len(train_loader), len(val_loader)
-    else:
+
+    # Save full test loader
+    elif save_test_loader:
         full_dataset = TensorDataset(terrains_tensor, dataset_tensor, labels_tensor)
         full_loader = DataLoader(full_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
 
-        torch.save(full_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_test_loader.pt'))
+        torch.save(full_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}test_loader.pt'))
         return len(full_loader), None
+
+    else:
+        raise ValueError("Must set either split_train_val=True or save_test_loader=True")
+
 
 
 def plot_samples(loader, prefix, samples_to_plot=10):
@@ -127,32 +131,33 @@ def plot_samples(loader, prefix, samples_to_plot=10):
             plt.savefig(filepath)
             plt.close()
 
-
 def create_and_save_dataloaders():
     """Run full DataLoader generation pipeline."""
-    loader_configs = [
-        ('big_', True),
-        ('big_', False),
-        ('small_', True),
-        ('prj_03_', True),
-        ('prj_03_', False)
+
+    configs = [
+        # (prefix, split, is_test)
+        ('small_', True, False),
+        ('big_', True, False),
+        ('big_', False, True),
+        ('prj_03_', True, False),
+        ('prj_03_', False, True)
     ]
 
-    # Run loader creation and plot
-    results = {}
-    for prefix, split in loader_configs:
-        print(f"Now Building {prefix}...")
-        results[prefix] = create_loader(prefix, split_train_val=split)
-    
-        # Optional: visualize and save 10 samples
+    for prefix, split, is_test in configs:
+        print(f"Now Building {prefix} - split: {split}, test: {is_test}")
+        create_loader(prefix, split_train_val=split, save_test_loader=is_test)
+
+        # Visualize only training loaders
+        if split:
+            loader_path = os.path.join(DATALOADERS_ROOT, f'{prefix}train_loader.pt')
+        elif is_test:
+            loader_path = os.path.join(DATALOADERS_ROOT, f'{prefix}test_loader.pt')
+        else:
+            continue  # Skip visualization if unclear
+
         try:
-            if split:
-                train_loader = torch.load(os.path.join(DATALOADERS_ROOT, f'{prefix}_train_loader.pt'))
-                print(f"Visualizing samples from {prefix}_train_loader...")
-                plot_samples(train_loader, prefix=prefix)
-            else:
-                loader = torch.load(os.path.join(DATALOADERS_ROOT, f'{prefix}_loader.pt'))
-                print(f"Visualizing samples from {prefix}_loader...")
-                plot_samples(loader, prefix=prefix)
+            loader = torch.load(loader_path)
+            plot_samples(loader, prefix=prefix)
         except Exception as e:
             print(f"⚠️ Could not visualize samples for {prefix}: {e}")
+
