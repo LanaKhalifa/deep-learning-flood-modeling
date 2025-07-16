@@ -1,8 +1,8 @@
-from multi_architecture_training.models.terrain_downsampler_k11s10 import TerrainDownsampleModel as DownsamplerK11S10
+from multi_architecture_training.models.terrain_downsampler_k11s10 import TerrainDownsampleK11S10
 from multi_architecture_training.models.non_downsampling_convolutions import NonDownsamplingConvolutions  # Arch_02
-from multi_architecture_training.models.simplified_unet import UNet as SimplifiedUNet  # Arch_03
+from multi_architecture_training.models.simplified_unet import SimplifiedUNet  # Arch_03
 from multi_architecture_training.models.non_downsampling_convolutions_attention import NonDownsamplingConvolutionsAttention  # Arch_04
-from multi_architecture_training.models.classic_unet import UNet as ClassicUNet  # Arch_05
+from multi_architecture_training.models.classic_unet import ClassicUNet  # Arch_05
 from multi_architecture_training.models.encoder_decoder_attention import EncoderDecoderWithAttention  # Arch_07
 from multi_architecture_training.models.unet_resnet_modified import UNetResNetModified  # Arch_08
 from multi_architecture_training.models.encoder_decoder_large_convolutions import EncoderDecoderLargeConv  # Arch_09
