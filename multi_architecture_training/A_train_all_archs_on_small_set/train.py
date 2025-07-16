@@ -19,8 +19,8 @@ def run_train_all_on_small():
     Saves each model and its loss curves.
     """
     # Load dataloaders
-    train_loader = torch.load(os.path.join(DATALOADERS_ROOT, 'small_train_val_loader.pt'))
-    test_loader = torch.load(os.path.join(DATALOADERS_ROOT, 'small_test_loader.pt'))
+    train_loader = torch.load(os.path.join(DATALOADERS_ROOT, 'small_train_loader.pt'))
+    val_loader = torch.load(os.path.join(DATALOADERS_ROOT, 'small_val_loader.pt'))
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -43,7 +43,7 @@ def run_train_all_on_small():
             model=model,
             optimizer=optimizer,
             train_loader=train_loader,
-            test_loader=test_loader,
+            val_loader=val_loader,
             num_epochs=config["epochs"],
             arch_name=arch_name,
             device=device,
