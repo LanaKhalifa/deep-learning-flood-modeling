@@ -94,7 +94,9 @@ Additional key files:
 
 
 
+hyperparameter tuning of each architetcure was omitted as it is not clean. so stage 1 was omitted, and we straight beging with training all architecture on big_train_val. meaning trainig the different architecture. 
 
+whenevr you want to download anything, simply do that by mocing form onedrive to there and then you can make any stage as you wish 
 
 
 
