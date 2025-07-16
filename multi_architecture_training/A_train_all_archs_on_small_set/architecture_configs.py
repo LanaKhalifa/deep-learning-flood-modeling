@@ -72,10 +72,7 @@ architectures = {
     },
     "Arch_08": {
         "model_class": UNetResNetModified,
-        "params": {
-            "in_channels": 3,
-            "out_channels": 1
-        },
+        "params": {},
         **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
