@@ -3,7 +3,7 @@ from simulations_to_samples.scripts.generate_patches import process_project
 from simulations_to_samples.scripts.generate_datasets import create_and_save_datasets
 from simulations_to_samples.scripts.generate_dataloaders import create_and_save_dataloaders
 from multi_architecture_training.A_train_all_archs_on_small_set.train import run_train_all_on_small
-from multi_architecture_training.A_train_all_archs_on_small_set.plot_all_losses import plot_all_arch_losses
+from multi_architecture_training.A_train_all_archs_on_small_set.plot_all_losses import plot_all_losses
 
 
 print("************************************************* STAGE 1: FROM SIMULATIONS TO SAMPLES *************************************************")
