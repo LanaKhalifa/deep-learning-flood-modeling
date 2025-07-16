@@ -31,8 +31,19 @@ def create_loader(prefix, shuffle=True, split_train_val=False, save_test_loader=
         raise ValueError(f"Unknown dataset prefix: {prefix}")
     
     # Load dataset
-    with open(os.path.join(DATASETS_ROOT, subdir, f'{prefix}.pkl'), 'rb') as f:
+    
+    # Resolve correct filename
+    if split_train_val:
+        filename = f'{prefix}train_val.pkl'
+    elif save_test_loader:
+        filename = f'{prefix}test.pkl'
+    else:
+        raise ValueError("Must set either split_train_val=True or save_test_loader=True")
+
+    filepath = os.path.join(DATASETS_ROOT, subdir, filename)
+    with open(filepath, 'rb') as f:
         dataset_dict = pickle.load(f)
+
 
     depths_numpy = np.array(dataset_dict['depth'])
     depths_next_numpy = np.array(dataset_dict['depth_next'])
