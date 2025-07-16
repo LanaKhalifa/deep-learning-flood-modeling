@@ -7,134 +7,84 @@ from multi_architecture_training.models.encoder_decoder_attention import Encoder
 from multi_architecture_training.models.unet_resnet_modified import UNetResNetModified  # Arch_08
 from multi_architecture_training.models.encoder_decoder_large_convolutions import EncoderDecoderWithLargeConvolutions  # Arch_09
 
+# Shared downsampler params
+default_downsampler = {
+    "downsampler_class": TerrainDownsampleK11S10,
+    "downsampler_params": {
+        "c_start": 10,
+        "c1": 16,
+        "c2": 8,
+        "c_end": 1,
+        "act": "leakyrelu"
+    }
+}
+
 architectures = {
     "Arch_02": {
         "model_class": NonDownsamplingConvolutions,
-        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
-            "input_channels": 3,
-            "num_layers": 5,
-            "num_channels": 32,
-            "act": "leakyrelu",
-            "last_act": "leakyrelu",
+            "arch_input_c": 3,
+            "arch_num_layers": 5,
+            "arch_num_c": 32,
+            "arch_act": "leakyrelu",
+            "arch_last_act": "leakyrelu"
         },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_03": {
         "model_class": SimplifiedUNet,
-        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
             "num_c_encoder": [3, 32, 64, 128, 256, 256, 256, 128, 64, 32, 1]
         },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_04": {
         "model_class": NonDownsamplingConvolutionsWithAttention,
-        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
-            "input_channels": 3,
-            "num_layers": 5,
-            "num_channels": 32,
-            "act": "leakyrelu",
-            "last_act": "leakyrelu"
+            "arch_input_c": 3,
+            "arch_num_layers": 6,
+            "arch_num_c": 32,
+            "arch_act": "leakyrelu",
+            "arch_last_act": "leakyrelu",
+            "arch_num_attentions": 1
         },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_05": {
         "model_class": ClassicUNet,
-        "downsampler_class": TerrainDownsampleK11S10,
-        "params": {
-            "in_channels": 3,
-            "out_channels": 1,
-            "init_features": 32
-        },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        "params": {},
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_07": {
         "model_class": EncoderDecoderWithAttention,
-        "downsampler_class": TerrainDownsampleK11S10,
-        "params": {
-            "input_channels": 3,
-            "inner_channels": 32,
-            "act": "leakyrelu"
-        },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        "params": {},
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_08": {
         "model_class": UNetResNetModified,
-        "downsampler_class": TerrainDownsampleK11S10,
         "params": {
-            "input_channels": 3,
-            "base_channels": 32,
-            "act": "leakyrelu"
+            "in_channels": 3,
+            "out_channels": 1
         },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     },
     "Arch_09": {
         "model_class": EncoderDecoderWithLargeConvolutions,
-        "downsampler_class": TerrainDownsampleK11S10,
-        "params": {
-            "input_channels": 3,
-            "inner_channels": 32,
-            "act": "leakyrelu"
-        },
-        "downsampler_params": {
-            "c_start": 10,
-            "c1": 16,
-            "c2": 8,
-            "c_end": 1,
-            "act": "leakyrelu"
-        },
+        "params": {},
+        **default_downsampler,
         "epochs": 150,
         "lr": 0.0001
     }
 }
-
