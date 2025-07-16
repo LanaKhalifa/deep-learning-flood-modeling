@@ -134,8 +134,8 @@ def create_and_save_dataloaders():
         ('big_', True),
         ('big_', False),
         ('small_', True),
-        ('prj_03_', False),
-        ('prj_03_, False)
+        ('prj_03_', True),
+        ('prj_03_', False)
     ]
 
     # Run loader creation and plot
