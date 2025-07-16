@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from architectures.attention import ConvSelfAttention  # adjust if path is different
+from models.attention import ConvSelfAttention 
 
 
 class NonDownsamplingConvolutionsWithAttention(nn.Module):
