@@ -6,9 +6,9 @@ Train multiple architectures on the small dataset with per-model hyperparameters
 import torch
 import os
 from config import DATALOADERS_ROOT
-from training_utils.weights_init import weights_init
-from training_utils.train_model import train_model
-from A_train_all_archs_on_small_set.architecture_configs import architectures
+from multi_architecture_training.training_utils.weights_init import weights_init
+from multi_architecture_training.training_utils.train_model import train_model
+from multi_architecture_training.A_train_all_archs_on_small_set.architecture_configs import architectures
 from pathlib import Path
 CURRENT_DIR = Path(__file__).parent
 
