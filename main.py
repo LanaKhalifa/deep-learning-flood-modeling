@@ -4,7 +4,7 @@ from simulations_to_samples.scripts.generate_datasets import create_and_save_dat
 from simulations_to_samples.scripts.generate_dataloaders import create_and_save_dataloaders
 from multi_architecture_training.A_train_all_archs_on_small_set.train import run_train_all_on_small
 
-print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 1: FROM SIMULATIONS TO SAMPLES 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
+print("***************************************** STAGE 1: FROM SIMULATIONS TO SAMPLES *****************************************")
 
 print("=" * 60)
 print("🔷 Starting Flood Patch Generation... 🔷")
@@ -34,13 +34,24 @@ print("=" * 60)
 create_and_save_dataloaders()
 
 
-print("🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷 STAGE 2: TRAIN DEEP LEARNING MODELS 🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷🔷")
+print("***************************************** STAGE 2: TRAIN DEEP LEARNING MODELS *****************************************")
 
-# =============================
+# ============================================
 # STEP 1: Train All Architectures on Small Set
-# =============================
+# ============================================
 print("=" * 60)
 print("🔷 Training All Architectures on Small Set... 🔷")
 print("=" * 60)
 
 run_train_all_on_small()
+
+
+print("=" * 60)
+print("🔷 Plotting Losses... 🔷")
+print("🔷 Plotting Predications along (Relative Absolute Errors) RAE... 🔷")
+print("=" * 60)
+
+# ============================================
+# STEP 2: Tune Custom Architecture (Non-downsampling Convolutions with Self Attention)
+# ============================================
+
