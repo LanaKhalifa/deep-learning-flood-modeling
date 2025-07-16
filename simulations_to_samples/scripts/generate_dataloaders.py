@@ -91,7 +91,7 @@ def plot_samples(loader, prefix, samples_to_plot=10):
 
     Parameters:
     - loader: DataLoader object
-    - prefix: Identifier for the loader (e.g. 'big_train_val')
+    - prefix: Identifier for the loader (e.g. 'big_ or 'small', or 'prj_03')
     - samples_to_plot: Number of samples to plot/save
     """
     save_dir = os.path.join(DATALOADERS_ROOT, 'figures', f'{prefix}')
@@ -131,11 +131,11 @@ def plot_samples(loader, prefix, samples_to_plot=10):
 def create_and_save_dataloaders():
     """Run full DataLoader generation pipeline."""
     loader_configs = [
-        ('big_train_val', True),
-        ('big_test', False),
-        ('small_train_val', True),
-        ('prj_03_train_val', False),
-        ('prj_03_test', False)
+        ('big_', True),
+        ('big_', False),
+        ('small_', True),
+        ('prj_03_', False),
+        ('prj_03_, False)
     ]
 
     # Run loader creation and plot
