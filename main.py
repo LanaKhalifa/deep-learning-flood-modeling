@@ -49,7 +49,7 @@ run_train_all_on_small()
 
 print("=" * 60)
 print("🔷 Plotting Losses... 🔷")
-plot_all_arch_losses()
+plot_all_losses()
 
 
 print("🔷 Plotting Predications along (Relative Absolute Errors) RAE... 🔷")
