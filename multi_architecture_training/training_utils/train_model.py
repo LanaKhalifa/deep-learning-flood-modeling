@@ -5,7 +5,7 @@ import os
 import pickle
 
 
-def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_name, device, save_root_dir):
+def train_model(model, optimizer, train_loader, val_loader, num_epochs, arch_name, device, save_root_dir):
     criterion = torch.nn.L1Loss()
     
     train_losses = []
@@ -30,13 +30,13 @@ def train_model(model, optimizer, train_loader, test_loader, num_epochs, arch_na
         model.eval()
         val_running_loss = 0.0
         with torch.no_grad():
-            for terrain, input_data, label in test_loader:
+            for terrain, input_data, label in val_loader:
                 terrain, input_data, label = terrain.to(device), input_data.to(device), label.to(device)
                 output = model(terrain, input_data)
                 loss = criterion(output, label)
                 val_running_loss += loss.item()
 
-        avg_val_loss = val_running_loss / len(test_loader)
+        avg_val_loss = val_running_loss / len(val_loader)
         val_losses.append(avg_val_loss)
 
         print(f"Epoch [{epoch+1}/{num_epochs}] | Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f}")
