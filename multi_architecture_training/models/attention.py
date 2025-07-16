@@ -1,3 +1,7 @@
+
+import torch
+import torch.nn as nn
+
 class ConvSelfAttention(nn.Module):
     """
     Applies self-attention over the spatial features by reshaping the input and applying Conv1d operations.
