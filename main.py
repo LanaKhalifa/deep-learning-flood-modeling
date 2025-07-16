@@ -51,10 +51,6 @@ print("=" * 60)
 print("🔷 Plotting Losses... 🔷")
 plot_all_losses()
 
-
-print("🔷 Plotting Predications along (Relative Absolute Errors) RAE... 🔷")
-print("=" * 60)
-
 # ============================================
 # STEP 2: Tune Custom Architecture (Non-downsampling Convolutions with Self Attention)
 # ============================================
