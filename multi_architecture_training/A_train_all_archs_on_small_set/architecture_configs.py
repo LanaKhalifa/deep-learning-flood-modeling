@@ -20,6 +20,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -34,6 +36,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -52,6 +56,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -68,6 +74,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -84,6 +92,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -100,6 +110,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -116,6 +128,8 @@ architectures = {
         },
         "downsampler_params": {
             "c_start": 10,
+            "c1": 16,
+            "c2": 8,
             "c_end": 1,
             "act": "leakyrelu"
         },
@@ -123,3 +137,4 @@ architectures = {
         "lr": 0.0001
     }
 }
+
