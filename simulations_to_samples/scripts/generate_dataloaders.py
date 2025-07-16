@@ -81,7 +81,7 @@ def create_loader(prefix, shuffle=True, split_train_val=False):
         full_dataset = TensorDataset(terrains_tensor, dataset_tensor, labels_tensor)
         full_loader = DataLoader(full_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
 
-        torch.save(full_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_loader.pt'))
+        torch.save(full_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}_test_loader.pt'))
         return len(full_loader), None
 
 
