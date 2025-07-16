@@ -5,7 +5,7 @@ from multi_architecture_training.models.non_downsampling_convolutions_attention 
 from multi_architecture_training.models.classic_unet import ClassicUNet  # Arch_05
 from multi_architecture_training.models.encoder_decoder_attention import EncoderDecoderWithAttention  # Arch_07
 from multi_architecture_training.models.unet_resnet_modified import UNetResNetModified  # Arch_08
-from multi_architecture_training.models.encoder_decoder_large_convolutions import EncoderDecoderLargeConv  # Arch_09
+from multi_architecture_training.models.encoder_decoder_large_convolutions import EncoderDecoderWithLargeConvolutions  # Arch_09
 
 architectures = {
     "Arch_02": {
