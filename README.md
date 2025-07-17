@@ -28,4 +28,5 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 **main.generate_dataloaders():** simply generate deep learning ready dataloaders from datasets. each sample should look as follows: 
 <img width="1029" height="411" alt="image" src="https://github.com/user-attachments/assets/ca92161b-93b5-4fec-be9f-13f06af72ac6" />
 
+## 2. Training and Validation:
 
