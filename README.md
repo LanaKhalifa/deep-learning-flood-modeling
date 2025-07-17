@@ -4,7 +4,7 @@
 This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning and a closure iterative model.
 The pipeline is organized into three stages:
 
-1. **From Simulations to Data**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based deep learning-ready datasets of augmented terrain and water depth patches.
+1. **From Simulations to Dataloaders**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based deep learning-ready datasets of augmented terrain and water depth patches.
    - Directory: `simulations_to_samples/` Includes patch extraction, dataset, and dataloader generation scripts.
    - Before running: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into: `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline.
 
@@ -14,8 +14,9 @@ The pipeline is organized into three stages:
 3. **Closure Model**: scale patch predictions to coherent full-domain predictions. 
    - Directory: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
 ### Setup: 
-## 1. From Simulations to Data
+## 1. From Simulations to Dataloaders
 Note: “Plan” and “Simulation” are used interchangeably throughout this repository.
+
 **Output Paths:**
 - `generate_patches` saves to:  
   └── `simulations_to_samples/processed_data/patches/PRJ_##/PLAN_##/`
