@@ -13,7 +13,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architecture from the previous step. 
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby remotely sensed terrains, all taken from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). overall there are 4 projects (prj_03, prj_04, prj_05 and prj_06) from which 210 simulations were run. 
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all taken from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). overall there are 4 projects (prj_03, prj_04, prj_05 and prj_06) from which 210 simulations were run, differing from each other with terrain and water flow. 
 
 **Output Paths:**
 - `generate_patches` saves to:  
@@ -26,7 +26,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
   └── `simulations_to_samples/processed_data/dataloaders/`
 
 ### **main.generate_patches:** 
-takes each simulation's (210 in total) terrain and water depth maps and generates preprocessed patches after augmentation and cleaning:
+takes each simulation's terrain and water depth maps and generates preprocessed patches after augmentation and cleaning:
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
 ### **main.generate_datasets**: 
@@ -34,9 +34,9 @@ loads the patches from each simulation and assembles them into datasets as follo
 
 | Name                     | Description |
 |--------------------------|-------------|
-| `small_train` / `small_val` | Selects 2 simulations from eac project. Used for fast experimentation and architectural comparison. |
+| `small_train` / `small_val` | Selects 7 simulations from prj_03. Used for fast experimentation and architectural comparison. |
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
-| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` already included in the `big_*` sets. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. and thus performance on such dataset is evaluated |
+| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` mirroring `big_*` sets samples. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. and thus performance on such dataset is evaluated |
 
 ### **main.generate_dataloaders:** 
 generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
@@ -53,10 +53,15 @@ Each subdirectory reflects a distinct phase in the research workflow:
 
 | Directory | Description |
 |-----------|-------------|
-| 📁`A_train_all_archs_on_small_set/` | Initial comparison of multiple architectures trained on a small dataset. Used to identify high-performing candidates. |
+| 📁`A_train_all_archs_on_small_set/` | Trains multiple architectures on a small dataset to position the proposed design (main branch) within a broader landscape of adapted models and test the feasibility of the downsampler branch. Also identifies top-performing candidates worth scaling to the full dataset.|
 | 📁`B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the top-performing model (`Arch_04`) on the same small dataset. |
 | 📁`C_train_best_three_on_big_set/` | Retraining the three best architectures on the full dataset (`big_train` / `big_val`) to assess scalability and robustness. |
 | 📁`D_boxplots_RAE_all_sets/` | Evaluation of the final models using Relative Absolute Error (RAE) across all datasets. |
 | 📁`D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
 | 📁`D_compare_all_archs_runtime_size_performance/` | Summary of model inference time, parameter count, and overall performance to support trade-off analysis. |
+
+
+### main.run_train_all_on_small
+<img width="1047" height="758" alt="image" src="https://github.com/user-attachments/assets/0a58eacb-82cb-4e6c-932f-ca705ab15306" />
+
 
