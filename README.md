@@ -14,7 +14,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    - Directory: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository.
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project - called prj - refers to a collection of simulations (i.e., flood scenarios) occuring on nearby terrains.
 
 **Output Paths:**
 - `generate_patches` saves to:  
@@ -30,7 +30,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
 **python main.generate_datasets**: loads the patches from each simulation and assembles them into datasets as follows:
-- small_train / small_val: Selects 2 simulations from each project. A project refers to a collection of simulations (i.e., a set of flood scenarios occuring on nearby terrains).
+- small_train / small_val: Selects 2 simulations from each project. 
 - big_train / big_val: Includes all simulations from all projects, excluding 7 simulations per project which are reserved for big_test.
 - prj_03_train_val / prj_03_test: Mirrors the prj_03 simulations found in big_train, big_val, and big_test. prj_03 contains the highest-quality, hand-curated simulations—unlike the automatically generated settings used elsewhere in the dataset.
 
