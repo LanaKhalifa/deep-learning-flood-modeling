@@ -1,7 +1,8 @@
 <img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/dfdbd8d9-d1d6-49cd-b1e6-683e19b28708" />
 
 remember to say that in stage 2, only the final configuration were were implemented to present a cleaner story. 
-
+i prefer to work in directories rather than prapare eveyrthig in the same root dir 
+add used papers. ok? 
 # 🌊 Deep Learning Flood Modeling
 
 This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning.
