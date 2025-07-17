@@ -1,4 +1,5 @@
 from multi_architecture_training.models.terrain_downsampler_k11s10 import TerrainDownsampleK11S10
+from multi_architecture_training.models.terrain_downsampler_alternating import TerrainDownsampleAlternating
 from multi_architecture_training.models.non_downsampling_convolutions import NonDownsamplingConvolutions  # Arch_02
 from multi_architecture_training.models.simplified_unet import SimplifiedUNet  # Arch_03
 from multi_architecture_training.models.non_downsampling_convolutions_attention import NonDownsamplingConvolutionsWithAttention  # Arch_04
@@ -9,13 +10,12 @@ from multi_architecture_training.models.encoder_decoder_large_convolutions impor
 
 # Shared downsampler params
 default_downsampler = {
-    "downsampler_class": TerrainDownsampleK11S10,
+    "downsampler_class": TerrainDownsampleAlternating,
     "downsampler_params": {
-        "c_start": 1,
-        "c1": 16,
-        "c2": 8,
-        "c_end": 1,
-        "act": "leakyrelu"
+        "c_start": 3,
+        "c1": 20,
+        "c2": 40,
+        "c_end": 1
     }
 }
 
