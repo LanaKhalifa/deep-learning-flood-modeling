@@ -15,6 +15,7 @@ from multi_architecture_training.B_tune_one_arch_on_small_set.plot_losses import
 from multi_architecture_training.C_train_best_three_on_big_set.train import run_train_best_three_on_big
 from multi_architecture_training.C_train_best_three_on_big_set.plot_all_losses import plot_all_losses_best_three
 
+from multi_architecture_training.D_boxplots_RAE_all_sets.rae_main import run_all_rae_plots
 
 # ----------------------------
 # Setup logging
@@ -73,7 +74,11 @@ def train_best_three_on_big():
 def plot_best_three_on_big():
     logger.info("📊 Plotting losses for best three architectures...")
     plot_all_losses_best_three()
-    
+
+def plot_all_rae():
+    logger.info("📦 Generating RAE boxplots for best three architectures...")
+    run_all_rae_plots()
+
 # ----------------------------
 # CLI Argument Parser
 # ----------------------------
@@ -104,7 +109,8 @@ def main():
         'tune_arch_04': tune_arch_04,
         'plot_tuned': plot_tuned,
         'train_best_three_on_big': train_best_three_on_big,
-        'plot_best_three_on_big': plot_best_three_on_big
+        'plot_best_three_on_big': plot_best_three_on_big,
+        'plot_all_rae': plot_all_rae
     }
 
     logger.info(f"🚀 Starting task: {args.task}")
