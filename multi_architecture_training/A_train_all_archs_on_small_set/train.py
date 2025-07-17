@@ -25,7 +25,7 @@ def run_train_all_on_small():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     for arch_name, config in architectures.items():
-        print(f"\n🔧 Training {arch_name}...")
+        print(f"\n Training {arch_name}...")
 
         # Initialize downsampler and model with their respective parameters
         downsampler = config["downsampler_class"](**config["downsampler_params"]).to(device)
