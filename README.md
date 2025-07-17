@@ -16,7 +16,7 @@ The pipeline is organized into three stages:
 
 ## 1. From Simulations to Data
 Note: “Plan” and “Simulation” are used interchangeably throughout this repository.
-### main.generate_patches()
+#### main.generate_patches()
  takes each simulation (210 in total) terrain and water depth maps and generates patches in `simulations_to_samples/processed_data/patches/'
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
