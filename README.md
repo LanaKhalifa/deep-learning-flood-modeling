@@ -10,7 +10,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 2. **📁 multi_architecture_training/**: Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
    - Directory: Includes model architectures, training, and evaluation scripts.
 
-3. **📁 full_domain_closure_best_mosel/**: scale patch predictions to coherent full-domain predictions. utilizes the best architectures from the previous step. 
+3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architectures from the previous step. 
 ### Setup: 
 ## 1. From Simulations to Dataloaders
 Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A *project* (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby terrains, all extracted from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP).
