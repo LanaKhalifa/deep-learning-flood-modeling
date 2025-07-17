@@ -1,8 +1,4 @@
-<img width="1280" height="720" alt="fig_14" src="https://github.com/user-attachments/assets/dfdbd8d9-d1d6-49cd-b1e6-683e19b28708" />
 
-remember to say that in stage 2, only the final configuration were were implemented to present a cleaner story. 
-i prefer to work in directories rather than prapare eveyrthig in the same root dir 
-add used papers. ok? 
 # 🌊 Deep Learning Flood Modeling
 
 This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning.
@@ -11,16 +7,16 @@ The pipeline is organized into three stages:
 1. **From Simulations to Data**  
    Transforms HEC-RAS (hydrodynamic simulation software) outputs into patch-based datasets of augmented terrain and water depth patches.
    - **Directory**: `simulations_to_samples/`  
-     Includes patch extraction, dataset creation, and dataloader generation scripts.
+     Includes patch extraction, dataset, and dataloader generation scripts.
    - **Before running**:  
      Move the large folder `hecras_simulations_results/` (shared via OneDrive) into:  
-     `simulations_to_samples/raw_data/hecras_simulations_results/`  
-     This is necessary due to GitHub's file size limitations. With this structure in place, you can run the full pipeline using `main.py`.
+     `simulations_to_samples/raw_data/`  
+     This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline.
 
 2. **Training and Validation**  
    Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
    - **Directory**: `multi_architecture_training/`  
-     Contains model architectures, training scripts, and evaluation logic.
+     Contains model architectures, training, and evaluation scripts.
 
 3. **Closure Model**  
    scale patch predictions to coherent full-domain predictions. 
@@ -273,3 +269,8 @@ Each subfolder contains:
 
 ~90 simulation output files in HDF5 format — each one is a different flood event over a different terrain
 A Terrains/ folder with the terrain TIFF files used in the simulations
+
+
+remember to say that in stage 2, only the final configuration were were implemented to present a cleaner story. 
+i prefer to work in directories rather than prapare eveyrthig in the same root dir 
+add used papers. ok? 
