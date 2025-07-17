@@ -55,7 +55,7 @@ def create_and_save_datasets():
     for prj_num, (_, plan_list) in prjs_metadata.items():
         big_train_val_list += [(prj_num, p) for p in plan_list[:-7]]
         big_test_list += [(prj_num, p) for p in plan_list[-7:]]
-        small_train_val_list += [(prj_num, p) for p in plan_list[:2]]
+        #small_train_val_list += [(prj_num, p) for p in plan_list[:2]]
 
     # --- BIG DATASET ---
     save_dataset(build_dataset(big_train_val_list), BIG_DIR, 'big_train_val')
@@ -67,4 +67,4 @@ def create_and_save_datasets():
     save_dataset(build_dataset([('03', p) for p in prj_03_plans[-7:]]), PRJ_03_DIR, 'prj_03_test')
 
     # --- SMALL DATASET ---
-    save_dataset(build_dataset(small_train_val_list), SMALL_DIR, 'small_train_val')
+    save_dataset(build_dataset([('03', p) for p in prj_03_plans[:7]]), PRJ_03_DIR, 'small_train_val')
