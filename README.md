@@ -14,7 +14,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    - Directory: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project - called prj - refers to a collection of simulations (i.e., flood scenarios) occuring on nearby terrains.
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A *project* (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby terrains, all extracted from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP).
 
 **Output Paths:**
 - `generate_patches` saves to:  
