@@ -53,7 +53,7 @@ Each subdirectory reflects a distinct phase in the research workflow:
 
 | Directory | Description |
 |-----------|-------------|
-| `A_train_all_archs_on_small_set/` | Initial comparison of multiple architectures trained on a small dataset. Used to identify high-performing candidates. |
+| > 📁`A_train_all_archs_on_small_set/` | Initial comparison of multiple architectures trained on a small dataset. Used to identify high-performing candidates. |
 | `B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the top-performing model (`Arch_04`) on the same small dataset. |
 | `C_train_best_three_on_big_set/` | Retraining the three best architectures on the full dataset (`big_train` / `big_val`) to assess scalability and robustness. |
 | `D_boxplots_RAE_all_sets/` | Evaluation of the final models using Relative Absolute Error (RAE) across all datasets. |
