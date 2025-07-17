@@ -17,11 +17,14 @@ The pipeline is organized into three stages:
 ## 1. From Simulations to Data
 Note: “Plan” and “Simulation” are used interchangeably throughout this repository.
 #### main.generate_patches()
- takes each simulation (210 in total) terrain and water depth maps and generates patches into `simulations_to_samples/processed_data/patches/'
+takes each simulation (210 in total) terrain and water depth maps and generates patches:
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 #### main.generate_datasets()
-This function loads the extracted patches and assembles them into datasets according to the following logic:
+This function loads the extracted patches and assembles them into datasets in  according to the following logic:
 
 - small_train / small_val: Selects 2 simulations from each project. A project refers to a collection of simulations (i.e., a set of flood scenarios occuring on nearby terrains).
 - big_train / big_val: Includes all simulations from all projects, excluding 7 simulations per project which are reserved for big_test.
 - prj_03_train_val / prj_03_test: Mirrors the prj_03 simulations found in big_train, big_val, and big_test. prj_03 contains the highest-quality, hand-curated simulations—unlike the automatically generated settings used elsewhere in the dataset.
+
+#### main.generate_dataloaders()
+simply generate deep learning ready dataloaders from datasets
