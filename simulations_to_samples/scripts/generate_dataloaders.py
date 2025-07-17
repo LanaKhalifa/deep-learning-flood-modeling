@@ -96,7 +96,14 @@ def create_loader(prefix, shuffle=True, split_train_val=False, save_test_loader=
         return len(full_loader), None
 
     else:
-        raise ValueError("Must set either split_train_val=True or save_test_loader=True")
+        train_val_dataset = TensorDataset(terrains_tensor[:],
+                                          dataset_tensor[:],
+                                          labels_tensor[:])
+
+        train_val_loader = DataLoader(train_val_dataset, batch_size=BATCH_SIZE, shuffle=shuffle)
+
+        torch.save(train_val_loader, os.path.join(DATALOADERS_ROOT, f'{prefix}train_val_loader.pt'))
+        return len(train_val_loader), len(train_val_loader)
 
 
 
@@ -150,7 +157,7 @@ def create_and_save_dataloaders():
         ('small_', True, False),
         ('big_', True, False),
         ('big_', False, True),
-        ('prj_03_', True, False),
+        ('prj_03_', False, False),
         ('prj_03_', False, True)
     ]
 
