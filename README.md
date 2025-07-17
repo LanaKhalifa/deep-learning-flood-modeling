@@ -19,5 +19,6 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 #### main.generate_patches()
  takes each simulation (210 in total) terrain and water depth maps and generates patches in `simulations_to_samples/processed_data/patches/'
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
-
-
+#### main.generate_datasets()
+ takes each simulation (210 in total) terrain and water depth maps and generates patches in `simulations_to_samples/processed_data/patches/'
+<img width="890" height="492" alt="image" src="https://github.com/user-attachments/assets/d027c84f-73db-4f7b-9e52-f73231418592" />
