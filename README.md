@@ -10,14 +10,14 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 2. **📁 multi_architecture_training/**: Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
    - Directory: Includes model architectures, training, and evaluation scripts.
 
-3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architectures from the previous step. 
+3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architecture from the previous step. 
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby terrains, all extracted from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP).
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby remotely sensed terrains, all taken from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). overall there are 4 projects (prj_03, prj_04, prj_05 and prj_06) from which 210 simulations were run. 
 
 **Output Paths:**
 - `generate_patches` saves to:  
-  └── `simulations_to_samples/processed_data/patches_per_simulation/PRJ_##/PLAN_##/`
+  └── `simulations_to_samples/processed_data/patches_per_simulation/prj_##/plan_##/`
 
 - `generate_datasets` saves to:  
   └── `simulations_to_samples/processed_data/datasets/`
@@ -26,7 +26,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
   └── `simulations_to_samples/processed_data/dataloaders/`
 
 ### **main.generate_patches:** 
-takes each simulation (210 in total) terrain and water depth maps and generates and augments patches:
+takes each simulation's (210 in total) terrain and water depth maps and generates preprocessed patches after augmentation and cleaning:
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
 ### **main.generate_datasets**: 
@@ -34,12 +34,12 @@ loads the patches from each simulation and assembles them into datasets as follo
 
 | Name                     | Description |
 |--------------------------|-------------|
-| `small_train` / `small_val` | Selects 2 simulations from each project. Used for fast experimentation and architectural comparison. |
+| `small_train` / `small_val` | Selects 2 simulations from eac project. Used for fast experimentation and architectural comparison. |
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
-| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` already included in the `big_*` sets. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. |
+| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` already included in the `big_*` sets. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. and thus performance on such dataset is evaluated |
 
 ### **main.generate_dataloaders:** 
-simply generate deep learning ready dataloaders from datasets. each sample should look as follows:
+generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 
 ## 2. Training and Validating Multiple Architectures
