@@ -13,7 +13,7 @@ The pipeline is organized into three stages:
 
 3. **Closure Model**: scale patch predictions to coherent full-domain predictions. 
    - Directory: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
-
+### Setup: 
 ## 1. From Simulations to Data
 Note: “Plan” and “Simulation” are used interchangeably throughout this repository.
 
