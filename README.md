@@ -31,8 +31,6 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 
 **python main.generate_datasets**: loads the patches from each simulation and assembles them into datasets as follows:
 
-### Dataset Splits
-
 | Name                     | Description |
 |--------------------------|-------------|
 | `small_train` / `small_val` | Selects 2 simulations from each project. Used for fast experimentation and architectural comparison. |
