@@ -62,6 +62,6 @@ Each subdirectory reflects a distinct phase in the research workflow:
 
 
 ### main.run_train_all_on_small
-<img width="1047" height="758" alt="image" src="https://github.com/user-attachments/assets/0a58eacb-82cb-4e6c-932f-ca705ab15306" />
+<img width="753" height="448" alt="image" src="https://github.com/user-attachments/assets/665f9fed-82d2-4e5f-ad9f-fc30777f8395" />
 
 
