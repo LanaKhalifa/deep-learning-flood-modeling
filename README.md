@@ -25,4 +25,6 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 - big_train / big_val: Includes all simulations from all projects, excluding 7 simulations per project which are reserved for big_test.
 - prj_03_train_val / prj_03_test: Mirrors the prj_03 simulations found in big_train, big_val, and big_test. prj_03 contains the highest-quality, hand-curated simulations—unlike the automatically generated settings used elsewhere in the dataset.
 
-**main.generate_dataloaders():** simply generate deep learning ready dataloaders from datasets.
+**main.generate_dataloaders():** simply generate deep learning ready dataloaders from datasets. each sample should look as follows: 
+<img width="1185" height="472" alt="image" src="https://github.com/user-attachments/assets/682146a4-6f5f-4568-ac09-c912ec7a650d" />
+
