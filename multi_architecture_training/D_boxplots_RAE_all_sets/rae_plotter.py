@@ -11,12 +11,26 @@ def calculate_rae_boxplot_all_sets(model, device, save_path):
     """
     loader_names = [
         'small_val_loader.pt',
+        'small_train_loader.pt',
+        'small_test_loader.pt',
         'big_val_loader.pt',
-        'prj_01_test_loader.pt',
-        'prj_02_test_loader.pt',
-        'prj_03_test_loader.pt'
+        'big_train_loader.pt',
+        'big_test_loader.pt',
+        'prj_03_test_loader.pt',
+        'prj_03_train_val_loader.pt',
     ]
-    loader_labels = ['Small Val', 'Big Val', 'Prj01 Test', 'Prj02 Test', 'Prj03 Test']
+    
+    loader_labels = [
+        'Small Val',
+        'Small Train',
+        'Small Test',
+        'Big Val',
+        'Big Train',
+        'Big Test',
+        'Prj03 Test',
+        'Prj03 Train+Val'
+    ]
+
     all_rae_data = []
 
     model.eval()
