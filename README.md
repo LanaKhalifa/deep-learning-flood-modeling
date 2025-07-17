@@ -26,11 +26,11 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 - `generate_dataloaders` saves to:  
   └── `simulations_to_samples/processed_data/dataloaders/`
 
-### **python main.generate_patches:** 
+### **main.generate_patches:** 
 takes each simulation (210 in total) terrain and water depth maps and generates and augments patches:
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
-### **python main.generate_datasets**: 
+### **main.generate_datasets**: 
 loads the patches from each simulation and assembles them into datasets as follows:
 
 | Name                     | Description |
@@ -39,7 +39,7 @@ loads the patches from each simulation and assembles them into datasets as follo
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
 | `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` already included in the `big_*` sets. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. |
 
-### **python main.generate_dataloaders:** 
+### **main.generate_dataloaders:** 
 simply generate deep learning ready dataloaders from datasets. each sample should look as follows:
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 
