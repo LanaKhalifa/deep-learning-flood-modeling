@@ -20,5 +20,8 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
  takes each simulation (210 in total) terrain and water depth maps and generates patches into `simulations_to_samples/processed_data/patches/'
 <img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 #### main.generate_datasets()
-takes the patches, and uses patches from simulaions according to the following table: 
-<img width="829" height="363" alt="image" src="https://github.com/user-attachments/assets/b1364ab2-3673-4e23-8904-eec386f7ce9e" />
+This function loads the extracted patches and assembles them into datasets according to the following logic:
+
+- small_train / small_val: Selects 2 simulations from each project. A project refers to a collection of simulations (i.e., a set of flood scenarios occuring on nearby terrains).
+- big_train / big_val: Includes all simulations from all projects, excluding 7 simulations per project which are reserved for big_test.
+- prj_03_train_val / prj_03_test: Mirrors the prj_03 simulations found in big_train, big_val, and big_test. prj_03 contains the highest-quality, hand-curated simulations—unlike the automatically generated settings used elsewhere in the dataset.
