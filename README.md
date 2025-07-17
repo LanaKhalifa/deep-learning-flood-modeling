@@ -44,8 +44,8 @@ generates deep learning ready dataloaders from datasets. each sample should look
 
 ## 2. Training and Validating Multiple Architectures
 
-This stage involves systematic experimentation with various neural network architectures to predict water depth at the patch level.  
-The process is organized into clearly defined subdirectories within:
+This stage involves systematic experimentation with various architectures to predict future water depth at the patch level.  
+The process is organized into subdirectories within:
 
 > 📁 `multi_architecture_training/`
 
