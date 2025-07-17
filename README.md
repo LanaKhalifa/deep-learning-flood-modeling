@@ -2,16 +2,16 @@
 # 🌊 Deep Learning Flood Modeling
 
 This repository provides a complete pipeline for emulating hydrodynamic flood simulations using deep learning and a closure iterative model.
-The pipeline is organized into three stages:
+The pipeline is organized into three stages, which are saved as directories in the repository's root: 
 
-1. **From Simulations to Dataloaders**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based deep learning-ready datasets of augmented terrain and water depth patches.
+1. **📁 simulations_to_data**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based deep learning-ready datasets of augmented terrain and water depth patches.
    - Directory: `simulations_to_samples/` Includes patch extraction, dataset, and dataloader generation scripts.
    - Before running: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into: `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline.
 
-2. **Training and Validation:** Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
+2. **📁 multi_architecture_training/** Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
    - Directory: `multi_architecture_training/` Contains model architectures, training, and evaluation scripts.
 
-3. **Closure Model**: scale patch predictions to coherent full-domain predictions. 
+3. **📁 full_domain_closure_best_mosel**: scale patch predictions to coherent full-domain predictions. utilizes the best architectures from the previous step. 
    - Directory: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
 ### Setup: 
 ## 1. From Simulations to Dataloaders
@@ -39,5 +39,13 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 - `generate_dataloaders` saves to:  
 ## 2. Training and Validating Multipe Architectures:
+the steps in which the reserach was conducted, are shown in the correct order in multi_architecture_training/ directory at root of the project. 
 
 
+Name	Last commit message	Last commit date
+..
+A_train_all_archs_on_small_set
+B_tune_one_arch_on_small_set
+C_train_best_three_on_big_set
+D_boxplots_RAE_all_sets
+D_visualize_prediction_and_errors_test_set
