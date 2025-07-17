@@ -25,16 +25,16 @@ logger = logging.getLogger(__name__)
 # ----------------------------
 
 def generate_patches():
-    logger.info("🔷 Generating patches from HEC-RAS simulations...")
+    logger.info("Generating patches from HEC-RAS simulations...")
     for prj_num, (prj_name, plans) in prjs_metadata.items():
         process_project(prj_num, prj_name, plans)
 
 def generate_datasets():
-    logger.info("🔷 Creating dataset files...")
+    logger.info("Creating dataset files...")
     create_and_save_datasets()
 
 def generate_dataloaders():
-    logger.info("🔷 Creating dataloaders...")
+    logger.info("Creating dataloaders...")
     create_and_save_dataloaders()
 
 # ----------------------------
@@ -58,7 +58,7 @@ def main():
         'generate_dataloaders': generate_dataloaders,
     }
 
-    logger.info(f"🚀 Starting task: {args.task}")
+    logger.info(f"Starting task: {args.task}")
     task_map[args.task]()
 
 if __name__ == '__main__':
