@@ -19,7 +19,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 
 **Output Paths:**
 - `generate_patches` saves to:  
-  └── `simulations_to_samples/processed_data/patches/PRJ_##/PLAN_##/`
+  └── `simulations_to_samples/processed_data/patches_per_simulation/PRJ_##/PLAN_##/`
 
 - `generate_datasets` saves to:  
   └── `simulations_to_samples/processed_data/datasets/`
