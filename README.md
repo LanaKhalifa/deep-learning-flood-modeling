@@ -37,10 +37,6 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
 | `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` already included in the `big_*` sets. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. |
 
-- small_train / small_val: Selects 2 simulations from each project. 
-- big_train / big_val: Includes all simulations from all projects, excluding 7 simulations per project which are reserved for big_test.
-- prj_03_train_val / prj_03_test: Mirrors the prj_03 simulations found in big_train, big_val, and big_test. prj_03 contains the highest-quality, hand-curated simulations—unlike the automatically generated settings used elsewhere in the dataset.
-
 **python main.generate_dataloaders:** simply generate deep learning ready dataloaders from datasets. each sample should look as follows:
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 - `generate_dataloaders` saves to:  
