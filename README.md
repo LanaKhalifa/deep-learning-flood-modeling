@@ -9,8 +9,7 @@ The pipeline is organized into three stages:
    - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into: `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline.
 
 2. **Training and Validation:** Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
-   - **Directory**: `multi_architecture_training/`  
-     Contains model architectures, training, and evaluation scripts.
+   - **Directory**: `multi_architecture_training/` Contains model architectures, training, and evaluation scripts.
 
 3. **Closure Model**: scale patch predictions to coherent full-domain predictions. 
    - **Directory**: `full_domain_closure_best_model/` Includes utilities to map patch predictions back to the simulation domain grid.
