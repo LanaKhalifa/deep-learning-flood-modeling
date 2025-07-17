@@ -13,7 +13,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architectures from the previous step. 
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A *project* (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby terrains, all extracted from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP).
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on nearby terrains, all extracted from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP).
 
 **Output Paths:**
 - `generate_patches` saves to:  
