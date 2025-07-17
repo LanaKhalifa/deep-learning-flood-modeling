@@ -3,6 +3,7 @@
 import torch
 import os
 import pickle
+from multi_architecture_training.training_utils.dummy_loss import calculate_dummy_mean_loss
 
 
 def train_model(model, optimizer, train_loader, val_loader, num_epochs, arch_name, device, save_root_dir):
@@ -49,6 +50,17 @@ def train_model(model, optimizer, train_loader, val_loader, num_epochs, arch_nam
     # Save loss curves
     loss_dir = os.path.join(save_root_dir, "saved_losses", arch_name)
     os.makedirs(loss_dir, exist_ok=True)
-    torch.save({'train_losses': train_losses, 'val_losses': val_losses}, os.path.join(loss_dir, "losses.pt"))
+
+    # Calculate dummy baseline losses
+    dummy_train_loss = calculate_dummy_mean_loss(train_loader, device)
+    dummy_val_loss = calculate_dummy_mean_loss(val_loader, device)
+
+
+    torch.save({
+        'train_losses': train_losses,
+        'val_losses': val_losses,
+        'dummy_train_loss': dummy_train_loss,
+        'dummy_val_loss': dummy_val_loss
+    }, os.path.join(loss_dir, "losses.pt"))
 
     return train_losses, val_losses
