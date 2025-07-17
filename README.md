@@ -38,13 +38,21 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 - `generate_dataloaders` saves to:  
 ## 2. Training and Validating Multipe Architectures:
-the steps in which the reserach was conducted, are shown in the correct order in multi_architecture_training/ directory at root of the project. 
+## 2. Training and Validating Multiple Architectures
 
+This stage involves systematic experimentation with various neural network architectures to predict water depth at the patch level.  
+The process is organized into clearly defined subdirectories within:
 
-Name	Last commit message	Last commit date
-..
-A_train_all_archs_on_small_set
-B_tune_one_arch_on_small_set
-C_train_best_three_on_big_set
-D_boxplots_RAE_all_sets
-D_visualize_prediction_and_errors_test_set
+> 📁 `multi_architecture_training/`
+
+Each subdirectory reflects a distinct phase in the research workflow:
+
+| Directory | Description |
+|-----------|-------------|
+| `A_train_all_archs_on_small_set/` | Initial comparison of multiple architectures trained on a small dataset. Used to identify high-performing candidates. |
+| `B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the top-performing model (`Arch_04`) on the same small dataset. |
+| `C_train_best_three_on_big_set/` | Retraining the three best architectures on the full dataset (`big_train` / `big_val`) to assess scalability and robustness. |
+| `D_boxplots_RAE_all_sets/` | Evaluation of the final models using Relative Absolute Error (RAE) across all datasets. |
+| `D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
+| `D_compare_all_archs_runtime_size_performance/` | Summary of model inference time, parameter count, and overall performance to support trade-off analysis. |
+
