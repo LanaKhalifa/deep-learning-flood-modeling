@@ -48,8 +48,7 @@ see 📁 `simulations_to_samples/processed_data/dataloaders/figures/` to see ran
 
 ## 2. Training and Validating Multiple Architectures
 
-This stage involves systematic experimentation with various architectures to predict future water depth at the patch level.  
-The process is organized into subdirectories within:
+This stage involves systematic experimentation with various architectures to predict future water depth at the patch level. The process is organized into subdirectories within:
 
 > 📁 `multi_architecture_training/`
 
