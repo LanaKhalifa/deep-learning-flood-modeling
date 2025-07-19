@@ -73,6 +73,7 @@ using configuration settings from:
 
 #### main.A_plot_losses:
 generates `multi_architectures_training/A_train_all_archs_on_small_set/learning_curves.png`: 
-<img width="753" height="448" alt="image" src="https://github.com/user-attachments/assets/665f9fed-82d2-4e5f-ad9f-fc30777f8395" />
+<img width="2742" height="1114" alt="image" src="https://github.com/user-attachments/assets/9b8c73b4-56a2-4425-8d10-5018e14c044d" />
+
 
 
