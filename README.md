@@ -63,10 +63,6 @@ Each subdirectory reflects a distinct phase in the research workflow:
 | 📁`D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
 | 📁`D_compare_all_archs_runtime_size_performance/` | Summary of model inference time, parameter count, and overall performance to support trade-off analysis. |
 
-
-
-
-
 > 📁`A_train_all_archs_on_small_set/`
 ### 2.A: Training All Architectures on Small Set
 #### main.A_train → main.A_plot_losses:
