@@ -46,8 +46,7 @@ generates deep learning ready dataloaders from datasets. each sample should look
 see 📁 `simulations_to_samples/processed_data/dataloaders/figures/` to see random samples from each dataloader. here are 6 samples:
 <img width="1280" height="497" alt="image" src="https://github.com/user-attachments/assets/35cd3e72-ee02-4ca6-83d8-244fe91dd711" />
 
-## 2. Training and Validating Multiple Architectures
-
+## 2. Training the Proposed Architecture 
 This stage involves systematic experimentation with various architectures to predict future water depth at the patch level. The process is organized into subdirectories within:
 
 > 📁 `multi_architecture_training/`
