@@ -13,7 +13,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architecture from the previous step. 
 ### Setup: 
 ## 1. From Simulations to Dataloaders
-Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all taken from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). overall there are 4 projects (prj_03, prj_04, prj_05 and prj_06) from which 210 simulations were run, differing from each other with terrain and flood event (water flow). 
+Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all cut via QGIS from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). overall there are 4 projects (prj_03, prj_04, prj_05 and prj_06) from which 210 simulations were run, differing from each other with terrain and flood event (water flow). 
 
 **Output Paths:**
 - `generate_patches` saves to:  
@@ -36,7 +36,7 @@ loads the patches from each simulation and assembles them into datasets as follo
 |--------------------------|-------------|
 | `small_train` / `small_val` | Selects 7 simulations from prj_03. Used for fast experimentation and architectural comparison. |
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
-| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` mirroring `big_*` sets samples. `prj_03` consists of hand-curated simulations, unlike the more automatic steps used in setting up simulations of the other projects. and thus evaluating performance on such dataset is needed |
+| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` mirroring `big_*` sets samples. Unlike the other projects, prj_03 contains hand-curated simulations rather than those generated through automated processes. Evaluating performance on this dataset is therefore essential.|
 
 ### **main.generate_dataloaders:** 
 generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
