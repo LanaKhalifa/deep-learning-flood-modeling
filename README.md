@@ -56,8 +56,8 @@ Each subdirectory reflects a distinct phase in the research workflow:
 
 | Directory | Description |
 |-----------|-------------|
-| 📁`A_train_all_archs_on_small_set/` | Trains multiple architectures on a small_train to position the proposed design (main branch) within a broader landscape of adapted models and test the feasibility of the downsampler branch. Also identifies top-performing candidates worth training on big_train.|
-| 📁`B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the the custom deigned net: Non Downsampling Convolutions with Self Attention on the same small dataset. |
+| 📁`A_train_all_archs_on_small_set/` | Trains multiple architectures on `small_train` to position the custom-designed model (*Non-Downsampling Convolutions with Self-Attention*) within a broader landscape of adapted models and evaluate the feasibility of the downsampler branch (*Alternating Stride Downsampler*). Also identifies top-performing candidates worth training on `big_train`.|
+| 📁`B_tune_one_arch_on_small_set/` | Fine-tunes the proposed model (*Non-Downsampling Convolutions with Self-Attention*) on `small_train` / `small_val`.|
 | 📁`C_train_best_three_on_big_set/` | Retraining the three best architectures on the full dataset (`big_train` / `big_val`) to assess scalability and robustness. |
 | 📁`D_boxplots_RAE_all_sets/` | Evaluation of the final models using Relative Absolute Error (RAE) across all datasets. |
 | 📁`D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
@@ -75,5 +75,8 @@ using configuration settings from:
 └──  `multi_architectures_training/A_train_all_archs_on_small_set/learning_curves.png`: 
 <img width="2742" height="1114" alt="image" src="https://github.com/user-attachments/assets/81a21afc-a4cd-4dd5-b298-4fd6d097ee60" />
 
-
-
+> 📁`B_tune_one_arch_on_small_set/`
+### 2.B: Tuning with One Arch
+#### main.B_train
+This phase involved extensive experimentation to tune the proposed model. The final tuned version is presented here and can be trained directly using the provided script.
+#### main.B_plot_losses
