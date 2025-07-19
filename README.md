@@ -63,9 +63,9 @@ Each subdirectory reflects a distinct phase in the research workflow:
 | 📁`D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
 | 📁`D_compare_all_archs_runtime_size_performance/` | Summary of model inference time, parameter count, and overall performance to support trade-off analysis. |
 
->📁`A_train_all_archs_on_small_set/`
-### main.A_train → main.A_plot_learning_curves 
-generates this `multi_architectures_training/A_train_all_archs_on_small_set/learning_curves.png`: 
+
+### 📁`A_train_all_archs_on_small_set/`: main.A_train → main.A_plot_learning_curves 
+generates `multi_architectures_training/A_train_all_archs_on_small_set/learning_curves.png`: 
 <img width="753" height="448" alt="image" src="https://github.com/user-attachments/assets/665f9fed-82d2-4e5f-ad9f-fc30777f8395" />
 
 
