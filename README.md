@@ -7,7 +7,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    - Directory: Includes patch extraction, dataset, and dataloader generation scripts.
    - Before running: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into: `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline.
 
-2. **📁 multi_architecture_training/**: Trains modified existing deep learning models as well as custom desigend ones to predict water depth at the patch level
+2. **📁 multi_architecture_training/**: Trains custom designed deep learning models as well as modified ones from the literature to predict water depth at the patch level
    - Directory: Includes model architectures, training, and evaluation scripts.
 
 3. **📁 full_domain_closure_best_mosel/**: scales patch predictions to coherent full-domain predictions. utilizes the best architecture from the previous step. 
