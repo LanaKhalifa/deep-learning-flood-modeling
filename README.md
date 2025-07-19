@@ -80,4 +80,4 @@ using configuration settings from:
 Note: This phase involved extensive experimentation to tune the proposed model. The final tuned version is presented here and can be trained directly using the provided script.
 #### main.B_train
 #### main.B_plot_losses
-<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/375c38ba-7301-4705-a9b9-e40f82dcfc43" />
+<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/00d93142-c735-477b-8eca-92a54dae3b10" />
