@@ -27,7 +27,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 
 ### **main.generate_patches:** 
 takes each simulation's terrain and water depth maps and generates preprocessed patches after augmentation and cleaning:
-<img  width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
+<img width="1280" height="373" alt="image" src="https://github.com/user-attachments/assets/cc712de5-0266-44e5-bde7-b5519997ad93" />
 
 ### **main.generate_datasets**: 
 loads the patches from each simulation and assembles them into datasets as follows:
@@ -41,7 +41,7 @@ loads the patches from each simulation and assembles them into datasets as follo
 ### **main.generate_dataloaders:** 
 generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
 
-<img  width="460" height="189" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
+<img  width="980" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 
 (sea 📁 `simulations_to_samples/processed_data/dataloaders/figures/` to see random samples from each dataloader.)
 
