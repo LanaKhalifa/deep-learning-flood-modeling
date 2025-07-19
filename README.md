@@ -88,6 +88,6 @@ using configuration settings from:
 <img width="400" height="333" alt="image" src="https://github.com/user-attachments/assets/00d93142-c735-477b-8eca-92a54dae3b10" />
 </p>
 
-> 📁`C_train_best_four_on_big_set/`
+> 📁`C_train_best_on_big_set/`
 
 
