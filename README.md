@@ -77,8 +77,12 @@ using configuration settings from:
 
 > 📁`B_tune_one_arch_on_small_set/`
 ### 2.B: Tuning Non-Downsampling Convolution with Self-Attention
-Note: This phase involved extensive experimentation to tune the proposed model. The final tuned version is presented here and can be trained directly using the provided script.
+Note: This phase involved extensive experimentation to tune the proposed model. only the final tuned version is present and used in this repo.
 #### main.B_train
+Trains the models defined in:  
+└── `multi_architecture_training/models/`  
+using configuration settings from:  
+└── `multi_architecture_training/B_tune_one_arch_on_small_set/arch_04_tuned_config.py`
 #### main.B_plot_losses
 <p align="center">
 <img width="400" height="333" alt="image" src="https://github.com/user-attachments/assets/00d93142-c735-477b-8eca-92a54dae3b10" />
