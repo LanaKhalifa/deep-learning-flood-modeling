@@ -65,7 +65,9 @@ Each subdirectory reflects a distinct phase in the research workflow:
 
 > 📁`A_train_all_archs_on_small_set/`
 ### 2.A: Training All Architectures on Small Set
-#### main.A_train → main.A_plot_losses:
+#### main.A_train:
+trains models found in /models.py with /architectures_configs
+#### main.A_plot_losses:
 generates `multi_architectures_training/A_train_all_archs_on_small_set/learning_curves.png`: 
 <img width="753" height="448" alt="image" src="https://github.com/user-attachments/assets/665f9fed-82d2-4e5f-ad9f-fc30777f8395" />
 
