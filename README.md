@@ -57,7 +57,7 @@ Each subdirectory reflects a distinct phase in the research workflow:
 | Directory | Description |
 |-----------|-------------|
 | 📁`A_train_all_archs_on_small_set/` | Trains multiple architectures on a small_train to position the proposed design (main branch) within a broader landscape of adapted models and test the feasibility of the downsampler branch. Also identifies top-performing candidates worth training on big_train.|
-| 📁`B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the top-performing model (`Arch_04`) on the same small dataset. |
+| 📁`B_tune_one_arch_on_small_set/` | Hyperparameter tuning of the the custom deigned net: Non Downsampling Convolutions with Self Attention on the same small dataset. |
 | 📁`C_train_best_three_on_big_set/` | Retraining the three best architectures on the full dataset (`big_train` / `big_val`) to assess scalability and robustness. |
 | 📁`D_boxplots_RAE_all_sets/` | Evaluation of the final models using Relative Absolute Error (RAE) across all datasets. |
 | 📁`D_visualize_prediction_and_errors_test_set/` | Visual comparison between predicted and ground truth water depths on the test set. |
