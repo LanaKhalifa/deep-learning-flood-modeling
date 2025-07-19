@@ -76,7 +76,7 @@ using configuration settings from:
 <img width="2742" height="1114" alt="image" src="https://github.com/user-attachments/assets/81a21afc-a4cd-4dd5-b298-4fd6d097ee60" />
 
 > 📁`B_tune_one_arch_on_small_set/`
-### 2.B: Tuning with One Arch
+### 2.B: Tuning Non-Downsampling Convolution with Self-Attention
 #### main.B_train
 This phase involved extensive experimentation to tune the proposed model. The final tuned version is presented here and can be trained directly using the provided script.
 #### main.B_plot_losses
