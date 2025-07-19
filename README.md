@@ -27,7 +27,7 @@ Note: “Plan” and “Simulation” are used interchangeably throughout this r
 
 ### **main.generate_patches:** 
 takes each simulation's terrain and water depth maps and generates preprocessed patches after augmentation and cleaning:
-<img width="1280" height="366" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
+<img  width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/066520cc-c46a-41b2-a808-cc0b7dfc524a" />
 
 ### **main.generate_datasets**: 
 loads the patches from each simulation and assembles them into datasets as follows:
