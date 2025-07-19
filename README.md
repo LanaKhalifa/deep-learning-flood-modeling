@@ -81,6 +81,6 @@ Note: This phase involved extensive experimentation to tune the proposed model. 
 #### main.B_train
 #### main.B_plot_losses
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/your-image.png" width="600" alt="Description of image" />
-</p>
 <img width="400" height="333" alt="image" src="https://github.com/user-attachments/assets/00d93142-c735-477b-8eca-92a54dae3b10" />
+</p>
+
