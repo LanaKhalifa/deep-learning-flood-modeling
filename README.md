@@ -41,6 +41,7 @@ loads the patches from each simulation and assembles them into datasets as follo
 ### **main.generate_dataloaders:** 
 generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
 <img width="920" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
+
 please check 📁 `simulations_to_samples/processed_data/dataloaders/figures` to see random samples from each dataloaders
 ## 2. Training and Validating Multiple Architectures
 
