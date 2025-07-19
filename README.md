@@ -36,7 +36,7 @@ loads the patches from each simulation and assembles them into datasets as follo
 |--------------------------|-------------|
 | `small_train` / `small_val` | Selects 7 simulations from prj_03. Used for fast experimentation and architectural comparison. |
 | `big_train` / `big_val`     | Includes all simulations from all projects, **excluding 7 per project**, which are reserved for `big_test`. |
-| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` mirroring `big_*` sets samples. `prj_03` consists of hand-curated simulations, unlike the automatically generated ones in other projects. and thus performance on such dataset is evaluated |
+| `prj_03_train_val` / `prj_03_test` | Subset of simulations from `prj_03` mirroring `big_*` sets samples. `prj_03` consists of hand-curated simulations, unlike the more automatic steps used in setting up simulations of the other projects. and thus evaluating performance on such dataset is needed |
 
 ### **main.generate_dataloaders:** 
 generates deep learning ready dataloaders from datasets. each sample should look as follows (ignore the downsampler part for now):
