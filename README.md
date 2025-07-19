@@ -44,7 +44,7 @@ generates deep learning ready dataloaders from datasets. each sample should look
 <img  width="980" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 
 see 📁 `simulations_to_samples/processed_data/dataloaders/figures/` to see random samples from each dataloader. here are 8 samples:
-<img width="1280" height="800" alt="image" src="https://github.com/user-attachments/assets/c12d9153-5366-4a47-99ef-5611facf75f0" />
+<img width="1280" height="720" alt="dataloader_samples" src="https://github.com/user-attachments/assets/e1245e85-1999-4a0c-be94-870e7cd8773d" />
 
 
 ## 2. Training and Validating Multiple Architectures
