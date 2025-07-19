@@ -77,8 +77,7 @@ using configuration settings from:
 
 > 📁`B_tune_one_arch_on_small_set/`
 ### 2.B: Tuning Non-Downsampling Convolution with Self-Attention
-Note: This phase involved extensive experimentation to tune the proposed model. only the final tuned version is present and used in this repo.
-#### main.B_train
+Note: This phase involved extensive experimentation to fine-tune the proposed model. Only the final, optimized version is included and used in this repository.#### main.B_train
 Trains arch_04 defined in:  
 └── `multi_architecture_training/models/`  
 using configuration settings from:  
