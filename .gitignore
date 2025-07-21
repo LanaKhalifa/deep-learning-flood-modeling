@@ -1,0 +1,43 @@
+# Large data directories
+simulations_to_samples/raw_data/hecras_simulations_results/
+simulations_to_samples/raw_data/images/
+simulations_to_samples/processed_data/datasets/
+simulations_to_samples/processed_data/patches_per_simulation/images/
+simulations_to_samples/processed_data/patches_per_simulation/prj_03/
+simulations_to_samples/processed_data/patches_per_simulation/prj_04/
+simulations_to_samples/processed_data/patches_per_simulation/prj_05/
+simulations_to_samples/processed_data/patches_per_simulation/prj_06/
+
+# Large model files and data
+simulations_to_samples/processed_data/dataloaders/*.pt
+multi_architecture_training/*/saved_trained_models/
+multi_architecture_training/*/saved_losses/
+multi_architecture_training/training_utils/*.pt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp

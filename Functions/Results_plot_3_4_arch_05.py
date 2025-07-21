@@ -1,0 +1,496 @@
+#%% Import libraries
+import torch 
+import os
+import torch.profiler
+import sys 
+import pandas as pd
+import matplotlib.pyplot as plt 
+import pickle
+import torch 
+import torch.profiler
+import numpy as np
+
+#%% Import Functions and Classes 
+sys.path.append('/home/lana_k/Spyder_Projects/Inspect_HDF/Inspect_HDF_thesis_final/Functions')
+from TerrainDownsample_k11s1p0 import TerrainDownsample_k11s1p0
+from arch_05 import arch_05
+from plot_learning_curve import plot_learning_curve
+from plot_samples_diff_eval import plot_samples_diff_eval
+from save_quartiles import save_quartiles
+from calculate_rae_all_quartiles import calculate_rae_all_quartiles
+
+#%% settings constant
+# Set the default tensor type to float64
+torch.set_default_dtype(torch.float64) 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+#%%  settings
+trial_num = 'trial_final'
+Architecture_num = 'Arch_05'
+prj_num = '_'
+
+BC_thickness = 2
+num_epochs = 2
+weight_init = 'kaiming'
+initial_lr = 0.001
+
+terrain_c = 1
+
+down_c_start = 1
+down_c1 = 10
+down_c2 = 20
+down_c_end = 1 #madakhalneesh
+down_act = 'leakyrelu'
+down_type = 'k11s10'
+
+arch_num_attentions = 1
+arch_num_layers = 6
+arch_num_c = 32 
+input_c = 2
+
+arch_input_c = down_c_end +  input_c
+arch_act = 'leakyrelu'
+arch_last_act = 'leakyrelu'
+
+#%% directories and paths
+base_dir = '/home/lana_k/Spyder_Projects/Inspect_HDF/Inspect_HDF_thesis_final'
+dataloaders_dir = os.path.join(base_dir, 'Dataloaders')
+
+# Define model, learning curves, and plot directories
+model_dir = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/trained_models')
+learning_curves_dir = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/learning_curves')
+plot_dir_big_test = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/samples/test/big_test')
+plot_dir_prj_03_test = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/samples/test/prj_03_test')
+rae_boxplot_dir = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/boxplots')
+
+# Define paths
+model_path = os.path.join(model_dir, 'model.pth')
+learning_curve_path = os.path.join(learning_curves_dir, 'plot_3_learning_curve.png')
+val_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_val.png')  # New path for histogram
+train_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_train.png')  # New path for histogram
+test_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_test.png')  # New path for histogram
+prj_03_train_val_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_prj03_train_val.png')  # New path for histogram
+prj_03_test_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_prj03_test.png')  # New path for histogram
+all_rae_boxplot_path = os.path.join(rae_boxplot_dir, 'rae_boxplot_all.png')  # New path for histogram
+train_losses_path = os.path.join(learning_curves_dir, 'train_losses.pkl')
+val_losses_path = os.path.join(learning_curves_dir, 'val_losses.pkl')
+train_dummy_losses_path = os.path.join(learning_curves_dir, 'train_dummy_losses.pkl')
+val_dummy_losses_path = os.path.join(learning_curves_dir, 'val_dummy_losses.pkl')
+
+print("Directories and paths set up successfully.")
+
+#%% paths of dataloaders 
+train_loader_path = os.path.join(dataloaders_dir, 'big_train_loader_Terrain_1_BC_2.pt')
+val_loader_path = os.path.join(dataloaders_dir, 'big_val_loader_Terrain_1_BC_2.pt')
+test_loader_path = os.path.join(dataloaders_dir, 'big_test_loader_Terrain_1_BC_2.pt')
+prj_03_train_val_loader_path = os.path.join(dataloaders_dir, 'prj_03_train_val_loader_Terrain_1_BC_2.pt')
+prj_03_test_loader_path = os.path.join(dataloaders_dir, 'prj_03_test_loader_Terrain_1_BC_2.pt')
+
+#%% load losses and plot learning curve
+# Load the loss arrays
+with open(train_losses_path, 'rb') as f:
+    G_losses_train = pickle.load(f)
+
+with open(val_losses_path, 'rb') as f:
+    G_losses_val = pickle.load(f)
+
+with open(train_dummy_losses_path, 'rb') as f:
+    dummy_losses_train = pickle.load(f)
+
+with open(val_dummy_losses_path, 'rb') as f:
+    dummy_losses_val = pickle.load(f)
+    
+plot_learning_curve(G_losses_train, G_losses_val, dummy_losses_train, dummy_losses_val, Architecture_num, trial_num, learning_curve_path)
+
+#%% load trained model
+# Load the trained model
+shared_terrain_downsample = TerrainDownsample_k11s1p0(down_c_start, down_c_end, down_c1, down_c2).to(device)
+netG = arch_05(shared_terrain_downsample).to(device)
+netG.load_state_dict(torch.load(model_path))
+netG.eval()  # Set the model to evaluation mode
+print("Trained model loaded successfully.")
+
+#%% calculate statistic of RAE and save them for later building a boxplot
+#%% big_train
+loader = torch.load(train_loader_path)
+print("big_train loader loaded successfully.")
+Q1, Q2, Q3, min_val, max_val = calculate_rae_all_quartiles(netG, loader, device, train_rae_boxplot_path)
+save_quartiles(base_dir, Architecture_num, trial_num, Q1, Q2, Q3, min_val, max_val, 'big_train')
+print("RAE calculation on big_train set completed and saved.")
+
+#%% big_val
+loader = torch.load(val_loader_path)
+print("big_val loader loaded successfully.")
+Q1, Q2, Q3, min_val, max_val = calculate_rae_all_quartiles(netG, loader, device, val_rae_boxplot_path)
+save_quartiles(base_dir, Architecture_num, trial_num, Q1, Q2, Q3, min_val, max_val, 'big_val')
+print("RAE calculation on big_val set completed and saved.")
+
+#%% prj_03_train_val
+loader = torch.load(prj_03_train_val_loader_path)
+print("prj_03_train_val loader loaded successfully.")
+Q1, Q2, Q3, min_val, max_val = calculate_rae_all_quartiles(netG, loader, device, prj_03_train_val_rae_boxplot_path)
+save_quartiles(base_dir, Architecture_num, trial_num, Q1, Q2, Q3, min_val, max_val, 'prj_03_train_val')
+print("RAE calculation on prj_03_train_val set completed and saved.")
+
+
+#%% big_test
+loader = torch.load(test_loader_path)
+print("big_test loader loaded successfully.")
+
+# Calculate RAE quartiles for the entire test set
+Q1, Q2, Q3, min_val, max_val = calculate_rae_all_quartiles(netG, loader, device, test_rae_boxplot_path)
+save_quartiles(base_dir, Architecture_num, trial_num, Q1, Q2, Q3, min_val, max_val, 'big_test')
+print("RAE calculation on big_test set completed and saved.")
+
+# Iterate through the loader to process all patches
+for i, (terrains, data, labels) in enumerate(loader):
+    terrains, data, labels = terrains.to(device), data.to(device), labels.to(device)
+    
+    # Create a subdirectory for each batch
+    batch_dir = os.path.join(plot_dir_big_test, f'batch_{i+1}')
+    os.makedirs(batch_dir, exist_ok=True)
+    
+    with torch.no_grad():
+        prediction_diffs = netG(terrains, data)
+        plot_samples_diff_eval(100, 'big_test', Architecture_num, trial_num, 
+                           prediction_diffs, labels, terrains, data[:,1],
+                           batch_dir, terrains.shape[0]) 
+#%% prj_03_test
+loader = torch.load(prj_03_test_loader_path)
+print("prj_03_test loader loaded successfully.")
+Q1, Q2, Q3, min_val, max_val = calculate_rae_all_quartiles(netG, loader, device, prj_03_test_rae_boxplot_path)
+save_quartiles(base_dir, Architecture_num, trial_num, Q1, Q2, Q3, min_val, max_val, 'prj_03_test')
+print("RAE calculation on prj_03_test set completed and saved.")
+#%%
+# Iterate through the loader to process all patches
+for i, (terrains, data, labels) in enumerate(loader):
+    terrains, data, labels = terrains.to(device), data.to(device), labels.to(device)
+    
+    # Create a subdirectory for each batch
+    if i == 0 or i ==1:
+        continue
+    
+    batch_dir = os.path.join(plot_dir_prj_03_test, f'batch_{i+1}')
+    os.makedirs(batch_dir, exist_ok=True)
+    
+    with torch.no_grad():
+        prediction_diffs = netG(terrains, data)
+        plot_samples_diff_eval(100, 'prj_01_test', Architecture_num, trial_num, 
+                           prediction_diffs, labels, terrains, data[:,1],
+                           batch_dir, terrains.shape[0]) 
+ 
+#%%
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Function to load the saved quartiles from a CSV file
+def load_quartiles_csv(architecture_num, trial_num, which):
+    quartiles_path = os.path.join(base_dir, f'{architecture_num}/{trial_num}/boxplot/rae_quartiles_{which}.csv')
+    if os.path.exists(quartiles_path):
+        df = pd.read_csv(quartiles_path, index_col=0)
+        return df
+    else:
+        print(f"File {quartiles_path} not found.")
+        return None
+
+# Load quartiles for each dataset
+datasets = [ 'big_train','big_val', 'big_test',  'prj_03_train_val', 'prj_03_test']
+
+quartiles_data = {}
+for dataset in datasets:
+    df = load_quartiles_csv(Architecture_num, trial_num, dataset)
+    if df is not None:
+        quartiles_data[dataset] = df.loc[trial_num]
+
+# Prepare data for plotting
+boxplot_data = [quartiles_data[dataset][['min_val', 'Q1', 'Q2', 'Q3', 'max_val']] for dataset in datasets]
+# Prepare data for boxplot
+boxplot_values = [list(data[['min_val', 'Q1', 'Q2', 'Q3', 'max_val']].values) for data in boxplot_data]
+
+# Convert to the format required by matplotlib for boxplot
+boxplot_data = []
+for values in boxplot_values:
+    boxplot_data.append([values[0], values[1], values[2], values[3], values[4]])
+
+# Plotting the boxplot
+fig, ax = plt.subplots(figsize=(10, 4))  # Increased figure size for better readability
+
+# Creating the boxplot
+ax.boxplot(boxplot_data, vert=False, patch_artist=True, showmeans=False,
+           medianprops=dict(color='blue', linewidth=2),  # Blue line for median
+           boxprops=dict(color='black', linewidth=2, facecolor='lightgrey'),  # Light grey box with thinner black border
+           whiskerprops=dict(color='black', linewidth=2),  # Thinner whisker lines
+           capprops=dict(color='black', linewidth=2),     # Thinner caps
+           flierprops=dict(marker='o', color='red', alpha=0.5),  # Style for outliers
+           widths=0.5)  # Keep the boxes at the same width
+
+# Adjust the y-axis spacing by manipulating the tick positions
+ax.set_yticks([i + 1 for i in range(len(datasets))])  # Set Y-ticks closer together
+ax.set_yticklabels(datasets, fontsize=14)
+
+# Customize the background grid
+ax.grid(True, linestyle='--', alpha=0.7)
+
+# Setting labels and title
+ax.set_xlabel('Relative Absolute Error (RAE)', fontsize=16)
+ax.set_title('Box Plot of RAE Values Across Different Datasets', fontsize=18)# fontweight='bold')
+ax.tick_params(axis='both', which='major', labelsize=14)
+
+# Move the boxplots closer together by reducing the height of the plot
+plt.subplots_adjust(left=0.2, right=0.95, top=0.9, bottom=0.1, hspace=0.1)  # hspace controls vertical spacing
+
+# Tight layout to adjust padding
+plt.tight_layout()
+
+# Save the figure
+#plt.savefig("boxplot_rae_datasets.png", dpi=300)
+
+rae_boxplot_dir = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/boxplots')
+
+# Ensure the directory exists; if not, create it
+os.makedirs(rae_boxplot_dir, exist_ok=True)
+
+# Define the full path including the filename
+save_path = os.path.join(rae_boxplot_dir, 'boxplot_rae_datasets.png')
+
+# Save the plot to the specified directory
+plt.savefig(save_path, dpi=300)
+# Show the plot
+plt.show()
+
+#%% boxplot new 
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Function to load the saved quartiles from a CSV file
+def load_quartiles_csv(architecture_num, trial_num, which):
+    quartiles_path = os.path.join(base_dir, f'{architecture_num}/{trial_num}/boxplot/rae_quartiles_{which}.csv')
+    if os.path.exists(quartiles_path):
+        df = pd.read_csv(quartiles_path, index_col=0)
+        return df
+    else:
+        print(f"File {quartiles_path} not found.")
+        return None
+
+# Load quartiles for each dataset
+datasets = ['big_train', 'big_val', 'big_test', 'prj_03_train_val', 'prj_03_test']
+
+quartiles_data = {}
+for dataset in datasets:
+    df = load_quartiles_csv(Architecture_num, trial_num, dataset)
+    if df is not None:
+        quartiles_data[dataset] = df.loc[trial_num]
+
+# Prepare data for plotting
+boxplot_data = [quartiles_data[dataset][['min_val', 'Q1', 'Q2', 'Q3', 'max_val']] for dataset in datasets]
+# Prepare data for boxplot
+boxplot_values = [list(data[['min_val', 'Q1', 'Q2', 'Q3', 'max_val']].values) for data in boxplot_data]
+
+# Convert to the format required by matplotlib for boxplot
+boxplot_data = []
+for values in boxplot_values:
+    boxplot_data.append([values[0], values[1], values[2], values[3], values[4]])
+
+# Plotting the boxplot
+fig, ax = plt.subplots(figsize=(10, 4))  # Increased figure size for better readability
+
+# Creating the boxplot
+ax.boxplot(boxplot_data, vert=False, patch_artist=True, showmeans=False,
+           medianprops=dict(color='blue', linewidth=2),  # Blue line for median
+           boxprops=dict(color='black', linewidth=2, facecolor='lightgrey'),  # Light grey box with thinner black border
+           whiskerprops=dict(color='black', linewidth=2),  # Thinner whisker lines
+           capprops=dict(color='black', linewidth=2),     # Thinner caps
+           flierprops=dict(marker='o', color='red', alpha=0.5),  # Style for outliers
+           widths=0.5)  # Keep the boxes at the same width
+
+# Adjust the y-axis spacing by manipulating the tick positions
+ax.set_yticks([i + 1 for i in range(len(datasets))])  # Set Y-ticks closer together
+ax.set_yticklabels(['big_train', 'big_val', 'big_test', 'prj_01_train_val', 'prj_01_test'], fontsize=14)  # Updated labels
+
+# Customize the background grid
+ax.grid(True, linestyle='--', alpha=0.7)
+
+# Setting labels and title
+ax.set_xlabel('Relative Absolute Error (RAE)', fontsize=16)
+ax.tick_params(axis='both', which='major', labelsize=14)
+
+# Move the boxplots closer together by reducing the height of the plot
+plt.subplots_adjust(left=0.2, right=0.95, top=0.9, bottom=0.1, hspace=0.1)  # hspace controls vertical spacing
+
+# Tight layout to adjust padding
+plt.tight_layout()
+
+# Save the figure
+#plt.savefig("boxplot_rae_datasets.png", dpi=300)
+
+rae_boxplot_dir = os.path.join(base_dir, f'{Architecture_num}/{trial_num}/boxplots')
+
+# Ensure the directory exists; if not, create it
+os.makedirs(rae_boxplot_dir, exist_ok=True)
+
+# Define the full path including the filename
+save_path = os.path.join(rae_boxplot_dir, 'boxplot_rae_datasets.png')
+
+# Save the plot to the specified directory
+plt.savefig(save_path, dpi=300)
+# Show the plot
+plt.show()
+
+#%% Grouping samples and calculating median RAE
+loader = torch.load(val_loader_path)
+group_ranges = [(i, i + 1) for i in range(10)]  # Create ranges [(0, 1), (1, 2), ..., (9, 10)]
+group_labels = [f'{low}-{high}' for low, high in group_ranges]
+
+# Initialize dictionaries to store data for each group
+group_raes = {label: [] for label in group_labels}  # Store RAEs for calculating median
+group_counts = {label: 0 for label in group_labels}
+group_samples = {label: [] for label in group_labels}
+
+# Step 1: Group samples based on min and max pixel values of the labels
+for terrains, data, labels in loader:
+    max_vals = labels.max(dim=3)[0].max(dim=2)[0]  # Maximum pixel value in each label
+    min_vals = labels.min(dim=3)[0].min(dim=2)[0]  # Minimum pixel value in each label
+
+    for i in range(labels.size(0)):  # Iterate over batch
+        max_val, min_val = max_vals[i].item(), min_vals[i].item()
+
+        for (low, high), label in zip(group_ranges, group_labels):
+            if low <= min_val < high and max_val < high:
+                group_samples[label].append((terrains[i:i+1], data[i:i+1], labels[i:i+1]))
+                break
+
+# Step 2 and 3: Pass each group through the model and calculate the RAE
+with torch.no_grad():
+    for label, samples in group_samples.items():
+        if not samples:
+            continue
+
+        terrains_group = torch.cat([s[0] for s in samples], dim=0).to(device)
+        data_group = torch.cat([s[1] for s in samples], dim=0).to(device)
+        labels_group = torch.cat([s[2] for s in samples], dim=0).to(device)
+
+        # Model prediction
+        y_fake_group = netG(terrains_group, data_group)
+
+        # Calculate RAE
+        diff = torch.abs(y_fake_group - labels_group)
+        dummy_diff = torch.abs(labels_group)
+        rae_group = (torch.sum(diff, dim=(1, 2, 3)) / torch.sum(dummy_diff, dim=(1, 2, 3))).cpu().numpy()
+
+        # Store the RAEs for median calculation
+        group_raes[label].extend(rae_group.tolist())
+        group_counts[label] = labels_group.size(0)
+
+# Calculate the median RAE for each group
+median_raes = [np.median(group_raes[label]) if group_raes[label] else 0 for label in group_labels]
+
+# Step 4 and 5: Plotting the results
+sample_counts = [group_counts[label] for label in group_labels]
+
+fig, ax1 = plt.subplots()
+
+color = 'tab:blue'
+ax1.set_xlabel('Water Depth Difference Ranges (m)')
+ax1.set_ylabel('Median RAE', color=color)
+ax1.bar(group_labels, median_raes, color=color)
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Change sample count color to dark red
+color = 'darkred'
+ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+ax2.set_ylabel('Number of Samples', color=color)  # we already handled the x-label with ax1
+ax2.plot(group_labels, sample_counts, color=color, marker='o')
+ax2.tick_params(axis='y', labelcolor=color)
+
+fig.tight_layout()  # otherwise the right y-label is slightly clipped
+plt.title('Median RAE and Sample Counts per Water Depth Difference Range')
+plt.show()
+
+print("Median RAE and Sample Counts per Water Depth Difference Range calculation completed.")
+#%%
+import torch
+import numpy as np
+import matplotlib.pyplot as plt
+
+#%% Grouping samples and calculating median RAE
+loader = torch.load(val_loader_path)
+group_ranges = [(i, i + 1) for i in range(10)]  # Create ranges [(0, 1), (1, 2), ..., (9, 10)]
+group_labels = [f'{low}-{high}' for low, high in group_ranges]
+
+# Initialize dictionaries to store data for each group
+group_raes = {label: [] for label in group_labels}  # Store RAEs for calculating median
+group_counts = {label: 0 for label in group_labels}
+group_samples = {label: [] for label in group_labels}
+
+# Step 1: Group samples based on min and max pixel values of the labels
+for terrains, data, labels in loader:
+    max_vals = labels.max(dim=3)[0].max(dim=2)[0]  # Maximum pixel value in each label
+    min_vals = labels.min(dim=3)[0].min(dim=2)[0]  # Minimum pixel value in each label
+
+    for i in range(labels.size(0)):  # Iterate over batch
+        max_val, min_val = max_vals[i].item(), min_vals[i].item()
+
+        for (low, high), label in zip(group_ranges, group_labels):
+            if low <= min_val < high and max_val < high:
+                group_samples[label].append((terrains[i:i+1], data[i:i+1], labels[i:i+1]))
+                break
+
+# Step 2 and 3: Pass each group through the model and calculate the RAE
+with torch.no_grad():
+    for label, samples in group_samples.items():
+        if not samples:
+            continue
+
+        terrains_group = torch.cat([s[0] for s in samples], dim=0).to(device)
+        data_group = torch.cat([s[1] for s in samples], dim=0).to(device)
+        labels_group = torch.cat([s[2] for s in samples], dim=0).to(device)
+
+        # Model prediction
+        y_fake_group = netG(terrains_group, data_group)
+
+        # Calculate RAE
+        diff = torch.abs(y_fake_group - labels_group)
+        dummy_diff = torch.abs(labels_group)
+        rae_group = (torch.sum(diff, dim=(1, 2, 3)) / torch.sum(dummy_diff, dim=(1, 2, 3))).cpu().numpy()
+
+        # Store the RAEs for median calculation
+        group_raes[label].extend(rae_group.tolist())
+        group_counts[label] = labels_group.size(0)
+
+# Calculate the median RAE for each group
+median_raes = [np.median(group_raes[label]) if group_raes[label] else 0 for label in group_labels]
+
+# Step 4 and 5: Plotting the results
+sample_counts = [group_counts[label] for label in group_labels]
+
+fig, ax1 = plt.subplots(figsize=(10, 6))  # Adjusted the figure size for better visibility
+
+# Primary axis for Median RAE
+color = 'tab:blue'
+ax1.set_xlabel('Water Depth Difference Ranges (m)', fontsize=14)
+ax1.set_ylabel('Median RAE', color=color, fontsize=14)
+ax1.bar(group_labels, median_raes, color=color, alpha=0.7, width=0.6)
+ax1.tick_params(axis='y', labelcolor=color, labelsize=12)
+ax1.tick_params(axis='x', labelsize=12)
+ax1.set_ylim(0, max(median_raes) * 1.2)  # Add a bit more space on top
+
+# Secondary axis for Number of Samples
+color = 'darkred'
+ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+ax2.set_ylabel('Number of Samples', color=color, fontsize=14)
+ax2.plot(group_labels, sample_counts, color=color, marker='o', markersize=8, linestyle='-', linewidth=2)
+ax2.tick_params(axis='y', labelcolor=color, labelsize=12)
+ax2.set_ylim(0, max(sample_counts) * 1.2)  # Add a bit more space on top
+
+# Improve the overall layout
+fig.tight_layout(pad=3.0)
+plt.title('Median RAE and Sample Counts per Water Depth Difference Range', fontsize=16)
+plt.grid(True, linestyle='--', alpha=0.6)
+
+# Save and show the plot
+plt.savefig('rae_sample_counts_plot.png', dpi=300)
+plt.show()
+
+print("Median RAE and Sample Counts per Water Depth Difference Range calculation completed.")
