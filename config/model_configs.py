@@ -1,6 +1,5 @@
 # config/model_configs.py
 # Model configurations for different training stages
-
 from multi_architecture_training.models.terrain_downsampler_k11s10 import TerrainDownsampleK11S10
 from multi_architecture_training.models.terrain_downsampler_alternating import TerrainDownsampleAlternating
 from multi_architecture_training.models.non_downsampling_convolutions import NonDownsamplingConvolutions
@@ -10,6 +9,7 @@ from multi_architecture_training.models.classic_unet import ClassicUNet
 from multi_architecture_training.models.encoder_decoder_attention import EncoderDecoderWithAttention
 from multi_architecture_training.models.unet_resnet_modified import UNetResNetModified
 from multi_architecture_training.models.encoder_decoder_large_convolutions import EncoderDecoderWithLargeConvolutions
+from config.training_config import EPOCHS, LEARNING_RATE
 
 # ============================================================================
 # STAGE A: Train all architectures on small set
@@ -17,9 +17,7 @@ from multi_architecture_training.models.encoder_decoder_large_convolutions impor
 
 def get_stage_A_configs():
     """Configuration for training all architectures on small dataset"""
-    
-    epochs = 300
-    
+        
     # Shared downsampler params for stage A
     default_downsampler = {
         "downsampler_class": TerrainDownsampleAlternating,
@@ -42,17 +40,16 @@ def get_stage_A_configs():
                 "arch_last_act": "leakyrelu"
             },
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_03": {
             "model_class": SimplifiedUNet,
             "params": {
-                "num_c_encoder": [3, 32, 64, 128, 256, 256, 256, 128, 64, 32, 1]
             },
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_04": {
             "model_class": NonDownsamplingConvolutionsWithAttention,
@@ -65,36 +62,36 @@ def get_stage_A_configs():
                 "arch_num_attentions": 1
             },
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_05": {
             "model_class": ClassicUNet,
             "params": {},
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_07": {
             "model_class": EncoderDecoderWithAttention,
             "params": {},
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_08": {
             "model_class": UNetResNetModified,
             "params": {},
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         },
         "Arch_09": {
             "model_class": EncoderDecoderWithLargeConvolutions,
             "params": {},
             **default_downsampler,
-            "epochs": epochs,
-            "lr": 0.0001
+            "epochs": EPOCHS,
+            "lr": LEARNING_RATE
         }
     }
     

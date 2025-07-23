@@ -1,23 +1,8 @@
 # config/data_config.py
-# Configuration for dataset and dataloader generation
 
-# General constants
-PATCH_SIZE = 32
-BOUNDARY_THICKNESS = 2 
-TERRAIN_PATCH_SIZE = 321
-BATCH_SIZE = 300
-
-# Data paths
-PATCHES_ROOT = './simulations_to_samples/processed_data/patches_per_simulation/'
-DATASETS_ROOT = './simulations_to_samples/processed_data/datasets/'
-DATALOADERS_ROOT = './simulations_to_samples/processed_data/dataloaders/'
-
-# RAE evaluation paths
-RAEs_ROOT = './multi_architecture_training/D_evaluation_and_visualization/RAE_values'
-
-# Project simulation sublists
+# Project simulation sublists (raw data)
 prj_03_plans = ['04', '05', '06', '07', '08', '09', '10','13', '14', '15', '16', '17', '18', '19','20', '21', '22', '23', '24','25', '26',
-                '31', '32', '33', '35', '38', '39', '40','51', '52', '53', '55', '56', '57', '58','61', '63', '64', '65', '71', '72', '73']
+               '31', '32', '33', '35', '38', '39', '40','51', '52', '53', '55', '56', '57', '58','61', '63', '64', '65', '71', '72', '73']
 
 prj_04_plans = ['01', '02', '03', '04', '05', '06', '07', '10', '12', '13', '14', '15', '16', '17', '18', '20', '21', '22',
                 '23', '24', '25', '26', '27', '28', '29', '30', '31','34', '35', '37','38', '39', '40', '41', '42', '44', '45']
@@ -37,3 +22,10 @@ prjs_metadata = {'03': ('hecras_on_03', prj_03_plans),
                  '04': ('HECRAS', prj_04_plans),
                  '05': ('HECRAS', prj_05_plans),
                  '06': ('HECRAS', prj_06_plans)} 
+
+# for building patches (generate_patches.py)
+PATCH_SIZE = 32
+TERRAIN_PATCH_SIZE = 321
+
+# for builiding dataloaders (generate_dataloaders.py)
+BOUNDARY_THICKNESS = 2 # (pixels. how much from n+1 do we want to show the model in the input)
