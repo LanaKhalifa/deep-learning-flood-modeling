@@ -1,6 +1,3 @@
-# config.py - Backward compatibility for existing imports
-# This file imports from the new config system to maintain compatibility
-
 from config.data_config import *
 from config.paths_config import *
 from config.training_config import *
