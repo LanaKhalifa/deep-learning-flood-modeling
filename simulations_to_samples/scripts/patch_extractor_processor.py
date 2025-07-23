@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import h5py
 import tifffile
 from scipy import ndimage
+from config.paths_config import RAW_SIMULATIONS_DIR
 
 class PatchExtractorProcessor:
     """
@@ -50,7 +51,7 @@ class PatchExtractorProcessor:
         self.plan_num = plan_num
 
         # File paths (relative to GitHub root)
-        self.prj_path = os.path.join('simulations_to_samples', 'raw_data', 'hecras_simulations_results', f'prj_{prj_num}') # location of simulations results in github repo
+        self.prj_path = os.path.join(RAW_SIMULATIONS_DIR, f'prj_{prj_num}')
         self.terrain_path = os.path.join(self.prj_path, 'Terrains') # terrain are saved in simulations results directory
         self.plan_file_name = f'{prj_name}.p{plan_num}.hdf' # HECRAS saves simulations results with these names
         self.tiff_name = f'terrain_{plan_num}.tif'
@@ -103,20 +104,14 @@ class PatchExtractorProcessor:
                   - 'Invert_Depth': ndarray of invert depth values
         """
         hdf_path = os.path.join(self.prj_path, self.plan_file_name)
-        if not os.path.exists(hdf_path):
-            raise FileNotFoundError(f'HDF file not found: {hdf_path}')
-
         with h5py.File(hdf_path, 'r') as f:
             data = {}
 
             # Geometry: Cell center coordinates
-            data['Cells Center Coordinate'] = np.array(
-                f['Geometry']['2D Flow Areas']['Perimeter 1']['Cells Center Coordinate']
-            )
+            data['Cells Center Coordinate'] = np.array(f['Geometry']['2D Flow Areas']['Perimeter 1']['Cells Center Coordinate'])
 
             # Results: Invert depth values over time
-            results_group = f['Results']['Unsteady']['Output']['Output Blocks']['Base Output']\
-                              ['Unsteady Time Series']['2D Flow Areas']['Perimeter 1']
+            results_group = f['Results']['Unsteady']['Output']['Output Blocks']['Base Output']['Unsteady Time Series']['2D Flow Areas']['Perimeter 1']
             data['Invert_Depth'] = np.array(results_group['Cell Invert Depth'])
 
         return data
@@ -183,9 +178,6 @@ class PatchExtractorProcessor:
 
         """
         tiff_path = os.path.join(self.terrain_path, self.tiff_name)
-        if not os.path.exists(tiff_path):
-            raise FileNotFoundError(f'TIFF file not found: {tiff_path}')
-
         self.tiff_data = tifffile.imread(tiff_path)
 
         # Trim 1 km (1000 TIFF pixels) from edges if required
@@ -465,7 +457,7 @@ class PatchExtractorProcessor:
             'simulations_to_samples',
             'processed_data',
             'patches_per_simulation',
-            'images')
+            'figures')
         os.makedirs(output_dir, exist_ok=True)
     
         # Create figure: 10 rows x 3 columns
@@ -534,7 +526,7 @@ class PatchExtractorProcessor:
         axs[0, 3].axis('off')
 
         # Save the figure in the raw_data/images/ directory
-        output_dir = './simulations_to_samples/raw_data/images/'
+        output_dir = os.path.join(RAW_SIMULATIONS_DIR, 'figures')
         os.makedirs(output_dir, exist_ok=True)
     
         # Save the figure as PNG with the project and plan identifiers

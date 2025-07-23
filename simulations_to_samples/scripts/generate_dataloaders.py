@@ -6,8 +6,9 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import TensorDataset, DataLoader
-from config.data_config import PATCH_SIZE, BOUNDARY_THICKNESS, BATCH_SIZE
-from config.paths_config import DATASETS_DIR, DATALOADERS_DIR
+from config.data_config import PATCH_SIZE, BOUNDARY_THICKNESS
+from config.training_config import BATCH_SIZE
+from config.paths_config import DATASETS_DIR, DATALOADERS_DIR, PATCHES_DIR
 
 def zero_internal(matrix):
     """Zero out the internal region of a 2D matrix, keeping a boundary."""
