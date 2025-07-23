@@ -1,5 +1,4 @@
 # main.py – Deep Learning Flood Modeling Pipeline
-
 import argparse
 import logging
 import sys
@@ -18,9 +17,10 @@ from multi_architecture_training.C_train_best_four_on_big_set.train import run_t
 from multi_architecture_training.C_train_best_four_on_big_set.plot_all_losses import plot_all_losses as C_plot_all_losses
 from multi_architecture_training.training_utils.dummy_losses import calculate_and_save_dummy_losses
 
-from evaluate_and_visualize_best_model.generate_rae_boxplot import plot_rae_boxplots_arch_05
-from evaluate_and_visualize_best_model.visualize_predictions import plot_entire_batch
+from evaluate_and_visualize_best_model.scripts.generate_rae_boxplot import plot_rae_boxplots_arch_05
+from evaluate_and_visualize_best_model.scripts.visualize_predictions import plot_entire_batch
 
+from full_domain_closure_best_model.apply_closure_on_simulations import run_closure_on_all_simulations
 
 # ----------------------------
 # Setup logging
@@ -95,6 +95,13 @@ def plot_rae_boxplots():
 def plot_entire_batch_predictions():
     plot_entire_batch() 
 # ----------------------------
+# Stage 4: Full Domain Closure
+# ----------------------------
+def run_closure():
+    logger.info("Running full domain closure on all simulations...")
+    run_closure_on_all_simulations()
+
+# ----------------------------
 # CLI Argument Parser
 # ----------------------------
 
@@ -113,7 +120,8 @@ def main():
         'C_train',
         'C_plot_losses',
         'plot_rae_boxplots',
-        'plot_entire_batch_predictions'
+        'plot_entire_batch_predictions',
+        'run_closure'
     ])
     
     args = parser.parse_args()
@@ -130,7 +138,8 @@ def main():
         'C_train': C_train,
         'C_plot_losses': C_plot_losses,
         'plot_rae_boxplots': plot_rae_boxplots,
-        'plot_entire_batch_predictions': plot_entire_batch_predictions
+        'plot_entire_batch_predictions': plot_entire_batch_predictions,
+        'run_closure': run_closure
     }
 
     task_map[args.task]()
