@@ -152,4 +152,22 @@ I've cherry picked intricate predictions on test set to show the model's capacit
 
 ___
 ## 4. Closure Model
+> **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance.  
+>  
+> In the meantime, you can view the results at:  
+> /home/lana_k/deep-learning-flood-modeling/full_domain_closure_best_model/figures/Converging  
+> and  
+> /home/lana_k/deep-learning-flood-modeling/full_domain_closure_best_model/figures/9_Maps  
+>  
+> 9_Maps shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. each subplot x and y axes show the number of pixel this flood is modeled over. each pixel is 10m in simulation.  
+> Converging shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
+>  
+> These figures were generated from test simulations used to create test loaders.  
+> Each PNG is named using the format prj_{x}_plan_{x}_t_{x}.png, referring to the project, plan, and the input time t when the closure model was applied.  
+>  
+> Below are selected examples of the 9 maps with their corresponding convergence curves:
 
+<img width="5760" height="3960" alt="111_prj_03_plan_71_t_70" src="https://github.com/user-attachments/assets/5dde5ac4-521e-451c-810a-a0b3a8d1da4a" />
+<img width="2160" height="720" alt="111c_prj_03_plan_71_t_70" src="https://github.com/user-attachments/assets/2bf82667-f07c-4dbd-83a4-f9ca646b7f98" />
+<img width="5760" height="3960" alt="222_prj_04_plan_44_t_210" src="https://github.com/user-attachments/assets/291b4ff1-50fa-4d37-acd1-fa2a4fed4ad4" />
+<img width="2160" height="720" alt="222c_prj_04_plan_44_t_210" src="https://github.com/user-attachments/assets/2c7ad89c-3b63-4765-a67f-59e379b9a6d6" />
