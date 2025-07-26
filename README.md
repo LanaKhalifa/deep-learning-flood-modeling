@@ -1,4 +1,3 @@
-create how to install section in GitHub readme. here is my full readme for now 
 # 🌊 Deep Learning Flood Modeling
 
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
