@@ -86,8 +86,7 @@ This stage involves systematic experimentation with various architectures to pre
 |------------------------------------|---------|
 | 📁 `A_tune_one_arch_on_small_set/`    | Fine-tunes the proposed architecture (*Non-Downsampling Convolutions with Self-Attention*) and explores database, architectural, and optimization settings using `small_train` / `small_val`. |
 | 📁 `B_train_all_archs_on_small_set/`  | Trains multiple architectures on `small_train` to position the proposed model within a broader landscape and evaluate the downsampler design (*Alternating Stride Downsampler*). Identifies top candidates for large-scale training. |
-| 📁 `C_train_best_four_on_big_set/`    | Retrains the top four architectures on `big_train` / `big_val` using optimized settings to select the best model. |
-`   | Retrains the top four architectures on `big_train` / `big_val` to identify the best model. |
+| 📁 `C_train_best_four_on_big_set/`    | Retrains the top four architectures on `big_train` / `big_val` using optimized settings to select the best model. Identifies the best model. |
 
 ### How to Run
 ```bash
