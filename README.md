@@ -31,7 +31,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    conda env create -f environment.yml
    ```
    
-   *Or using mamba (recommended for faster installation):*
+   *Or using mamba: *
    ```bash
    mamba env create -f environment.yml
    ```
@@ -46,28 +46,6 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    - Move it to `simulations_to_data/raw_data/hecras_simulations_results/`
    - This folder contains the HEC-RAS simulation outputs (.hdf files) and terrain data (.tif files) required for the pipeline
 
-5. **Verify installation:**
-   ```bash
-   python -c "import torch; import numpy; import matplotlib; print('Environment setup successful!')"
-   ```
-
-### Environment Management
-
-- **Activate environment:** `conda activate flood_env`
-- **Deactivate environment:** `conda deactivate`
-- **Update environment:** `conda env update -f environment.yml`
-- **Remove environment:** `conda env remove -n flood_env`
-
-### System Requirements
-- **RAM:** Minimum 16GB recommended (32GB+ for large datasets)
-- **GPU:** CUDA-compatible GPU recommended for training (optional for inference)
-- **Storage:** ~50GB free space for full dataset and model outputs
-- **OS:** Linux, macOS, or Windows with WSL2
-
-### Troubleshooting
-- If environment creation fails, try updating conda: `conda update conda`
-- For GPU support issues, verify CUDA installation: `nvidia-smi`
-- For memory issues during training, reduce batch size in configuration files
 ---
 ## 1. From Simulations to Dataloaders
 
