@@ -1,3 +1,4 @@
+create how to install section in GitHub readme. here is my full readme for now 
 # 🌊 Deep Learning Flood Modeling
 
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
@@ -10,25 +11,35 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 | [4. Closure Model](#4-closure-model) | Uses an iterative closure model to upscale patch predictions to full-domain flood maps. |
 
 ---
-How to Install
 
-1. Clone the Repository
-git clone https://github.com/your-username/deep-learning-flood-modeling.git
-cd deep-learning-flood-modeling
-2. Create and Activate Conda Environment
-Make sure you have Miniconda or Anaconda installed.
+## Installation
 
-conda env create -f environment.yml
-conda activate flood-modeling
-environment.yml contains all necessary dependencies, including PyTorch and core packages such as numpy, matplotlib, and scikit-learn.
-3. Prepare the Simulation Data
-Due to GitHub's file size limits, the raw simulation outputs are shared externally.
-Move the folder hecras_simulations_results/ (shared via OneDrive) into:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/deep-learning-flood-modeling.git
+   cd deep-learning-flood-modeling
+   ```
+2. **Create the conda environment:**
+   ```bash
+   conda env create -f environment.yml
+   ```
+   *Or using mamba:*
+   ```bash
+   mamba env create -f environment.yml
+   ```
 
-simulations_to_samples/raw_data/
+3. **Activate the environment:**
+   ```bash
+   conda activate flood-modeling
+   ```
 
+4. **Download and setup data:**
+   - Download the `hecras_simulations_results/` folder from the provided OneDrive link
+   - Move it to `simulations_to_data/raw_data/hecras_simulations_results/`
+   - This folder contains the HEC-RAS simulation outputs (.hdf files) and terrain data (.tif files) required for the pipeline
+
+5. **Activate environment:** `conda activate flood-modeling`
 ---
-
 ## 1. From Simulations to Dataloaders
 
 > Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all cut via QGIS from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). Overall, there are 4 projects (`prj_03`, `prj_04`, `prj_05`, and `prj_06`) from which 210 simulations were run, differing from each other in terrain and flood event (water flow).
