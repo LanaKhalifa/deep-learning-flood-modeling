@@ -15,7 +15,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 ## Installation
 
 ```
-git clone https://github.com/LanaKhalifa/deep-learning-flood-modeling.git    # 1. Clone the repository
+git clone https://github.com/LanaKhalifa/deep-learning-flood-modeling.git     # 1. Clone the repository
 cd deep-learning-flood-modeling
 conda env create -f environment.yml                                           # 2. Create the conda environment
 mamba env create -f environment.yml                                           # 2. Or using mamba
