@@ -2,26 +2,13 @@
 
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
 
-1. **📁 simulations_to_data/**: Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches. Includes patch extraction, dataset construction, and dataloader generation scripts.
-
-2. **📁 multi_architecture_training/**: Trains both custom-designed and literature-based deep learning models to predict water depth at the patch level. Includes model definitions, training scripts, and loss curve plotting tools.
-
-3. **📁 evaluate_and_visualize_best_model/**: Evaluates the best-performing model on each dataset using the RAE metric and visualizes its predictions.
-
-4. **📁 full_domain_closure_best_model/**: Applies an iterative closure model to upscale patch-level predictions into coherent, full-domain water depth maps using the best architecture identified in the previous stage.
-
-
-# 🌊 Deep Learning Flood Modeling
-
-This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
-
-## 📚 Table of Contents
+## Table of Contents
 
 | Section | Summary |
 |--------|---------|
 | [🌊 Deep Learning Flood Modeling](#-deep-learning-flood-modeling) | Overview of the full pipeline and its four core stages. |
-| [1. From Simulations to Dataloaders](#1-from-simulations-to-dataloaders) | Converts raw HEC-RAS and terrain files into patch-based datasets, then into dataloaders for deep learning. |
-| [2. Training Workflow](#2-training-workflow) | Trains multiple architectures, fine-tunes the best one, and scales training to larger datasets. |
+| [1. From Simulations to Dataloaders](#1-from-simulations-to-dataloaders) | Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches.|
+| [2. Training Workflow](#2-training-workflow) | Trains multiple architectures including custom designed ones |
 | [3. Evaluation and Visualization](#3-evaluation-and-visualization) | Evaluates the best model using RAE and visualizes its predictions. |
 | [4. Closure Model](#4-closure-model) | Uses an iterative closure model to upscale patch predictions to full-domain flood maps. |
 
