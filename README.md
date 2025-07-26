@@ -4,7 +4,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 
 | Section | Summary |
 |--------|---------|
-| [Installation](#-installation) | Setup instructions for conda/mamba environment, dependencies, and data download |
+| [Installation](#-installation) | Setup instructions for conda environment, dependencies, and data download |
 | [1. From Simulations to Dataloaders](#1-from-simulations-to-dataloaders) | Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches.|
 | [2. Training Workflow](#2-training-workflow) | Trains multiple architectures including custom designed ones |
 | [3. Evaluation and Visualization](#3-evaluation-and-visualization) | Evaluates the best model using RAE and visualizes its predictions. |
@@ -22,11 +22,6 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 2. **Create the conda environment:**
    ```bash
    conda env create -f environment.yml
-   ```
-   
-   *Or using mamba: *
-   ```bash
-   mamba env create -f environment.yml
    ```
 
 3. **Activate the environment:**
