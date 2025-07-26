@@ -107,9 +107,9 @@ python main.py A_plot_losses              # Plot training and validation losses 
 - Configuration file: `/config/model_configs.py`
 - Train file: `multi_architecture_training/training_utils/train_model.py`
 
-### A_plot_losses and C_plot_losses
+### B_plot_losses and C_plot_losses
 
-Generate visualizations of the L1 training and validation loss curves for all architectures trained on `small_train` (Stage A) and for the top four architectures retrained on `big_train` (Stage C).
+Generate visualizations of the L1 training and validation loss curves for all architectures trained on `small_train` (Stage B) and for the top four architectures retrained on `big_train` (Stage C).
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bb3c06e3-29e6-4607-b658-488b3b2bbcb1" alt="learning_curves_aa" style="width: 66%;" />
