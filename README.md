@@ -148,7 +148,6 @@ Plots the predictions of the best model on one batch (300 samples) from `prj_03_
 <p align="center">
   <img src="https://github.com/user-attachments/assets/02eae530-8fad-4451-aa62-68331ffb3087" alt="ten_samples_1" style="width: 30%;" />
 </p>
-I've cherry picked intricate predictions on test set to show the model's capacity: 
 
 ___
 ## 4. Closure Model
