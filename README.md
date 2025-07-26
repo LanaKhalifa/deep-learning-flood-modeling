@@ -2,12 +2,10 @@
 
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is structured into three main stages, each represented by a top-level directory in the repository:
 
-1. **📁 simulations_to_data/**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based, deep learning-ready datasets of augmented terrain and water depth patches.  
-   - **Directory**: Includes patch extraction, dataset, and dataloader generation scripts.  
-   - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, you can run the full pipeline from start to end.
+1. **📁 simulations_to_data/**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based, deep learning-ready datasets of augmented terrain and water depth patches. Directory includes patch extraction, dataset, and dataloader generation scripts.  
+   - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, the pipeline can be run from start to end.
 
-2. **📁 multi_architecture_training/**: Trains custom-designed deep learning models, as well as modified models from the literature, to predict water depth at the patch level.  
-   - **Directory**: Includes model architectures, training, and evaluation scripts.
+2. **📁 multi_architecture_training/**: Trains custom-designed deep learning models, as well as modified models from the literature, to predict water depth at the patch level. Directory Includes model architectures, training and plotting learning curves.
 
 3. **📁 full_domain_closure_best_model/**: Scales patch predictions to coherent full-domain predictions using the best architecture from the previous step.
 
@@ -17,34 +15,23 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 
 > Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all cut via QGIS from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). Overall, there are 4 projects (`prj_03`, `prj_04`, `prj_05`, and `prj_06`) from which 210 simulations were run, differing from each other in terrain and flood event (water flow).
 
-### How to Run
+### How to Run and Outputs found:
 
 ```bash
-python main.py generate_patches 
-python main.py generate_datasets           
-python main.py generate_dataloaders         
+python main.py generate_patches    #  saves patches to └── `simulations_to_samples/processed_data/patches_per_simulation/prj_##/plan_##/`
+python main.py generate_datasets    #  saves dataset to └── `simulations_to_samples/processed_data/datasets/`
+python main.py generate_dataloaders    #  saves dataloaders └── `simulations_to_samples/processed_data/dataloaders/`   
 ```
-
-### Output Paths
-
-- `generate_patches` saves to:  
-  └── `simulations_to_samples/processed_data/patches_per_simulation/prj_##/plan_##/`
-
-- `generate_datasets` saves to:  
-  └── `simulations_to_samples/processed_data/datasets/`
-
-- `generate_dataloaders` saves to:  
-  └── `simulations_to_samples/processed_data/dataloaders/`
 
 ### **generate_patches**
 
-Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches are then augmented (e.g., flipping and rotating in various degrees) and cleaned.
+Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches (each 32x32) are then augmented (e.g., flipping and rotating in various degrees) and cleaned.
 
 <img width="1280" height="373" alt="image" src="https://github.com/user-attachments/assets/cc712de5-0266-44e5-bde7-b5519997ad93" />
 
 ### **generate_datasets**
 
-Loads the patches from each simulation and assembles them into datasets as follows:
+Loads the patches of each simulation and assembles them into datasets as follows:
 
 | Name                          | Description                                                                 |
 |-------------------------------|-----------------------------------------------------------------------------|
