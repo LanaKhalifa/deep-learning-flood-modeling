@@ -21,7 +21,7 @@ conda env create -f environment.yml                                           # 
 mamba env create -f environment.yml                                           # 2. Or using mamba
 conda activate flood_env                                                      # 3. Activate the environment
 ```
- **Download and setup data:**
+ **Download data:**
    - Download the `hecras_simulations_results/` folder from the provided OneDrive link
    - Move it to `simulations_to_data/raw_data/hecras_simulations_results/`
    - This folder contains the HEC-RAS simulation outputs (.hdf files) and terrain data (.tif files) required for the pipeline
