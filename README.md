@@ -18,14 +18,14 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 ### How to Run:
 
 ```bash
-python main.py generate_patches    #  saves patches to └── `simulations_to_samples/processed_data/patches_per_simulation/prj_##/plan_##/`
-python main.py generate_datasets    #  saves dataset to └── `simulations_to_samples/processed_data/datasets/`
-python main.py generate_dataloaders    #  saves dataloaders └── `simulations_to_samples/processed_data/dataloaders/`   
+python main.py generate_patches            #  saves patches to └── `simulations_to_samples/processed_data/patches_per_simulation/prj_##/plan_##/`
+python main.py generate_datasets           #  saves dataset to └── `simulations_to_samples/processed_data/datasets/`
+python main.py generate_dataloaders        #  saves dataloaders └── `simulations_to_samples/processed_data/dataloaders/`   
 ```
 
 ### **generate_patches**
 
-Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches (each 32x32) are then augmented (e.g., flipping and rotating in various degrees) and cleaned.
+Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches (each 32x32) are then augmented (e.g., flipping and rotating in various directions/degrees) and cleaned.
 
 <img width="1280" height="373" alt="image" src="https://github.com/user-attachments/assets/cc712de5-0266-44e5-bde7-b5519997ad93" />
 
@@ -52,9 +52,7 @@ See `📁 simulations_to_samples/processed_data/dataloaders/figures/` for random
 ---
 
 ## 2. Training and Evaluation Workflow
-This stage involves systematic experimentation with various architectures to predict future water depth at the patch level. The process is organized into subdirectories within:
-
-📁 `multi_architecture_training/`
+This stage involves systematic experimentation with various architectures to predict future water depth at the patch level. The process is organized into subdirectories within 📁 `multi_architecture_training/`:
 
 | Folder                             | Purpose |
 |------------------------------------|---------|
@@ -64,21 +62,21 @@ This stage involves systematic experimentation with various architectures to pre
 
 ### How to Run
 ```bash
-python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state dummy model 
-                                       # saves losses at └── simulations_to_samples/training_utils/dummy_small_val_loss.pt
+python main.py calculate_dummy_losses     # Baseline L1 losses using steady-state dummy model 
+                                          # saves losses at └── simulations_to_samples/training_utils/dummy_small_val_loss.pt
 
-python main.py A_train                 # Train using config A (similarly B or C)
-                                       # saves trained model at └── X_*/saved_trained_models/Arch_##/model.pt
-                                       # saves losses at └── X_*/saved_losses/Arch_##/losses.pt
+python main.py A_train                    # Train using config A (similarly B or C)
+                                          # saves trained model at └── X_*/saved_trained_models/Arch_##/model.pt
+                                          # saves losses at └── X_*/saved_losses/Arch_##/losses.pt
 
-python main.py A_plot_losses           # Plot training and validation losses for config A (similarly B or C) 
-                                       # saves learning curves at └── X_*/learning_curves.png
+python main.py A_plot_losses              # Plot training and validation losses for config A (similarly B or C) 
+                                          # saves learning curves at └── X_*/learning_curves.png
 ```
 
 ### Shared Utilities (A, B, and C)
 
 - Models implemented in: `multi_architecture_training/models/`  
-- Configuration file: `multi_architecture_training/config/model_configs.py`
+- Configuration file: `/config/model_configs.py`
 - Train file: `multi_architecture_training/training_utils/train_model.py`
 
 ### A_plot_losses and C_plot_losses
@@ -125,9 +123,9 @@ ___
 > **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance.  
 >  
 > In the meantime, you can view the results at:  
-> /home/lana_k/deep-learning-flood-modeling/full_domain_closure_best_model/figures/Converging  
+> /full_domain_closure_best_model/figures/Converging  
 > and  
-> /home/lana_k/deep-learning-flood-modeling/full_domain_closure_best_model/figures/9_Maps  
+> full_domain_closure_best_model/figures/9_Maps  
 >  
 > 9_Maps shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. each subplot x and y axes show the number of pixel this flood is modeled over. each pixel is 10m in simulation.  
 > Converging shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
