@@ -13,13 +13,6 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 ---
 
 ## Installation
-
-### Prerequisites
-- [Anaconda](https://www.anaconda.com/products/distribution) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system
-- Alternative: [Mamba](https://mamba.readthedocs.io/) (faster conda replacement)
-
-### Setup Instructions
-
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/LanaKhalifa/deep-learning-flood-modeling.git
