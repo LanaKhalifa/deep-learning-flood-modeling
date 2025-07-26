@@ -101,18 +101,9 @@ Generate visualizations of the L1 training and validation loss curves for all ar
 ### How to Run
 
 ```bash
-python main.py generate_rae_boxplots
-python main.py plot_entire_batch_predictions
+python main.py generate_rae_boxplots # save to  └── `evaluate_and_visualize_best_model/boxplots/arch_05_rae_boxplots.png`
+python main.py plot_entire_batch_predictions └── `evaluate_and_visualize_best_model/visual_predictions/ten_predictions_{idx}.png` 
 ```
-
-### Output Paths
-
-- `generate_rae_boxplots` saves to:  
-  └── `evaluate_and_visualize_best_model/boxplots/arch_05_rae_boxplots.png`
-
-- `plot_entire_batch_predictions` saves to:  
-  └── `evaluate_and_visualize_best_model/visual_predictions/ten_predictions_{idx}.png` 
-
 
 ### generate_rae_boxplots
 
