@@ -2,8 +2,6 @@
 
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
 
-## Table of Contents
-
 | Section | Summary |
 |--------|---------|
 | [🌊 Deep Learning Flood Modeling](#-deep-learning-flood-modeling) | Overview of the full pipeline and its four core stages. |
