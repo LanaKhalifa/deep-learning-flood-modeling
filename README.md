@@ -15,6 +15,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 ## 1. From Simulations to Dataloaders
 
 > Note: “Plan” and “Simulation” are used interchangeably throughout this repository. A project (abbreviated as `prj`) refers to a collection of flood simulations conducted on remotely sensed terrains, all cut via QGIS from a single project unit defined by the U.S. Geological Survey's 3D Elevation Program (3DEP). Overall, there are 4 projects (`prj_03`, `prj_04`, `prj_05`, and `prj_06`) from which 210 simulations were run, differing from each other in terrain and flood event (water flow).
+
 > Note: Before running move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is required due to GitHub's file size limitations. Once added, the pipeline can run end-to-end.
 
 ### How to Run:
