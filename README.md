@@ -54,7 +54,7 @@ See `📁 simulations_to_samples/processed_data/dataloaders/figures/` for random
 
 ---
 
-## 2. Training and Evaluation Workflow
+## 2. Training Workflow
 This stage involves systematic experimentation with various architectures to predict future water depth at the patch level. The process is organized into subdirectories within 📁 `multi_architecture_training/`:
 
 | Folder                             | Purpose |
