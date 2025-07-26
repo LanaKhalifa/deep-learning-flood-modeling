@@ -1,13 +1,14 @@
 # 🌊 Deep Learning Flood Modeling
-
+## Summary:
 This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is structured into three main stages, each represented by a top-level directory in the repository:
 
 1. **📁 simulations_to_data/**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based, deep learning-ready datasets of augmented terrain and water depth patches. Directory includes patch extraction, dataset, and dataloader generation scripts.  
    - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, the pipeline can be run from start to end.
 
 2. **📁 multi_architecture_training/**: Trains custom-designed deep learning models, as well as modified models from the literature, to predict water depth at the patch level. Directory Includes model architectures, training and plotting learning curves.
+3. **📁 evaluate_and_visualize_best_model/**: evaluate best model on each dataset. visualizes predictions from best model. 
 
-3. **📁 full_domain_closure_best_model/**: Scales patch predictions to coherent full-domain predictions using the best architecture from the previous step.
+4. **📁 full_domain_closure_best_model/**: Scales patch predictions to coherent full-domain predictions using the best architecture from the previous step.
 
 ---
 
