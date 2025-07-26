@@ -98,7 +98,7 @@ python main.py A_train                    # Train using config A (similarly B or
                                           # saves losses at └── X_*/saved_losses/Arch_##/losses.pt
 
 python main.py A_plot_losses              # Plot training and validation losses for config A (similarly B or C) 
-                                          # saves learning curves at └── X_*/learning_curves.png
+                                          # saves learning curves at └── X_*/figures/learning_curves.png
 ```
 
 ### Shared Utilities (A, B, and C)
