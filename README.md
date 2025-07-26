@@ -63,6 +63,16 @@ This stage involves systematic experimentation with various architectures to pre
 | 📁 `C_train_best_four_on_big_set/`   | Retrains the top four architectures on `big_train` / `big_val`. |
 
 ### How to Run
+python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state dummy model 
+                                       # saves losses at └── simulations_to_samples/training_utils/dummy_small_val_loss.pt
+
+python main.py A_train                 # Train using config A (similarly B or C)
+                                       # └── X_*/saved_trained_models/Arch_##/model.pt and X_*/saved_losses/Arch_##/losses.pt
+
+python main.py A_plot_losses          # Plot training and validation losses for config A (similarly B or C) 
+                                      #  saves learning curves at └── X_*/learning_curves.png
+
+### How to Run
 
 ```bash
 python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state dummy model
