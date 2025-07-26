@@ -10,6 +10,24 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 | [4. Closure Model](#4-closure-model) | Uses an iterative closure model to upscale patch predictions to full-domain flood maps. |
 
 ---
+How to Install
+
+1. Clone the Repository
+git clone https://github.com/your-username/deep-learning-flood-modeling.git
+cd deep-learning-flood-modeling
+2. Create and Activate Conda Environment
+Make sure you have Miniconda or Anaconda installed.
+
+conda env create -f environment.yml
+conda activate flood-modeling
+environment.yml contains all necessary dependencies, including PyTorch and core packages such as numpy, matplotlib, and scikit-learn.
+3. Prepare the Simulation Data
+Due to GitHub's file size limits, the raw simulation outputs are shared externally.
+Move the folder hecras_simulations_results/ (shared via OneDrive) into:
+
+simulations_to_samples/raw_data/
+
+---
 
 ## 1. From Simulations to Dataloaders
 
