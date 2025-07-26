@@ -78,7 +78,7 @@ python main.py A_plot_losses           # Plot training and validation losses for
 
 - Models implemented in: `multi_architecture_training/models/`  
 - Configuration file: `multi_architecture_training/config/model_configs.py`
-- Train file: 'multi_architecture_training/training_utils/train_model.py'
+- Train file: `multi_architecture_training/training_utils/train_model.py`
 
 ### A_plot_losses and C_plot_losses
 
