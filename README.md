@@ -1,14 +1,19 @@
 # 🌊 Deep Learning Flood Modeling
-## Summary:
-This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is structured into three main stages, each represented by a top-level directory in the repository:
 
-1. **📁 simulations_to_data/**: Transforms HEC-RAS (hydrodynamic simulation software) outputs and terrain inputs (.hdf and terrain .tif files) into patch-based, deep learning-ready datasets of augmented terrain and water depth patches. Directory includes patch extraction, dataset, and dataloader generation scripts.  
-   - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is necessary due to GitHub's file size limitations. With this, the pipeline can be run from start to end.
+This repository implements a full pipeline for emulating hydrodynamic flood simulations using deep learning, followed by an iterative closure model for domain-wide prediction. The pipeline is organized into four main stages, each represented by a top-level directory:
 
-2. **📁 multi_architecture_training/**: Trains custom-designed deep learning models, as well as modified models from the literature, to predict water depth at the patch level. Directory Includes model architectures, training and plotting learning curves.
-3. **📁 evaluate_and_visualize_best_model/**: evaluate best model on each dataset. visualizes predictions from best model. 
+1. **📁 simulations_to_data/**:  
+   Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches. Includes patch extraction, dataset construction, and dataloader generation scripts.  
+   - **Before running**: Move the large folder `hecras_simulations_results/` (shared via OneDrive) into `simulations_to_samples/raw_data/`. This is required due to GitHub's file size limitations. Once added, the pipeline can run end-to-end.
 
-4. **📁 full_domain_closure_best_model/**: Scales patch predictions to coherent full-domain predictions using the best architecture from the previous step.
+2. **📁 multi_architecture_training/**:  
+   Trains both custom-designed and literature-based deep learning models to predict water depth at the patch level. Includes model definitions, training scripts, and loss curve plotting tools.
+
+3. **📁 evaluate_and_visualize_best_model/**:  
+   Evaluates the best-performing model on each dataset using the RAE metric and visualizes its predictions.
+
+4. **📁 full_domain_closure_best_model/**:  
+   Applies an iterative closure model to upscale patch-level predictions into coherent, full-domain water depth maps using the best architecture identified in the previous stage.
 
 ---
 
