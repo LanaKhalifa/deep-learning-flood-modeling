@@ -140,7 +140,7 @@ python main.py plot_entire_batch_predictions              # save to └── `e
 
 ### plot_entire_batch_predictions
 
-Plots the predictions of the best model on one batch (300 samples) from `prj_03_test` set. Each figure includes 10 samples from one batch, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions` for all samples in first batch. Here are 10 samples:
+Plots the predictions of the best model 300 random damples from `prj_03_test` set. Each figure includes 10 samples, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions`. Here are 10 samples:
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/02eae530-8fad-4451-aa62-68331ffb3087" alt="ten_samples_1" style="width: 30%;" />
