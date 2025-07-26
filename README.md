@@ -68,7 +68,8 @@ python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state d
                                        # saves losses at └── simulations_to_samples/training_utils/dummy_small_val_loss.pt
 
 python main.py A_train                 # Train using config A (similarly B or C)
-                                       # └── X_*/saved_trained_models/Arch_##/model.pt and X_*/saved_losses/Arch_##/losses.pt
+                                       # saves trained model at └── X_*/saved_trained_models/Arch_##/model.pt
+                                       # saves losses at └── X_*/saved_losses/Arch_##/losses.pt
 
 python main.py A_plot_losses           # Plot training and validation losses for config A (similarly B or C) 
                                        # saves learning curves at └── X_*/learning_curves.png
