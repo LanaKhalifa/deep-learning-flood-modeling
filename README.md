@@ -70,29 +70,9 @@ python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state d
 python main.py A_train                 # Train using config A (similarly B or C)
                                        # └── X_*/saved_trained_models/Arch_##/model.pt and X_*/saved_losses/Arch_##/losses.pt
 
-python main.py A_plot_losses          # Plot training and validation losses for config A (similarly B or C) 
-                                      #  saves learning curves at └── X_*/learning_curves.png
+python main.py A_plot_losses           # Plot training and validation losses for config A (similarly B or C) 
+                                       # saves learning curves at └── X_*/learning_curves.png
 ```
-
-### How to Run
-
-```bash
-python main.py calculate_dummy_losses  # Baseline L1 losses using steady-state dummy model
-python main.py X_train                 # Replace X with A, B, or C to train
-python main.py X_plot_losses           # Replace X with A, B, or C to plot losses
-```
-
-### Output Paths
-
-- `calculate_dummy_losses` saves to:  
-  └── `simulations_to_samples/training_utils/dummy_small_val_loss.pt`
-
-- `X_train` saves to:  
-  └── `X_*/saved_trained_models/Arch_##/model.pt`  
-  └── `X_*/saved_losses/Arch_##/losses.pt`
-
-- `X_plot_losses` saves to:  
-  └── `X_*/learning_curves.png`
 
 ### Shared Utilities (A, B, and C)
 
