@@ -4,6 +4,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 
 | Section | Summary |
 |--------|---------|
+| [Installation](#-installation) | Setup instructions for conda/mamba environment, dependencies, and data download |
 | [1. From Simulations to Dataloaders](#1-from-simulations-to-dataloaders) | Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches.|
 | [2. Training Workflow](#2-training-workflow) | Trains multiple architectures including custom designed ones |
 | [3. Evaluation and Visualization](#3-evaluation-and-visualization) | Evaluates the best model using RAE and visualizes its predictions. |
@@ -13,17 +14,60 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 
 ## Installation
 
-```
-git clone https://github.com/LanaKhalifa/deep-learning-flood-modeling.git     # 1. Clone the repository
-cd deep-learning-flood-modeling
-conda env create -f environment.yml                                           # 2. Create the conda environment
-mamba env create -f environment.yml                                           # 2. Or using mamba
-conda activate flood_env                                                      # 3. Activate the environment
-```
- **Download data:**
+### Prerequisites
+- [Anaconda](https://www.anaconda.com/products/distribution) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system
+- Alternative: [Mamba](https://mamba.readthedocs.io/) (faster conda replacement)
+
+### Setup Instructions
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/LanaKhalifa/deep-learning-flood-modeling.git
+   cd deep-learning-flood-modeling
+   ```
+
+2. **Create the conda environment:**
+   ```bash
+   conda env create -f environment.yml
+   ```
+   
+   *Or using mamba (recommended for faster installation):*
+   ```bash
+   mamba env create -f environment.yml
+   ```
+
+3. **Activate the environment:**
+   ```bash
+   conda activate flood_env
+   ```
+
+4. **Download and setup data:**
    - Download the `hecras_simulations_results/` folder from the provided OneDrive link
    - Move it to `simulations_to_data/raw_data/hecras_simulations_results/`
    - This folder contains the HEC-RAS simulation outputs (.hdf files) and terrain data (.tif files) required for the pipeline
+
+5. **Verify installation:**
+   ```bash
+   python -c "import torch; import numpy; import matplotlib; print('Environment setup successful!')"
+   ```
+
+### Environment Management
+
+- **Activate environment:** `conda activate flood_env`
+- **Deactivate environment:** `conda deactivate`
+- **Update environment:** `conda env update -f environment.yml`
+- **Remove environment:** `conda env remove -n flood_env`
+
+### System Requirements
+- **RAM:** Minimum 16GB recommended (32GB+ for large datasets)
+- **GPU:** CUDA-compatible GPU recommended for training (optional for inference)
+- **Storage:** ~50GB free space for full dataset and model outputs
+- **OS:** Linux, macOS, or Windows with WSL2
+
+### Troubleshooting
+- If environment creation fails, try updating conda: `conda update conda`
+- For GPU support issues, verify CUDA installation: `nvidia-smi`
+- For memory issues during training, reduce batch size in configuration files
 ---
 ## 1. From Simulations to Dataloaders
 
