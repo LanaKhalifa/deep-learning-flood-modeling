@@ -30,7 +30,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    ```
 
 4. **Download and setup data:**
-   - Download the `hecras_simulations_results/` folder from the provided [OneDrive link]([https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EssvOyWnw4pDqFcv_mZ6jNkBVXUI1pogD7ZTAq7Yw16eSA](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EnIUbbko4yRFlVm4kEkRYj4Bj3CIg-xPNThrl7-OTetgHA?e=ioqmTb))
+   - Download the `hecras_simulations_results/` folder from the provided [OneDrive link](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EssvOyWnw4pDqFcv_mZ6jNkBVXUI1pogD7ZTAq7Yw16eSA)
    - Move it to `simulations_to_samples/raw_data/hecras_simulations_results/`
    - This folder contains the HEC-RAS simulation outputs (.hdf files) and terrain data (.tif files) required for the pipeline.
   
