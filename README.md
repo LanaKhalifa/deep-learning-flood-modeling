@@ -103,9 +103,9 @@ python main.py A_plot_losses              # Plot training and validation losses 
 
 ### Shared Utilities (A, B, and C)
 
-- Models implemented in: `multi_architecture_training/models/`  
+- Models implemented in: `/multi_architecture_training/models/`  
 - Configuration file: `/config/model_configs.py`
-- Train file: `multi_architecture_training/training_utils/train_model.py`
+- Train file: `/multi_architecture_training/training_utils/train_model.py`
 
 ### B_plot_losses and C_plot_losses
 
@@ -123,7 +123,7 @@ Generate visualizations of the L1 training and validation loss curves for all ar
 
 ## 3. Evaluation and Visualization
 
-> **Note:** RAE measures how much error the trained model makes compared to a baseline dummy model. Specifically, it computes the total absolute difference between the model’s predictions and the ground truth, divided by the total absolute difference between the dummy model’s predictions and the ground truth.
+> **Note:** RAE measures how much error the trained model makes compared to a baseline dummy model which predicts no change in water depth. Specifically, it computes the total absolute difference between the model’s predictions and the ground truth, divided by the total absolute difference between the dummy model’s predictions and the ground truth.
 
 ### How to Run
 
