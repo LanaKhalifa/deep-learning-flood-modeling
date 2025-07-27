@@ -36,7 +36,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
   
 3. **Quick test:**
    ```bash
-   python main.py generate_patches
+   python main.py generate_patches # for running the pipeline from start to end replace generate_patches with run_all
    ```
 ---
 ## 1. From Simulations to Dataloaders
