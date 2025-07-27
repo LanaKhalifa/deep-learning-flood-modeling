@@ -1,0 +1,102 @@
+# =============================================================================
+# PROJECT-SPECIFIC LARGE DIRECTORIES (CRITICAL - 435GB+)
+# =============================================================================
+
+# Raw simulation data (319GB) - ignore contents but allow .gitkeep
+simulations_to_samples/raw_data/*
+!simulations_to_samples/raw_data/.gitkeep
+
+# Processed simulation data (117GB) - ignore contents but allow .gitkeep
+simulations_to_samples/processed_data/*
+!simulations_to_samples/processed_data/.gitkeep
+!simulations_to_samples/processed_data/datasets/.gitkeep
+!simulations_to_samples/processed_data/dataloaders/.gitkeep
+!simulations_to_samples/processed_data/patches_per_simulation/.gitkeep
+
+# Trained model files (294MB) - ignore contents but allow .gitkeep
+multi_architecture_training/B_train_all_archs_on_small_set/saved_trained_models/*
+!multi_architecture_training/B_train_all_archs_on_small_set/saved_trained_models/.gitkeep
+multi_architecture_training/A_tune_one_arch_on_small_set/saved_trained_models/*
+!multi_architecture_training/A_tune_one_arch_on_small_set/saved_trained_models/.gitkeep
+multi_architecture_training/C_train_best_four_on_big_set/saved_trained_models/*
+!multi_architecture_training/C_train_best_four_on_big_set/saved_trained_models/.gitkeep
+
+# Visual outputs and predictions (47MB) - ignore contents but allow .gitkeep
+evaluate_and_visualize_best_model/visual_predictions/*
+!evaluate_and_visualize_best_model/visual_predictions/.gitkeep
+evaluate_and_visualize_best_model/boxplots/*
+!evaluate_and_visualize_best_model/boxplots/.gitkeep
+
+# Generated figures - ignore contents but allow .gitkeep
+multi_architecture_training/B_train_all_archs_on_small_set/figures/*
+!multi_architecture_training/B_train_all_archs_on_small_set/figures/.gitkeep
+multi_architecture_training/A_tune_one_arch_on_small_set/figures/*
+!multi_architecture_training/A_tune_one_arch_on_small_set/figures/.gitkeep
+multi_architecture_training/C_train_best_four_on_big_set/figures/*
+!multi_architecture_training/C_train_best_four_on_big_set/figures/.gitkeep
+
+# =============================================================================
+# LARGE FILE TYPES FOUND IN PROJECT
+# =============================================================================
+
+# Model files (PyTorch models >10MB each)
+*.pth
+*.pt
+
+# Dataset files (pickle files >10MB each)  
+*.pkl
+
+# Data loader files
+*_loader.pt
+*_test.pkl
+*_train_val.pkl
+
+# =============================================================================
+# STANDARD PYTHON & ML FILES
+# =============================================================================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints
+
+# Environment files
+.env
+.venv
+env/
+venv/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =============================================================================
+# OUTPUTS & LOGS
+# =============================================================================
+
+# Loss and training logs
+saved_losses/
+logs/
+runs/
+outputs/
+
+# Generated images and figures
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+
+# Learning curves and plots
+learning_curves.png
+*_loss_plot.png
+*_loss_plot_aside.png
+
+# Temporary files
+*.tmp
+*.log
