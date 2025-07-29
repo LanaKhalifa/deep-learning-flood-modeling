@@ -151,18 +151,13 @@ Plots the predictions of the best model on 300 random samples from `prj_03_test`
 
 ___
 ## 4. Closure Model
-> **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance.  
->  
-> In the meantime, you can view the results in this OneDrive folder:  
-> Closure Model Results - [OneDrive](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/ElScJxuuHdZGug4VUbb-ehwB3aJaE-8nPgitDCgEBfdvZg?e=BCVYo8)
+> **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance. In the meantime, you can view the results in this OneDrive folder: Closure Model Results - [OneDrive](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/ElScJxuuHdZGug4VUbb-ehwB3aJaE-8nPgitDCgEBfdvZg?e=BCVYo8)
 > 
->  
 > The folder contains:
 > - **9_Maps**: Shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. Each subplot x and y axes show the number of pixels this flood is modeled over. Each pixel is 10m in simulation.  
 > - **Converging**: Shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
 >  
-> These figures were generated from test simulations used to create test loaders.  
-> Each PNG is named using the format {prj_num}_{plan_num}_{time}.png, referring to the project, plan, and the input time t when the closure model was applied.  
+> These figures were generated from test simulations used to create test loaders. Each PNG is named using the format {prj_num}_{plan_num}_{time}.png, referring to the project, plan, and the input time t when the closure model was applied.  
 >  
 > Below are selected examples of the 9 maps with their corresponding convergence curves:
 
