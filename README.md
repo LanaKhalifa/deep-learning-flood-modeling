@@ -112,8 +112,7 @@ python main.py A_plot_losses              # Plot training and validation losses 
 - Train file: `/multi_architecture_training/training_utils/train_model.py`
 
 ### B_plot_losses and C_plot_losses
-
-Generate visualizations of the L1 training and validation loss curves for all architectures trained on `small_train` (Stage B) and for the top four architectures retrained on `big_train` (Stage C).
+Plots L1 training and validation loss curves for all architectures trained on `small_train` (Stage B) and for the top four architectures retrained on `big_train` (Stage C).
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bb3c06e3-29e6-4607-b658-488b3b2bbcb1" alt="learning_curves_aa" style="width: 66%;" />
@@ -144,7 +143,7 @@ python main.py plot_entire_batch_predictions              # save to └── `e
 
 ### plot_entire_batch_predictions
 
-Plots the predictions of the best model 300 random damples from `prj_03_test` set. Each figure includes 10 samples, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions`. Here are 10 samples:
+Plots the predictions of the best model on 300 random samples from `prj_03_test` set. Each figure includes 10 samples, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions`. Here are 10 samples:
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/02eae530-8fad-4451-aa62-68331ffb3087" alt="ten_samples_1" style="width: 30%;" />
@@ -154,13 +153,13 @@ ___
 ## 4. Closure Model
 > **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance.  
 >  
-> In the meantime, you can view the results at:  
-> /full_domain_closure_best_model/figures/Converging  
-> and  
-> full_domain_closure_best_model/figures/9_Maps  
+> In the meantime, you can view the results in this OneDrive folder:  
+> [Closure Model Results - OneDrive](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EnIUbbko4yRFlVm4kEkRYj4Bj3CIg-xPNThrl7-OTetgHA?e=qvekae)
+> 
 >  
-> 9_Maps shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. each subplot x and y axes show the number of pixel this flood is modeled over. each pixel is 10m in simulation.  
-> Converging shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
+> The folder contains:
+> - **9_Maps**: Shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. Each subplot x and y axes show the number of pixels this flood is modeled over. Each pixel is 10m in simulation.  
+> - **Converging**: Shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
 >  
 > These figures were generated from test simulations used to create test loaders.  
 > Each PNG is named using the format prj_{x}_plan_{x}_t_{x}.png, referring to the project, plan, and the input time t when the closure model was applied.  
