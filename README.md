@@ -4,7 +4,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
 
 | Section | Summary |
 |--------|---------|
-| [Installation](#-installation) | Setup instructions for conda environment and data download |
+| [Installation](#-installation) | Setup instructions for conda environment, data download, quick test, and running from start to end |
 | [1. From Simulations to Dataloaders](#1-from-simulations-to-dataloaders) | Converts HEC-RAS simulation outputs and terrain files (`.hdf` and terrain `.tif`) into deep learning-ready datasets composed of augmented terrain and water depth patches.|
 | [2. Training Workflow](#2-training-workflow) | Trains multiple architectures including custom designed ones |
 | [3. Evaluation and Visualization](#3-evaluation-and-visualization) | Evaluates the best model using a proposed metric and visualizes its predictions. |
