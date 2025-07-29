@@ -154,7 +154,7 @@ ___
 > **Note:** The closure model implementation is currently not available as it is under review for publication. This section will be updated upon article acceptance.  
 >  
 > In the meantime, you can view the results in this OneDrive folder:  
-> [Closure Model Results - OneDrive](https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EnIUbbko4yRFlVm4kEkRYj4Bj3CIg-xPNThrl7-OTetgHA?e=qvekae)
+> Closure Model Results - [OneDrive]([https://technionmail-my.sharepoint.com/:f:/g/personal/lana_khalifa_campus_technion_ac_il/EnIUbbko4yRFlVm4kEkRYj4Bj3CIg-xPNThrl7-OTetgHA?e=qvekae](https://technionmail-my.sharepoint.com/my?id=%2Fpersonal%2Flana%5Fkhalifa%5Fcampus%5Ftechnion%5Fac%5Fil%2FDocuments%2Fdeep%2Dlearning%2Dflood%2Dmodeling%2FClosure%20Model%20Results&ga=1))
 > 
 >  
 > The folder contains:
