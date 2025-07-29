@@ -162,7 +162,7 @@ ___
 > - **Converging**: Shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
 >  
 > These figures were generated from test simulations used to create test loaders.  
-> Each PNG is named using the format prj_{x}_plan_{x}_t_{x}.png, referring to the project, plan, and the input time t when the closure model was applied.  
+> Each PNG is named using the format {prj_num}_{plan_num}_{time}.png, referring to the project, plan, and the input time t when the closure model was applied.  
 >  
 > Below are selected examples of the 9 maps with their corresponding convergence curves:
 
