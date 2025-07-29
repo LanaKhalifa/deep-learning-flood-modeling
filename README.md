@@ -57,7 +57,7 @@ python main.py generate_dataloaders        #  saves dataloaders └── `simul
 
 ### **generate_patches**
 
-Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches (each 32x32) are then augmented (e.g., flipping and rotating in various directions/degrees) and cleaned.
+Processes each simulation’s terrain and water depth maps by overlaying a patch grid and a dual grid (offset by half the patch size) to extract localized patches. These patches (each 32x32) are then augmented (flipping and rotating in various directions/degrees) and cleaned.
 
 <img width="1280" height="373" alt="image" src="https://github.com/user-attachments/assets/cc712de5-0266-44e5-bde7-b5519997ad93" />
 
