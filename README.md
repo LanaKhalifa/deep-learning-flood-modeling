@@ -38,6 +38,10 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
    ```bash
    python main.py generate_patches # for running the pipeline from start to end replace generate_patches with run_all
    ```
+4. **Running from start to end:**
+   ```bash
+   python main.py run_all 
+   ```
 ---
 ## 1. From Simulations to Dataloaders
 
