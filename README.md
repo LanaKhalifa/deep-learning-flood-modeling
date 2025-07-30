@@ -36,7 +36,7 @@ This repository implements a full pipeline for emulating hydrodynamic flood simu
   
 3. **Quick test:**
    ```bash
-   python main.py generate_patches # for running the pipeline from start to end replace generate_patches with run_all
+   python main.py generate_patches
    ```
 4. **Running from start to end:**
    ```bash
@@ -73,7 +73,7 @@ Loads the patches of each simulation and assembles them into datasets as follows
 
 ### **generate_dataloaders**
 
-Generates deep learning-ready dataloaders from datasets. Each sample should look as follows (ignore the downsampler part for now):
+Generates deep learning-ready dataloaders from the dataset. Each sample follows the format below. (Note: The downsampler is a learnable module that reduces the terrain input from 321×321 to 32×32, allowing it to be concatenated along the channel dimension with the 32×32 water depth maps.)
 
 <img width="980" height="377" alt="image" src="https://github.com/user-attachments/assets/981097c6-b6da-4b15-986a-6e5d445e38e6" />
 
@@ -95,14 +95,14 @@ This stage involves systematic experimentation with various architectures to pre
 ### How to Run
 ```bash
 python main.py calculate_dummy_losses     # Baseline L1 losses using steady-state dummy model 
-                                          # saves losses at └── multi_architecture_training/training_utils/dummy_small_val_loss.pt
+                                          # saves losses at └── multi_architecture_training/training_utils/dummy_small_val_loss.pt or dummy_big_val_loss.pt
 
 python main.py A_train                    # Train using config A (similarly B or C)
-                                          # saves trained model at └── X_*/saved_trained_models/Arch_##/model.pth
-                                          # saves losses at └── X_*/saved_losses/Arch_##/losses.pt
+                                          # saves trained model at └── A_*/saved_trained_models/Arch_##/model.pth
+                                          # saves losses at └── A_*/saved_losses/Arch_##/losses.pt
 
 python main.py A_plot_losses              # Plot training and validation losses for config A (similarly B or C) 
-                                          # saves learning curves at └── X_*/figures/learning_curves.png
+                                          # saves learning curves at └── A_*/figures/learning_curves.png
 ```
 
 ### Shared Utilities (A, B, and C)
@@ -143,7 +143,7 @@ python main.py plot_entire_batch_predictions              # save to └── `e
 
 ### plot_entire_batch_predictions
 
-Plots the predictions of the best model on 300 random samples from `prj_03_test` set. Each figure includes 10 samples, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions`. Here are 10 samples:
+Plots the predictions of the best model on 300 random samples from `prj_03_test` set. Each figure includes 10 samples, resulting in a total of 30 figures. See `📁 evaluate_and_visualize_best_model/visual_predictions`. Here is one figure:
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/02eae530-8fad-4451-aa62-68331ffb3087" alt="ten_samples_1" style="width: 30%;" />
@@ -157,7 +157,7 @@ ___
 > - **9_Maps**: Shows the predicted water depth and the ground truth over the entire domain, compared to a dummy model. Each subplot x and y axes show the number of pixels this flood is modeled over. Each pixel is 10m in simulation.  
 > - **Converging**: Shows the MAE between the prediction and ground truth as the solution evolves until it converges.  
 >  
-> These figures were generated from test simulations used to create test loaders. Each PNG is named using the format {prj_num}_{plan_num}_{time}.png, referring to the project, plan, and the input time t when the closure model was applied.  
+> These figures were generated from test simulations used to create test loaders. Each PNG is named using the format {prj_num}_{plan_num}_{time}.png, referring to the project, plan, and the input time t_initial when the closure model was applied.  
 >  
 > Below are selected examples of the 9 maps with their corresponding convergence curves:
 
