@@ -23,9 +23,9 @@
 ```
 (  3,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
-                  Self-attention  →       ( 32,32,32)
+                 Self-attention residual  →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
-                  Self-attention  →       ( 32,32,32)
+                 Self-attention residual  →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       (  1,32,32)
 ```
@@ -104,7 +104,7 @@ concat skip    → ( 128,32,32)   → k=3, p=1, LeakyReLU ×2 → ( 64,32,32)
 ( 48,32,32)    → k=5, s=2, p=2, LeakyReLU → ( 64,16,16)
 ( 64,16,16)    → k=3, s=2, p=1, LeakyReLU → ( 96, 8, 8)
 ( 96, 8, 8)    → k=3, s=2, p=1, LeakyReLU → (128, 4, 4)
-                Self-attention         → (128, 4, 4)
+                Self-attention residual         → (128, 4, 4)
 ```
 
 **Decoder**
