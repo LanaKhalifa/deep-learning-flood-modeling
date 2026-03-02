@@ -16,17 +16,33 @@
 
 ---
 
-## Non-downsampling Convolutions
+## Non-downsampling Convolutions with Self-Attention
+
+*Main proposed architecture. Activation (e.g. LeakyReLU) was a hyperparameter during tuning.*
 
 ```
-(3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
-(32,32,32)      → k=3, s=1, p=1, LeakyReLU → (32,32,32)   repeated N times (hyperparameter)
-(32,32,32)      → k=3, s=1, p=1, LeakyReLU → (1,32,32)
+(3,32,32)       → k=3, s=1, p=1, LeakyReLU (hyperparameter) → (32,32,32)
+(32,32,32)      → k=3, s=1, LeakyReLU (hyperparameter)     → (32,32,32)   repeated n₁ times (hyperparameter)
+                 Self-attn residual        → (32,32,32)
+(32,32,32)      → k=3, s=1, LeakyReLU (hyperparameter)     → (32,32,32)   repeated n₂ times (hyperparameter)
+                 Self-attn residual        → (32,32,32)
+(32,32,32)      → k=3, s=1, LeakyReLU (hyperparameter)     → (32,32,32)   repeated n₃ times (hyperparameter)
+(32,32,32)      → k=3, s=1, p=1, LeakyReLU (hyperparameter) → (1,32,32)
 ```
 
 ---
 
-## Simplified UNet
+## Non-downsampling Convolutions
+
+*Ablation (no self-attention). Hyperparameters that worked for Non-downsampling Convolutions with Self-Attention were chosen for this architecture, not the other way around. Activation (e.g. LeakyReLU) was a hyperparameter during tuning.*
+
+```
+(3,32,32)       → k=3, s=1, p=1, LeakyReLU (hyperparameter) → (32,32,32)
+(32,32,32)      → k=3, s=1, p=1, LeakyReLU (hyperparameter) → (32,32,32)   repeated N times (hyperparameter)
+(32,32,32)      → k=3, s=1, p=1, LeakyReLU (hyperparameter) → (1,32,32)
+```
+
+---
 
 **Encoder**
 
@@ -46,20 +62,6 @@ concat skip  → (512,2,2)      → ConvT k=4 s=2 → (128,4,4)
 concat skip  → (256,4,4)      → ConvT k=4 s=2 → (64,8,8)
 concat skip  → (128,8,8)     → ConvT k=4 s=2 → (32,16,16)
 concat skip  → (64,16,16)    → ConvT k=4 s=2 → (1,32,32)  LeakyReLU
-```
-
----
-
-## Non-downsampling Convolutions with Self-Attention
-
-```
-(3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₁ times (hyperparameter)
-                 Self-attn residual        → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₂ times (hyperparameter)
-                 Self-attn residual        → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₃ times (hyperparameter)
-(32,32,32)      → k=3, s=1, p=1, LeakyReLU → (1,32,32)
 ```
 
 ---
