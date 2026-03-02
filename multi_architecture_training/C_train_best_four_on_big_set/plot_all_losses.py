@@ -17,18 +17,20 @@ def plot_all_losses():
 
     # Define paths using config
     base_dir = STAGE_C_DIR
-    architectures = ['Arch_02', 'Arch_04', 'Arch_05']
+    architectures = ['Arch_02', 'Arch_04', 'Arch_05', 'Arch_07']
     
     # Architecture name mapping
     arch_names = {'Arch_02': 'Non-Downsampling Convolutions',
                   'Arch_04': 'Non-Downsampling Convolutions + Attention',
-                  'Arch_05': 'Classic UNet'}
+                  'Arch_05': 'Classic UNet',
+                  'Arch_07': 'Encoder-Decoder + Attention'}
     
     # Define consistent colors for architectures (same as A)
     colors = {
         'Arch_02': '#8A2BE2',  # purple
         'Arch_04': '#ff7f0e',  # orange
         'Arch_05': '#2ca02c',  # green
+        'Arch_07': '#d62728',  # red
     }
     
     save_path = base_dir / 'learning_curves.png'

@@ -17,7 +17,7 @@ def calculate_rae_one_sample(prediction, ground_truth):
     return rae.item()
 
 def calculate_and_save_all_raes(device, arch_name='arch_04'):
-    from multi_architecture_training.models.non_downsampling_convolutions_attention import NonDownsamplingConvolutionsWithAttention
+    from multi_architecture_training.models.classic_unet import ClassicUNet
     from multi_architecture_training.models.terrain_downsampler_alternating import TerrainDownsampleAlternating
     import os
     datasets = [
@@ -28,16 +28,8 @@ def calculate_and_save_all_raes(device, arch_name='arch_04'):
         'prj_03_test'
     ]
     downsampler = TerrainDownsampleAlternating(c_start=1, c1=20, c2=40, c_end=1).to(device)
-    model = NonDownsamplingConvolutionsWithAttention(
-        downsampler=downsampler,
-        arch_input_c=3,
-        arch_num_layers=12,
-        arch_num_c=32,
-        arch_act="leakyrelu",
-        arch_last_act="leakyrelu",
-        arch_num_attentions=2
-    ).to(device)
-    model_path = 'multi_architecture_training/C_train_best_four_on_big_set/saved_trained_models/Arch_04/model.pth'
+    model = ClassicUNet(downsampler=downsampler).to(device)
+    model_path = 'multi_architecture_training/C_train_best_four_on_big_set/saved_trained_models/Arch_05/model.pth'
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
     rae_data = {}
@@ -63,8 +55,8 @@ def calculate_and_save_all_raes(device, arch_name='arch_04'):
         rae_data[dataset] = rae_clean
     return rae_data
 
-def plot_rae_boxplots_arch_04(device):
-    arch_name='arch_04'
+def plot_rae_boxplots_arch_05(device):
+    arch_name='arch_05'
     import matplotlib.pyplot as plt
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Nimbus Roman']
@@ -80,7 +72,16 @@ def plot_rae_boxplots_arch_04(device):
                flierprops=dict(marker='o', color='red', alpha=0.5),
                widths=0.5)
     ax.set_yticks([i + 1 for i in range(len(available_datasets))])
-    ax.set_yticklabels(available_datasets, fontsize=14)
+    # Map dataset names for display (prj_03 -> prj_01)
+    display_labels = []
+    for dataset in available_datasets:
+        if dataset == 'prj_03_test':
+            display_labels.append('prj_01_test')
+        elif dataset == 'prj_03_train_val':
+            display_labels.append('prj_01_train_val')
+        else:
+            display_labels.append(dataset)
+    ax.set_yticklabels(display_labels, fontsize=14)
     ax.grid(True, linestyle='--', alpha=0.7)
     ax.set_xlabel('Relative Absolute Error (RAE)', fontsize=16)
     ax.set_title(f'RAE Distribution Across Datasets - Non-downsampling Convolutions with Self-Attention', fontsize=18)

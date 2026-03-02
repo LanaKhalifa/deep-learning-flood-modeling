@@ -17,7 +17,7 @@ from multi_architecture_training.C_train_best_four_on_big_set.train import run_t
 from multi_architecture_training.C_train_best_four_on_big_set.plot_all_losses import plot_all_losses as C_plot_all_losses
 from multi_architecture_training.training_utils.dummy_losses import calculate_and_save_dummy_losses
 
-from evaluate_and_visualize_best_model.scripts.generate_rae_boxplot import plot_rae_boxplots_arch_04
+from evaluate_and_visualize_best_model.scripts.generate_rae_boxplot import plot_rae_boxplots_arch_05
 from evaluate_and_visualize_best_model.scripts.visualize_predictions import plot_entire_batch
 
 from full_domain_closure_best_model.apply_closure_on_simulations import run_closure_on_all_simulations
@@ -89,7 +89,7 @@ def generate_rae_boxplots():
     logger.info("Calculating and plotting RAE boxplots for Non-downsampling Convolutions with Self-Attention...")
     import torch
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    plot_rae_boxplots_arch_04(device)
+    plot_rae_boxplots_arch_05(device)
 
 def plot_entire_batch_predictions():
     logger.info("Plotting entire batch predictions...")
