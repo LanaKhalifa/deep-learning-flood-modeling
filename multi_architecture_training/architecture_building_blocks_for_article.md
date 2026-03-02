@@ -20,7 +20,7 @@
 
 ```
 (3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
-(32,32,32)      → k=3, s=1, p=1, LeakyReLU → (32,32,32)   repeated 10 times
+(32,32,32)      → k=3, s=1, p=1, LeakyReLU → (32,32,32)   repeated N times (hyperparameter)
 (32,32,32)      → k=3, s=1, p=1, LeakyReLU → (1,32,32)
 ```
 
@@ -54,11 +54,11 @@ concat skip  → (64,16,16)    → ConvT k=4 s=2 → (1,32,32)  LeakyReLU
 
 ```
 (3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated 3 times
+(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₁ times (hyperparameter)
                  Self-attn residual        → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated 4 times
+(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₂ times (hyperparameter)
                  Self-attn residual        → (32,32,32)
-(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated 3 times
+(32,32,32)      → k=3, s=1, LeakyReLU      → (32,32,32)   repeated n₃ times (hyperparameter)
 (32,32,32)      → k=3, s=1, p=1, LeakyReLU → (1,32,32)
 ```
 
