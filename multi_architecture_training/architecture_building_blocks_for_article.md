@@ -8,25 +8,25 @@
 
 ## Common input (all architectures)
 
-| Step | Description |
-|------|--------------|
-| Input | Terrain (1,32,32) + depth (1,32,32) + BC (1,32,32) |
-| Downsampler | (1,32,32) → k=3 s=2, LeakyReLU → (20,15,15) → AlternatingStrideConv k=3 → (40,…) LeakyReLU → k=2 s=2 → (1,…) LeakyReLU |
-| Main net in | **(3, 32, 32)** |
+| Step           | Description                                                        |
+|----------------|--------------------------------------------------------------------|
+| Input          | Terrain (1,32,32) + depth (1,32,32) + BC (1,32,32)                 |
+| Downsampler    | (1,32,32) → k=3 s=2, LeakyReLU → (20,15,15) → AlternatingStrideConv k=3 → (40,…) LeakyReLU → k=2 s=2 → (1,…) LeakyReLU |
+| Main net in    | **(3, 32, 32)**                                                    |
 
 ---
 
 ## Non-downsampling Convolutions with Self-Attention
 
-*Main proposed architecture. Activation σ (e.g. LeakyReLU), number of self-attention modules (below is example where 2 selfattention layers are present), and number of layers in between (n) were hyperparameters during tuning.*
+Is this architecture good? This structure is the main proposed network. Convolutions use activation function σ (like LeakyReLU). The number of self-attention layers and the number of conv layers between them (n) were treated as tunable hyperparameters. Self-attention layers are interleaved with convolutional layers. Here’s an example with 2 self-attention modules and n conv layers in each block:
 
 ```
 (  3,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
-( 32,32,32)       →  Self-attention   →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
-( 32,32,32)       →  Self-attention   →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   [repeat n times]
+( 32,32,32)       → Self-attention    →       ( 32,32,32)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   [repeat n times]
+( 32,32,32)       → Self-attention    →       ( 32,32,32)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   [repeat n times]
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       (  1,32,32)
 ```
 
@@ -34,11 +34,11 @@
 
 ## Non-downsampling Convolutions
 
-*Ablation (no self-attention). Hyperparameters that worked for Non-downsampling Convolutions with Self-Attention were chosen for this architecture, not the other way around.*
+Is this simpler architecture good? This is an ablation with self-attention removed. The same hyperparameters were used as in the architecture above (not vice versa):
 
 ```
 (  3,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated N times (hyperparameter)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   [repeat N times]
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       (  1,32,32)
 ```
 
