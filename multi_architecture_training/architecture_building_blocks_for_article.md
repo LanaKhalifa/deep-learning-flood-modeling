@@ -16,7 +16,7 @@
 
 ---
 
-## Arch_02 — Non-downsampling Convolutions
+## Non-downsampling Convolutions
 
 ```
 (3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
@@ -26,7 +26,7 @@
 
 ---
 
-## Arch_03 — Simplified UNet
+## Simplified UNet
 
 **Encoder**
 
@@ -50,7 +50,7 @@ concat skip  → (64,16,16)    → ConvT k=4 s=2 → (1,32,32)  LeakyReLU
 
 ---
 
-## Arch_04 — Non-downsampling Convolutions with Self-Attention
+## Non-downsampling Convolutions with Self-Attention
 
 ```
 (3,32,32)       → k=3, s=1, p=1, LeakyReLU → (32,32,32)
@@ -64,7 +64,7 @@ concat skip  → (64,16,16)    → ConvT k=4 s=2 → (1,32,32)  LeakyReLU
 
 ---
 
-## Arch_05 — Classic UNet
+## Classic UNet
 
 **Encoder**
 
@@ -92,7 +92,7 @@ concat skip  → (128,32,32)   → k=3, p=1, LeakyReLU ×2 → (64,32,32)
 
 ---
 
-## Arch_07 — Encoder–Decoder with Self-Attention
+## Encoder–Decoder with Self-Attention
 
 **Encoder**
 
@@ -118,7 +118,7 @@ concat skip  → (128,32,32)   → k=3, p=1, LeakyReLU ×2 → (64,32,32)
 
 ---
 
-## Arch_08 — Modified UNet with ResNet
+## Modified UNet with ResNet
 
 **Encoder**
 
@@ -146,7 +146,7 @@ concat skip  → (128,32,32)   → k=3, p=1, LeakyReLU ×2 → (64,32,32)
 
 ---
 
-## Arch_09 — Encoder–Decoder with Large Convolutions
+## Encoder–Decoder with Large Convolutions
 
 **Encoder**
 
@@ -166,7 +166,9 @@ concat skip  → (128,32,32)   → k=3, p=1, LeakyReLU ×2 → (64,32,32)
 
 ---
 
-## Self-attention block (Arch_04, Arch_07)
+## Self-attention block
+
+*Used in: Non-downsampling Convolutions with Self-Attention, Encoder–Decoder with Self-Attention.*
 
 ```
 (C,H,W)   → reshape (C, N), N = H×W
