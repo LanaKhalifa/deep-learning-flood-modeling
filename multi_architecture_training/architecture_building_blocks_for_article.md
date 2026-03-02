@@ -23,9 +23,9 @@
 ```
 (  3,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
-                 Self-attention       →       ( 32,32,32)
+( 32,32,32)       →  Self-attention   →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
-                 Self-attention       →       ( 32,32,32)
+( 32,32,32)       →  Self-attention    →       ( 32,32,32)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       (  1,32,32)
 ```
