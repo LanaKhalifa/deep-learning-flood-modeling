@@ -18,15 +18,15 @@
 
 ## Non-downsampling Convolutions with Self-Attention
 
-*Main proposed architecture. Activation σ (e.g. LeakyReLU), number of self-attention modules, and number of layers in between were hyperparameters during tuning.*
+*Main proposed architecture. Activation σ (e.g. LeakyReLU), number of self-attention modules (below is example where 2 selfattention layers are present), and number of layers in between (n) were hyperparameters during tuning.*
 
 ```
 (  3,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
 ( 32,32,32)       →  Self-attention   →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
 ( 32,32,32)       →  Self-attention   →       ( 32,32,32)
-( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times (hyperparameter)
+( 32,32,32)       → k=3, s=1, p=1, σ  →       ( 32,32,32)   repeated n times
 ( 32,32,32)       → k=3, s=1, p=1, σ  →       (  1,32,32)
 ```
 
