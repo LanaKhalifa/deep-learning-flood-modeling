@@ -21,13 +21,13 @@
 *Main proposed architecture. Activation σ (e.g. LeakyReLU), number of self-attention modules, and number of layers in between were hyperparameters during tuning.*
 
 ```
-(3,32,32)       → k=3, s=1, p=1, σ → (32,32,32)
-(32,32,32)      → k=3, s=1, σ     → (32,32,32)   repeated n times (hyperparameter)
-                 Self-attn residual → (32,32,32)
-(32,32,32)      → k=3, s=1, σ     → (32,32,32)   repeated n times (hyperparameter)
-                 Self-attn residual → (32,32,32)
-(32,32,32)      → k=3, s=1, σ     → (32,32,32)   repeated n times (hyperparameter)
-(32,32,32)      → k=3, s=1, p=1, σ → (1,32,32)
+(3,32,32)       → k=3, s=1, p=1, σ  →       (32,32,32)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (32,32,32)   repeated n times (hyperparameter)
+                 Self-attn residual  →       (32,32,32)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (32,32,32)   repeated n times (hyperparameter)
+                 Self-attn residual  →       (32,32,32)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (32,32,32)   repeated n times (hyperparameter)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (1,32,32)
 ```
 
 ---
@@ -37,9 +37,9 @@
 *Ablation (no self-attention). Hyperparameters that worked for Non-downsampling Convolutions with Self-Attention were chosen for this architecture, not the other way around. Activation σ (e.g. LeakyReLU) was a hyperparameter during tuning.*
 
 ```
-(3,32,32)       → k=3, s=1, p=1, σ → (32,32,32)
-(32,32,32)      → k=3, s=1, p=1, σ → (32,32,32)   repeated N times (hyperparameter)
-(32,32,32)      → k=3, s=1, p=1, σ → (1,32,32)
+(3,32,32)       → k=3, s=1, p=1, σ  →       (32,32,32)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (32,32,32)   repeated N times (hyperparameter)
+(32,32,32)      → k=3, s=1, p=1, σ  →       (1,32,32)
 ```
 
 ---
